@@ -27,11 +27,17 @@ int main(int argc, char ** argv)
 				cout << "window is closed!\n";
 			}
 		}
+
+		//FPS manager
 		sf::Time time = clock.getElapsedTime();
 		cout <<1.0f / time.asSeconds() << '\n';
+
 		clock.restart().asSeconds();
 
 		renderWindow.clear();
+
+		//things to render!
+
 		renderWindow.display();
 	}
 }

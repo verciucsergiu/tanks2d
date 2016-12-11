@@ -1,2 +1,2 @@
 # tanks2d
-# nothing
+# Setup SFML ready

@@ -1,3 +1,4 @@
-﻿  Source.cpp
-  Tanks2DSetup.vcxproj -> D:\@BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Debug\Tanks2DSetup.exe
-  Tanks2DSetup.vcxproj -> D:\@BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Debug\Tanks2DSetup.pdb (Full PDB)
+﻿  main.cpp
+  LINK : E:\git\Debug\Tanks2DSetup.exe not found or not built by the last incremental link; performing full link
+  Tanks2DSetup.vcxproj -> E:\git\Debug\Tanks2DSetup.exe
+  Tanks2DSetup.vcxproj -> E:\git\Debug\Tanks2DSetup.pdb (Full PDB)

@@ -32,6 +32,7 @@ int main(int argc, char ** argv)
 		sf::Time time = clock.getElapsedTime();
 		cout <<1.0f / time.asSeconds() << '\n';
 		//ALIN WAS HERE
+		//
 		clock.restart().asSeconds();
 
 		renderWindow.clear();

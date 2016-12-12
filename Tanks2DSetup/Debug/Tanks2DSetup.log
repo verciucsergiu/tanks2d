@@ -1,3 +1,5 @@
-﻿  main.cpp
-  Tanks2DSetup.vcxproj -> E:\git\Debug\Tanks2DSetup.exe
-  Tanks2DSetup.vcxproj -> E:\git\Debug\Tanks2DSetup.pdb (Full PDB)
+﻿  Player.cpp
+d:\@blue\faculta\visual studio c++\proiect\tanks2dsetup\tanks2d\tanks2dsetup\player.cpp(50): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\tanks2dsetup\tanks2d\tanks2dsetup\player.cpp(62): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Tanks2DSetup.vcxproj -> D:\@BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Debug\Tanks2DSetup.exe
+  Tanks2DSetup.vcxproj -> D:\@BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Debug\Tanks2DSetup.pdb (Full PDB)

@@ -9,7 +9,7 @@ Player::Player()
 	}
 	if (!barrelTexture.loadFromFile("sprites/tank_turel.png"))
 	{
-		cout << "Error loading the tank _tourel\n";
+		cout << "Error loading the tank _turel!\n";
 	}
 	tankSprite.setTexture(tankTexture);
 	barrelSprite.setTexture(barrelTexture);

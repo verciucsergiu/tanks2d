@@ -150,12 +150,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\bullet.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\Game.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\GameMap.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\Player.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\tank.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\bullet.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\Game.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\GameMap.h" />
     <ClInclude Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\Player.h" />
     <ClInclude Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\tank.h" />
   </ItemGroup>

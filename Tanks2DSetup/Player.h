@@ -2,6 +2,7 @@
 #include <SFML\Graphics.hpp>
 #include <iostream>
 #include <cmath>
+#include "Game.h"
 #include "bullet.h"
 
 using namespace std;
@@ -16,6 +17,7 @@ public:
 	float speed;
 	float damage;
 
+	void checkCollision(Sprite wallSprites[],int nrOfWalls);
 
 	void update(float deltaTime, RenderWindow &window);
 	void draw(RenderWindow &window);
@@ -27,10 +29,11 @@ public:
 	void tankRotation(float x,float y, RenderWindow &window);
 	Sprite barrelSprite;
 	Sprite tankSprite;
+	Vector2i offset;
 private:
 	Texture tankTexture;
 	Texture barrelTexture;
-	Vector2i offset;
+	
 	float PI;
 	/*bool setScale;*/
 };

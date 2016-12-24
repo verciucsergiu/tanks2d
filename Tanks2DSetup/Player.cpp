@@ -1,6 +1,6 @@
 #include "Player.h"
 float PI = 3.14159265;
-
+bool show = false;
 Player::Player()
 {
 	if (!tankTexture.loadFromFile("sprites/tank_base.png"))
@@ -9,7 +9,7 @@ Player::Player()
 	}
 	if (!barrelTexture.loadFromFile("sprites/tank_turel.png"))
 	{
-		cout << "Error loading the tank _turel!\n";
+		cout << "Error loading the tank_turel!\n";
 	}
 	tankSprite.setTexture(tankTexture);
 	barrelSprite.setTexture(barrelTexture);
@@ -23,6 +23,25 @@ Player::Player()
 Player::~Player()
 {
 	cout << "Player destroyed!";
+}
+void Player::checkCollision(Sprite wallSprites[],int nrOfWalls)
+{
+	if (!show)
+	{
+		for (int i = 0; i < nrOfWalls; i++)
+		{
+			FloatRect rect(tankSprite.getPosition().x, tankSprite.getPosition().y, 32, 32);
+			if (wallSprites[i].getGlobalBounds().intersects(rect))
+			{
+				cout << "ALELUI!\n";
+			}
+			else
+			{
+				cout << "NO\n";
+			}
+		}
+	}
+	show = true;
 }
 void Player::update(float deltaTime,RenderWindow &window)
 {
@@ -58,18 +77,18 @@ void Player::update(float deltaTime,RenderWindow &window)
 	}
 	movement.x *= deltaTime*speed;
 	movement.y *= deltaTime*speed;
-	tankSprite.move(movement.x,movement.y);
-	barrelSprite.move(movement.x, movement.y);
+	/*tankSprite.move(movement.x,movement.y);
+	barrelSprite.move(movement.x, movement.y);*/
 
 
 	if (Mouse::isButtonPressed(Mouse::Button::Left))
 	{
-		cout << "Fired : (" << barrelSprite.getPosition().x << "," << barrelSprite.getPosition().y << ")\n";
+		//cout << "Fired : (" << barrelSprite.getPosition().x << "," << barrelSprite.getPosition().y << ")\n";
 		bullet bulletFired;
 		bulletFired.setPosition(barrelSprite.getPosition().x,barrelSprite.getPosition().y);
 		bulletFired.Update(deltaTime, window);
 	}
-
+	
 }
 void Player::draw(RenderWindow &window)
 {	

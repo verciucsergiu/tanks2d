@@ -15,8 +15,12 @@ public:
 	~Player();
 	/*float scale;*/
 
-	float speed;
+	float vSpeed;
+	float hSpeed;
 	float damage;
+
+	bool hith;
+	bool hitv;
 
 	void checkCollision(Sprite wallSprites[],int nrOfWalls);
 

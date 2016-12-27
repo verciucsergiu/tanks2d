@@ -1,7 +1,6 @@
 #include "Player.h"
 float PI = 3.14159265;
 bool show = false;
-
 Player::Player()
 {
 	if (!tankTexture.loadFromFile("sprites/tank_base.png"))
@@ -23,7 +22,7 @@ Player::Player()
 
 Player::~Player()
 {
-	cout << "Player destroyed!";
+	
 }
 
 void Player::update(float deltaTime,RenderWindow &window)
@@ -59,8 +58,8 @@ void Player::update(float deltaTime,RenderWindow &window)
 
 
 
-	tankSprite.move(movement.x * deltaTime * speed, movement.y * deltaTime * speed);
-	barrelSprite.move(movement.x * deltaTime * speed, movement.y * deltaTime * speed);
+	tankSprite.move(movement.x * deltaTime * vSpeed, movement.y * deltaTime * hSpeed);
+	barrelSprite.move(movement.x * deltaTime * vSpeed, movement.y * deltaTime * hSpeed);
 
 	direction.x = dirX;
 	direction.y = dirY;
@@ -76,18 +75,32 @@ void Player::update(float deltaTime,RenderWindow &window)
 }
 void Player::checkCollision(Sprite wallSprites[], int nrOfWalls)
 {
-
 	for (int i = 0; i < nrOfWalls; i++)
 	{
-		FloatRect rect = wallSprites[i].getGlobalBounds();
-		if (tankSprite.getGlobalBounds().intersects(rect))
+		for (int j = 0; j < 3; j++)
 		{
-			cout << "hit wall nr : " << i << '\n';
-			speed = 0;
-		}
-		else
-		{
-			//speed = 150;
+			bool left = wallSprites[i].getGlobalBounds().contains(tankSprite.getPosition().x + j * 32 / 3, tankSprite.getPosition().y + j*direction.y * 32 / 3 + 1);
+			bool top = wallSprites[i].getGlobalBounds().contains(tankSprite.getPosition().x + j*direction.x * 32 / 3 + 1, tankSprite.getPosition().y + j * 32 / 3);
+			if (top)
+			{
+				vSpeed = 0;
+				hitv = true;
+				cout << "Vertial collision!\n";
+			}
+			else
+			{
+				//hitv = false;
+			}
+			if (left)
+			{
+				cout << "Horizontal collision!\n";
+				hith = true;
+				hSpeed = 0;
+			}
+			else
+			{
+				//hith = false;
+			}
 		}
 	}
 }

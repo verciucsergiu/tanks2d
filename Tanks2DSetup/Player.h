@@ -2,6 +2,7 @@
 #include <SFML\Graphics.hpp>
 #include <iostream>
 #include <cmath>
+#include <string>
 #include "Game.h"
 #include "bullet.h"
 
@@ -27,6 +28,9 @@ public:
 	void lookAt(Vector2i target);
 	void setScale(float x, float y);
 	void tankRotation(float x,float y, RenderWindow &window);
+
+
+	Vector2i direction;
 	Sprite barrelSprite;
 	Sprite tankSprite;
 	Vector2i offset;

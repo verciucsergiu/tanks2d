@@ -1,6 +1,7 @@
 #include "Player.h"
 float PI = 3.14159265;
 bool show = false;
+
 Player::Player()
 {
 	if (!tankTexture.loadFromFile("sprites/tank_base.png"))
@@ -24,62 +25,45 @@ Player::~Player()
 {
 	cout << "Player destroyed!";
 }
-void Player::checkCollision(Sprite wallSprites[],int nrOfWalls)
-{
-	if (!show)
-	{
-		for (int i = 0; i < nrOfWalls; i++)
-		{
-			FloatRect rect(tankSprite.getPosition().x, tankSprite.getPosition().y, 32, 32);
-			if (wallSprites[i].getGlobalBounds().intersects(rect))
-			{
-				cout << "ALELUI!\n";
-			}
-			else
-			{
-				cout << "NO\n";
-			}
-		}
-	}
-	show = true;
-}
+
 void Player::update(float deltaTime,RenderWindow &window)
 {
-	//interactiunea turelei 
-	Vector2i mousePosition = Mouse::getPosition(window);
+	int dirX = 0;
+	int dirY = 0;
 
+	Vector2i mousePosition = Mouse::getPosition(window);
 	lookAt(mousePosition);
-	//movement
+
 	Vector2i movement(0,0);
+
 	if (Keyboard::isKeyPressed(Keyboard::W))
 	{
+		dirY = -1;
 		movement.y -= 1;
-		tankSprite.move(0, -1 * deltaTime * speed);
-		barrelSprite.move(0, -1 * deltaTime * speed);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::A))
 	{
+		dirX = -1;
 		movement.x -= 1;
-		tankSprite.move(-1 * deltaTime * speed, 0);
-		barrelSprite.move(-1 * deltaTime * speed, 0);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::S))
 	{
+		dirY = 1;
 		movement.y += 1;
-		tankSprite.move(0, 1 * deltaTime * speed);
-		barrelSprite.move(0, 1 * deltaTime * speed);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::D))
 	{
+		dirX = 1;
 		movement.x += 1;
-		tankSprite.move(1 * deltaTime * speed, 0);
-		barrelSprite.move(1 * deltaTime * speed, 0);
 	}
-	movement.x *= deltaTime*speed;
-	movement.y *= deltaTime*speed;
-	/*tankSprite.move(movement.x,movement.y);
-	barrelSprite.move(movement.x, movement.y);*/
 
+
+
+	tankSprite.move(movement.x * deltaTime * speed, movement.y * deltaTime * speed);
+	barrelSprite.move(movement.x * deltaTime * speed, movement.y * deltaTime * speed);
+
+	direction.x = dirX;
+	direction.y = dirY;
 
 	if (Mouse::isButtonPressed(Mouse::Button::Left))
 	{
@@ -89,6 +73,23 @@ void Player::update(float deltaTime,RenderWindow &window)
 		bulletFired.Update(deltaTime, window);
 	}
 	
+}
+void Player::checkCollision(Sprite wallSprites[], int nrOfWalls)
+{
+
+	for (int i = 0; i < nrOfWalls; i++)
+	{
+		FloatRect rect = wallSprites[i].getGlobalBounds();
+		if (tankSprite.getGlobalBounds().intersects(rect))
+		{
+			cout << "hit wall nr : " << i << '\n';
+			speed = 0;
+		}
+		else
+		{
+			//speed = 150;
+		}
+	}
 }
 void Player::draw(RenderWindow &window)
 {	

@@ -34,7 +34,6 @@ void GameMap::draw(RenderWindow &window)
 	for (int i = 0; i < indexWallTileMap; i++)
 	{
 		wallSprite.setPosition(wallAdress[i].x,wallAdress[i].y);
-
 		window.draw(wallSprite);
 	}
 }

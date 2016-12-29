@@ -3,36 +3,49 @@
 Game::Game()
 {
 	RenderWindow window(VideoMode(800, 574), "Tanks 2D", Style::Titlebar | Style::Close);
+	window.setFramerateLimit(59);
+
+	Clock clock;
+
 	View followPlayer;
 	followPlayer.setCenter(0, 0);
 	followPlayer.setSize(800, 574);
 	followPlayer.zoom(0.65);
-	Player player;
-	Clock clock;
-	player.vSpeed = 150;
-	player.hSpeed = 150;
-	window.setFramerateLimit(59);
-	player.setScale(1.3, 1.3);
-	player.transform(400, 300);
 
-	for (int i = 0; i < 21; i++)
+	Player player;
+	player.setSpeed(150);
+	player.setScale(1.3, 1.3);
+	player.startPosition(-100, -20);
+	player.setBoxColliderOffset(-2, -3);
+
+	GameMap tileMap;
+	
+	int walls = 5;
+
+	for (int i = 0; i < walls; i++)
 	{
 		tileMap.addTile(i, 0, GameMap::tileType::wall);
 		tileMap.addTile(0, i, GameMap::tileType::wall);
-		tileMap.addTile(21, i, GameMap::tileType::wall);
-		tileMap.addTile(i, 21, GameMap::tileType::wall);
+		tileMap.addTile(walls, i, GameMap::tileType::wall);
+		tileMap.addTile(i, walls, GameMap::tileType::wall);
 	}
-	tileMap.addTile(21, 21, GameMap::tileType::wall);
+	tileMap.addTile(walls, walls, GameMap::tileType::wall);
 
+	
+	//collision
 	for (int i = 0; i < tileMap.indexWallTileMap; i++)
 	{
-		tileMap.wallCollision[i].setTexture(tileMap.wallTexture);
-		tileMap.wallCollision[i].setPosition(tileMap.wallAdress[i].x, tileMap.wallAdress[i].y);
+		player.collider.target[i].setTexture(tileMap.wallTexture);
+		player.collider.target[i].setPosition(tileMap.wallAdress[i].x, tileMap.wallAdress[i].y);
+		player.collider.numberOfTargets = tileMap.indexWallTileMap;
 	}
 
+	//enemy to add to player.collider.target[i]
+	//metoda ineficienta de a verifica fiecare obstacol in parte dar mai putin cod de scris
+
+	//window
 	while (window.isOpen())
 	{
-
 		Event event;
 		while (window.pollEvent(event))
 		{
@@ -41,33 +54,25 @@ Game::Game()
 				window.close();
 			}
 		}
-		Time time = clock.getElapsedTime();
-		player.checkCollision(tileMap.wallCollision, tileMap.indexWallTileMap);
 
+		Time time = clock.getElapsedTime();
 		player.update(time.asSeconds(), window);
+
 		clock.restart().asSeconds();
 		
 		Color clearColor(150, 150, 150, 255);
 		window.clear(clearColor);
 		
+		//DrawThings
 		tileMap.draw(window);
 		player.draw(window);
+
+
+		//DEBUGING
 		Vector2f tankpos = player.tankSprite.getPosition();
-		
+	
 		Font font;
 		font.loadFromFile("sansation.ttf");
-		String dirX = "Direction X : " + to_string(player.direction.x);
-		
-		Text textX(dirX, font);
-		textX.setCharacterSize(15);
-		textX.setPosition(tankpos.x - 220, tankpos.y -50);
-		window.draw(textX);
-
-		String dirY = "Dirextion Y : " + to_string(player.direction.y);
-		Text textY(dirY, font);
-		textY.setCharacterSize(15);
-		textY.setPosition(tankpos.x - 220, tankpos.y - 20);
-		window.draw(textY);
 
 		String fps = "FPS: " + to_string((int)(1 / time.asSeconds()));
 		Text fpsT(fps, font);
@@ -75,21 +80,10 @@ Game::Game()
 		fpsT.setPosition(tankpos.x - 220, tankpos.y+10);
 		window.draw(fpsT);
 
-		String hitv = "Collision vert: " + to_string(player.hitv);
-		Text hitVText(hitv, font);
-		hitVText.setCharacterSize(15);
-		hitVText.setPosition(tankpos.x - 220, tankpos.y + 30);
-		window.draw(hitVText);
-
-		String hith = "Collision hozi: " + to_string(player.hith);
-		Text hitHText(hith, font);
-		hitHText.setCharacterSize(15);
-		hitHText.setPosition(tankpos.x - 220, tankpos.y + 50);
-		window.draw(hitHText);
-
+		//CAMERA MOVEMENT
 		followPlayer.setCenter(tankpos);
 		window.setView(followPlayer);
-		
+	
 		window.display();
 	}
 }

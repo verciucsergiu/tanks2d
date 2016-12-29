@@ -5,8 +5,6 @@
 using namespace sf;
 using namespace std;
 
-
-#define MAX_WALLS 1000
 class GameMap
 {
 public:
@@ -22,7 +20,6 @@ public:
 	string wallTilePath;
 	void addTile(int x, int y,tileType tile);
 	void draw(RenderWindow &window);
-	Sprite wallCollision[MAX_WALLS];
 	Texture wallTexture;
 private:
 	Sprite groundSprite;

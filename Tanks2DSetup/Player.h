@@ -8,41 +8,59 @@
 
 using namespace std;
 using namespace sf;
+
+#define MAX_TARGETS 1000
+
+struct Collider
+{
+	Sprite target[MAX_TARGETS];
+	int numberOfTargets;
+};
+
 class Player
 {
 public:
 	Player();
 	~Player();
-	/*float scale;*/
 
-	float vSpeed;
-	float hSpeed;
-	float damage;
-
-	bool hith;
-	bool hitv;
-
-	void checkCollision(Sprite wallSprites[],int nrOfWalls);
-
-	void update(float deltaTime, RenderWindow &window);
-	void draw(RenderWindow &window);
-	void transform(float coordonataX,float coordonataY);
-	void destroy();
-	bool collision(Vector2i position);
-	void lookAt(Vector2i target);
-	void setScale(float x, float y);
-	void tankRotation(float x,float y, RenderWindow &window);
-
-
-	Vector2i direction;
 	Sprite barrelSprite;
 	Sprite tankSprite;
-	Vector2i offset;
+
+	float damage;
+
+	void startPosition(float x, float y);
+	void update(float deltaTime, RenderWindow &window);
+
+	Collider collider;
+	bool Player::collisionHorizontal(float dir);
+	bool Player::collisionVertical(float dir);
+
+
+	void draw(RenderWindow &window);
+	void destroy();
+
+	void lookAt(Vector2i target, Vector2i halfSizeWindow);
+	void tankRotation(float x,float y, RenderWindow &window);
+
+	void setBoxColliderOffset(int x,int y);
+	void setScale(float x, float y);
+	void setSpeed(float speed);
+	
+	
+
+	//variabile care vor fi trecute private cand "DEBUG ends"
+	Vector2i collisionDirection;
+
 private:
+	Vector2i boxColliderOffset;
+	Vector2i initialPosition;
 	Texture tankTexture;
 	Texture barrelTexture;
-	
-	float PI;
+	void resetCollision();
+	void defaultBoxColliderOffset();
+	float PI = 3.14159265;
+	float vSpeed;
+	float hSpeed;
 	/*bool setScale;*/
 };
 

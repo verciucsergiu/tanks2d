@@ -1,9 +1,7 @@
 #pragma once
-#include <SFML\Graphics.hpp>
+#include "SFML\Graphics.hpp"
 #include <iostream>
-#include <cmath>
 #include <string>
-#include "Game.h"
 #include "bullet.h"
 
 using namespace std;
@@ -28,6 +26,7 @@ public:
 
 	float damage;
 
+	void create();
 	void startPosition(float x, float y);
 	void update(float deltaTime, RenderWindow &window);
 
@@ -35,32 +34,22 @@ public:
 	bool Player::collisionHorizontal(float dir);
 	bool Player::collisionVertical(float dir);
 
-
 	void draw(RenderWindow &window);
 	void destroy();
 
 	void lookAt(Vector2i target, Vector2i halfSizeWindow);
 	void tankRotation(float x,float y, RenderWindow &window);
 
-	void setBoxColliderOffset(int x,int y);
+	void setBoxColliderOffset(float x,float y);
 	void setScale(float x, float y);
 	void setSpeed(float speed);
-	
-	
-
-	//variabile care vor fi trecute private cand "DEBUG ends"
-	Vector2i collisionDirection;
-
 private:
 	Vector2i boxColliderOffset;
-	Vector2i initialPosition;
 	Texture tankTexture;
 	Texture barrelTexture;
-	void resetCollision();
 	void defaultBoxColliderOffset();
-	float PI = 3.14159265;
+	float PI = 3.14159265f;
 	float vSpeed;
 	float hSpeed;
-	/*bool setScale;*/
 };
 

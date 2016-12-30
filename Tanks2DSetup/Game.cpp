@@ -5,15 +5,15 @@ Game::Game()
 	window.create(VideoMode(800, 574), "TANKS 2D", Style::Titlebar | Style::Close);
 	window.setFramerateLimit(59);
 
-	CreateCamera();
+	CreateCamera(0.65f);
 
-	player.create();
 	player.setSpeed(150);
+	player.setRotationSpeed(6);
 	player.setScale(1.3f, 1.3f);
-	player.startPosition(-100, -20);
+	player.startPosition(550, 550);
 	player.setBoxColliderOffset(2, 2);
 	
-	int walls = 5;
+	int walls = 12;
 	for (int i = 0; i < walls; i++)
 	{
 		tileMap.addTile(i, 0, GameMap::tileType::wall);
@@ -23,6 +23,10 @@ Game::Game()
 	}
 	tileMap.addTile(walls, walls, GameMap::tileType::wall);
 
+	tileMap.addTile(6, 6, GameMap::tileType::wall);
+	tileMap.addTile(6, 7, GameMap::tileType::wall);
+	tileMap.addTile(7, 7, GameMap::tileType::wall);
+	tileMap.addTile(7, 6, GameMap::tileType::wall);
 	//Call after the walls were created and enemy spawned!;
 	MapCollisions();
 	//window
@@ -58,24 +62,20 @@ Game::Game()
 		window.display();
 	}
 }
-
-
 Game::~Game()
 {
 	
 }
-
 void Game::Draw(RenderWindow & window)
 {
 	tileMap.draw(window);
 	player.draw(window);
 }
-
-void Game::CreateCamera()
+void Game::CreateCamera(float zoom)
 {
 	followPlayer.setCenter(0, 0);
-	followPlayer.setSize(800, 574);
-	followPlayer.zoom(0.65f);
+	followPlayer.setSize(window.getSize().x, window.getSize().y);
+	followPlayer.zoom(zoom);
 }
 
 void Game::CameraBehavior()

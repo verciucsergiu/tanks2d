@@ -2,16 +2,8 @@
 
 Player::Player()
 {
-	
-}
+	currentRotation = 0;
 
-Player::~Player()
-{
-	
-}
-
-void Player::create()
-{
 	if (!tankTexture.loadFromFile("sprites/tank_base.png"))
 	{
 		cout << "Error loading the tank_base!\n";
@@ -31,6 +23,10 @@ void Player::create()
 	defaultBoxColliderOffset();
 }
 
+Player::~Player()
+{
+	
+}
 void Player::startPosition(float x, float y)
 {
 	Vector2f position(x, y);
@@ -61,7 +57,7 @@ void Player::update(float deltaTime,RenderWindow &window)
 	{
 		movement.x += 1;
 	}
-
+	tankRotation(movement.x, movement.y);
 	tankSprite.move(movement.x * deltaTime * vSpeed, movement.y * deltaTime * hSpeed);
 	barrelSprite.move(movement.x * deltaTime * vSpeed, movement.y * deltaTime * hSpeed);
 
@@ -136,6 +132,113 @@ void Player::lookAt(Vector2i target,Vector2i halfSizeWindow)
 
 	barrelSprite.setRotation(rotation);
 }
+
+void Player::tankRotation(int dirX, int dirY)
+{
+	//wtf should i do :(
+	if (currentRotation < 0)
+	{
+		currentRotation = 0;
+	}
+	if (currentRotation >360)
+	{
+		currentRotation = 0;
+	}
+	if (dirX && dirY == 0)
+	{
+		if (dirX == -1)
+		{
+			if (currentRotation != 180)
+			{
+				if (currentRotation>180)
+				{
+					currentRotation -= rotationSpeed;
+				}
+				else
+				{
+					currentRotation += rotationSpeed;
+				}
+			}
+		}
+		else
+		{
+			if (currentRotation != 0)
+			{
+				if (currentRotation>180)
+				{
+					currentRotation += rotationSpeed;
+				}
+				else
+				{
+					currentRotation -= rotationSpeed;
+				}
+			}
+		}
+	}
+	else if (dirX == 0 && dirY)
+	{
+		if (dirY == -1)
+		{
+			if (currentRotation != 90)
+			{
+				if (currentRotation < 90 && currentRotation > 270)
+				{
+					if (currentRotation < 360)
+					{
+						currentRotation += rotationSpeed;
+						if (currentRotation > 360)
+						{
+							currentRotation = 360 - currentRotation;
+						}
+					}
+					else if (currentRotation > 0)
+					{
+						{
+							currentRotation += rotationSpeed;
+						}
+					}
+
+				}
+				else
+				{
+					currentRotation -= rotationSpeed;
+				}
+			}
+			
+		}
+		else
+		{
+			if (currentRotation != 270)
+			{
+				if (currentRotation < 90 && currentRotation > 270)
+				{
+					if (currentRotation > 0)
+					{
+						currentRotation -= rotationSpeed;
+						if (currentRotation < 0)
+						{
+							currentRotation = currentRotation + 360;
+						}
+					}
+					else if (currentRotation < 360)
+					{
+						{
+							currentRotation -= rotationSpeed;
+						}
+					}
+					
+				}
+				else
+				{
+					currentRotation += rotationSpeed;
+				}
+			}
+		}
+	}
+	cout << "angle: " << currentRotation << '\n';
+	tankSprite.setRotation(currentRotation);
+}
+
 void Player::setBoxColliderOffset(float x, float y)
 {
 	boxColliderOffset.x = x;
@@ -150,6 +253,10 @@ void Player::setSpeed(float value)
 {
 	vSpeed = value;
 	hSpeed = value;
+}
+void Player::setRotationSpeed(float value)
+{
+	rotationSpeed = value;
 }
 void Player::defaultBoxColliderOffset()
 {

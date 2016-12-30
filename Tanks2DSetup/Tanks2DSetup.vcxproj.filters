@@ -21,9 +21,6 @@
     <ClCompile Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\tank.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -36,9 +33,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\tank.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\bullet.h">

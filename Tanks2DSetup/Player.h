@@ -26,7 +26,6 @@ public:
 
 	float damage;
 
-	void create();
 	void startPosition(float x, float y);
 	void update(float deltaTime, RenderWindow &window);
 
@@ -38,11 +37,12 @@ public:
 	void destroy();
 
 	void lookAt(Vector2i target, Vector2i halfSizeWindow);
-	void tankRotation(float x,float y, RenderWindow &window);
+	void tankRotation(int x,int y);
 
 	void setBoxColliderOffset(float x,float y);
 	void setScale(float x, float y);
 	void setSpeed(float speed);
+	void setRotationSpeed(float value);
 private:
 	Vector2i boxColliderOffset;
 	Texture tankTexture;
@@ -51,5 +51,7 @@ private:
 	float PI = 3.14159265f;
 	float vSpeed;
 	float hSpeed;
+	float rotationSpeed;
+	float currentRotation;
 };
 

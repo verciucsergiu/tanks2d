@@ -17,7 +17,7 @@ public:
 	~Game();
 private:
 	void Draw(RenderWindow &window);
-	void CreateCamera();
+	void CreateCamera(float zoom);
 	void CameraBehavior();
 	void MapCollisions();
 	void AddCollision(Sprite sprite);

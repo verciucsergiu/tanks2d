@@ -36,6 +36,7 @@ void Player::startPosition(float x, float y)
 
 void Player::update(float deltaTime,RenderWindow &window)
 {
+	fixedDeltaTime = deltaTime;
 	Vector2i mousePosition = Mouse::getPosition(window);
 	Vector2i halfSizeWindow(window.getSize().x / 2, window.getSize().y / 2);
 	lookAt(mousePosition,halfSizeWindow);
@@ -132,113 +133,151 @@ void Player::lookAt(Vector2i target,Vector2i halfSizeWindow)
 
 	barrelSprite.setRotation(rotation);
 }
-
 void Player::tankRotation(int dirX, int dirY)
 {
 	//wtf should i do :(
 	if (currentRotation < 0)
 	{
-		currentRotation = 0;
+		currentRotation = 360 + currentRotation;
 	}
 	if (currentRotation >360)
 	{
-		currentRotation = 0;
+		currentRotation = currentRotation - 360;
 	}
 	if (dirX && dirY == 0)
 	{
 		if (dirX == -1)
 		{
-			if (currentRotation != 180)
+			if (currentRotation >= 180 + fixedDeltaTime * 100 || currentRotation <= 180 - fixedDeltaTime * 100)
 			{
 				if (currentRotation>180)
 				{
-					currentRotation -= rotationSpeed;
+					currentRotation -= rotationSpeed * fixedDeltaTime;
 				}
 				else
 				{
-					currentRotation += rotationSpeed;
+					currentRotation += rotationSpeed * fixedDeltaTime;
 				}
 			}
 		}
 		else
 		{
-			if (currentRotation != 0)
+			if (currentRotation >= 0 + fixedDeltaTime * 100 || currentRotation <= 0 - fixedDeltaTime * 100)
 			{
 				if (currentRotation>180)
 				{
-					currentRotation += rotationSpeed;
+					currentRotation += rotationSpeed * fixedDeltaTime;
 				}
 				else
 				{
-					currentRotation -= rotationSpeed;
+					currentRotation -= rotationSpeed * fixedDeltaTime;
 				}
 			}
 		}
 	}
 	else if (dirX == 0 && dirY)
 	{
-		if (dirY == -1)
+		if (dirY == 1)
 		{
-			if (currentRotation != 90)
+			if (currentRotation >= 90 + fixedDeltaTime * 100 || currentRotation <= 90 - fixedDeltaTime * 100)
 			{
-				if (currentRotation < 90 && currentRotation > 270)
+				if (currentRotation <270 && currentRotation > 90)
 				{
-					if (currentRotation < 360)
-					{
-						currentRotation += rotationSpeed;
-						if (currentRotation > 360)
-						{
-							currentRotation = 360 - currentRotation;
-						}
-					}
-					else if (currentRotation > 0)
-					{
-						{
-							currentRotation += rotationSpeed;
-						}
-					}
-
+					currentRotation -= rotationSpeed * fixedDeltaTime;
 				}
 				else
 				{
-					currentRotation -= rotationSpeed;
+					currentRotation += rotationSpeed * fixedDeltaTime;
 				}
 			}
 			
 		}
 		else
 		{
-			if (currentRotation != 270)
+			if (currentRotation >= 270 + fixedDeltaTime * 100 || currentRotation <= 270 - fixedDeltaTime * 100)
 			{
-				if (currentRotation < 90 && currentRotation > 270)
+				if (currentRotation < 270 && currentRotation > 90)
 				{
-					if (currentRotation > 0)
-					{
-						currentRotation -= rotationSpeed;
-						if (currentRotation < 0)
-						{
-							currentRotation = currentRotation + 360;
-						}
-					}
-					else if (currentRotation < 360)
-					{
-						{
-							currentRotation -= rotationSpeed;
-						}
-					}
-					
+					currentRotation += rotationSpeed * fixedDeltaTime;
 				}
 				else
 				{
-					currentRotation += rotationSpeed;
+					if (currentRotation<=360||currentRotation==0)
+					{
+						currentRotation -= rotationSpeed * fixedDeltaTime;
+					}
+					else if (currentRotation < 90)
+					{
+						currentRotation -= rotationSpeed * fixedDeltaTime;
+					}
 				}
 			}
 		}
 	}
-	cout << "angle: " << currentRotation << '\n';
+	else if (dirX && dirY)
+	{
+		if (dirX == 1 && dirY == 1) // 45
+		{
+			if (currentRotation >= 45 + fixedDeltaTime * 100 || currentRotation <= 45 - fixedDeltaTime * 100)
+			{
+				if (currentRotation < 225 && currentRotation > 45)
+				{
+					currentRotation -= rotationSpeed * fixedDeltaTime;
+				}
+				else
+				{
+					currentRotation += rotationSpeed * fixedDeltaTime;
+				}
+			}
+			
+		}
+		if (dirX == -1 && dirY == 1) // 135
+		{
+			if (currentRotation >= 135 + fixedDeltaTime * 100 || currentRotation <= 135 - fixedDeltaTime * 100)
+			{
+				if (currentRotation < 315 && currentRotation > 135)
+				{
+					currentRotation -= rotationSpeed * fixedDeltaTime;
+				}
+				else
+				{
+					currentRotation += rotationSpeed * fixedDeltaTime;
+				}
+			}
+		}
+		if (dirX == -1 && dirY == -1) //225
+		{
+			if (currentRotation >= 225 + fixedDeltaTime * 100 || currentRotation <= 225 - fixedDeltaTime * 100)
+			{
+				if (currentRotation < 225 && currentRotation > 45)
+				{
+					currentRotation += rotationSpeed * fixedDeltaTime;
+				}
+				else
+				{
+					currentRotation -= rotationSpeed * fixedDeltaTime;
+				}
+			}
+		}
+		if (dirX == 1 && dirY == -1) // 315
+		{
+			if (currentRotation >= 315 + fixedDeltaTime * 100 || currentRotation <= 315 - fixedDeltaTime * 100)
+			{
+				if (currentRotation < 315 && currentRotation > 135)
+				{
+					currentRotation += rotationSpeed * fixedDeltaTime;
+				}
+				else
+				{
+					currentRotation -= rotationSpeed * fixedDeltaTime;
+				}
+			}
+		}
+	}
+
+	//cout << "Angle : " << currentRotation << '\n';
 	tankSprite.setRotation(currentRotation);
 }
-
 void Player::setBoxColliderOffset(float x, float y)
 {
 	boxColliderOffset.x = x;

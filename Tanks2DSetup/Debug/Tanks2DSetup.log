@@ -1,9 +1,9 @@
-﻿  Game.cpp
-d:\@blue\faculta\visual studio c++\proiect\tanks2dsetup\tanks2d\tanks2dsetup\game.cpp(19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\tanks2dsetup\tanks2d\tanks2dsetup\game.cpp(20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\tanks2dsetup\tanks2d\tanks2dsetup\game.cpp(21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\tanks2dsetup\tanks2d\tanks2dsetup\game.cpp(22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\tanks2dsetup\tanks2d\tanks2dsetup\game.cpp(24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\tanks2dsetup\tanks2d\tanks2dsetup\game.cpp(77): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+﻿  Player.cpp
+d:\@blue\faculta\visual studio c++\proiect\tanks2dsetup\tanks2d\tanks2dsetup\player.cpp(121): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\tanks2dsetup\tanks2d\tanks2dsetup\player.cpp(128): warning C4305: 'initializing': truncation from 'double' to 'float'
+d:\@blue\faculta\visual studio c++\proiect\tanks2dsetup\tanks2d\tanks2dsetup\player.cpp(129): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\tanks2dsetup\tanks2d\tanks2dsetup\player.cpp(130): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\tanks2dsetup\tanks2d\tanks2dsetup\player.cpp(283): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\tanks2dsetup\tanks2d\tanks2dsetup\player.cpp(284): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   Tanks2DSetup.vcxproj -> D:\@BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Debug\Tanks2DSetup.exe
   Tanks2DSetup.vcxproj -> D:\@BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Debug\Tanks2DSetup.pdb (Full PDB)

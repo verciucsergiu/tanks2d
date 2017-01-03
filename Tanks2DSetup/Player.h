@@ -51,6 +51,7 @@ private:
 	float PI = 3.14159265f;
 	float vSpeed;
 	float hSpeed;
+	float fixedDeltaTime;
 	float rotationSpeed;
 	float currentRotation;
 };

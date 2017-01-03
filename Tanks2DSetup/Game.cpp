@@ -3,18 +3,18 @@
 Game::Game()
 {
 	window.create(VideoMode(800, 574), "TANKS 2D", Style::Titlebar | Style::Close);
-	window.setFramerateLimit(59);
+	//window.setFramerateLimit(144);
 
 	CreateCamera(0.65f);
 
 	player.setSpeed(150);
-	player.setRotationSpeed(6);
+	player.setRotationSpeed(350);
 	player.setScale(1.3f, 1.3f);
-	player.startPosition(550, 550);
+	player.startPosition(-55, -55);
 	player.setBoxColliderOffset(2, 2);
 	
 	int walls = 12;
-	for (int i = 0; i < walls; i++)
+	for (int i = 1; i <= walls; i++)
 	{
 		tileMap.addTile(i, 0, GameMap::tileType::wall);
 		tileMap.addTile(0, i, GameMap::tileType::wall);
@@ -58,7 +58,6 @@ Game::Game()
 		fpsT.setPosition(tankpos.x - 220, tankpos.y+10);
 		window.draw(fpsT);
 		CameraBehavior();
-
 		window.display();
 	}
 }
@@ -76,13 +75,13 @@ void Game::CreateCamera(float zoom)
 	followPlayer.setCenter(0, 0);
 	followPlayer.setSize(window.getSize().x, window.getSize().y);
 	followPlayer.zoom(zoom);
+	window.setView(followPlayer);
 }
 
 void Game::CameraBehavior()
 {
 	Vector2f tankpos = player.tankSprite.getPosition();
 
-	//mouse lookForward
 	followPlayer.setCenter(tankpos);
 	window.setView(followPlayer);
 }

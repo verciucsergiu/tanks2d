@@ -2,18 +2,17 @@
 #include "SFML\Graphics.hpp"
 #include <iostream>
 #include <string>
-#include "bullet.h"
 
 using namespace std;
 using namespace sf;
 
-#define MAX_TARGETS 1000
 
 struct Collider
 {
-	Sprite target[MAX_TARGETS];
-	int numberOfTargets;
+	Sprite target;
+	Collider * next;
 };
+
 
 class Player
 {
@@ -28,7 +27,11 @@ public:
 	void startPosition(float x, float y);
 	void update(float deltaTime, RenderWindow &window);
 
-	Collider collider;
+	Collider * collFirst;
+	Collider * collLast;
+	void addCollider(Sprite sprite);
+	void resetCollider();
+
 	bool Player::collisionHorizontal(float dir);
 	bool Player::collisionVertical(float dir);
 
@@ -53,5 +56,7 @@ private:
 	float fixedDeltaTime;
 	float rotationSpeed;
 	float currentRotation;
+
+	bool testing;
 };
 

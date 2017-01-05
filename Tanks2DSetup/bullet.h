@@ -6,6 +6,12 @@
 using namespace std;
 using namespace sf;
 
+struct Collider2D
+{
+	Sprite target;
+	Collider2D * next;
+};
+
 class bullet
 {
 public:
@@ -18,6 +24,13 @@ public:
 	void shoot(float deltaTime);
 	void setTarget(int x, int y);
 	void setSpeed(float value);
+
+	Collider2D *collFirst;
+	Collider2D *collLast;
+	void addCollider(Sprite sprite);
+	void resetCollider();
+	bool checkCollision();
+
 private:
 	void draw(RenderWindow &window);
 	Texture bulletTexture;

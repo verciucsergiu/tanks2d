@@ -16,6 +16,42 @@ void bullet::Update(float deltaTime, RenderWindow &window)
 	draw(window);
 
 }
+void bullet::addCollider(Sprite sprite)
+{
+	if (collFirst != nullptr && collLast != nullptr)
+	{
+		Collider2D * add = new Collider2D;
+		add->target = sprite;
+		add->next = nullptr;
+		collLast->next = add;
+		collLast = add;
+	}
+	else
+	{
+		Collider2D * add = new Collider2D;
+		add->target = sprite;
+		add->next = nullptr;
+		collFirst = add;
+		collLast = collFirst;
+	}
+}
+void bullet::resetCollider()
+{
+	collFirst = nullptr;
+	collLast = nullptr;
+}
+bool bullet::checkCollision()
+{
+	for (Collider2D * current = collFirst; current != nullptr; current = current->next)
+	{
+		FloatRect rect(bulletSprite.getPosition().x, bulletSprite.getPosition().y, 4, 4);
+		if (current->target.getGlobalBounds().intersects(rect))
+		{
+			return true;
+		}
+	}
+	return false;
+}
 void bullet::draw(RenderWindow &window)
 {
 	window.draw(bulletSprite);
@@ -58,6 +94,7 @@ void bullet::setStartPosition(int x, int y)
 
 void bullet::create()
 {
+	resetCollider();
 	if (!bulletTexture.loadFromFile("sprites/bullet.png"))
 	{
 			cout << "Error loading the bullet\n";

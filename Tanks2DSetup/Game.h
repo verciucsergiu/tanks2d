@@ -6,6 +6,7 @@
 #include <string>
 #include "Player.h"
 #include "GameMap.h"
+#include "bullet.h"
 
 using namespace std;
 using namespace sf;
@@ -42,6 +43,8 @@ private:
 	void updateBullets();
 	void setFireDelay(float value);
 	float fireDelay;
+	void addBulletCollision(bullet &target);
+	void eliminareBullet(BulletsFired *target);
 
 	void MapGenerator();
 };

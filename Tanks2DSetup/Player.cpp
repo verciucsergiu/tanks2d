@@ -3,6 +3,10 @@
 Player::Player()
 {
 	currentRotation = 0;
+	resetCollider();
+
+	testing = false;
+	
 	if (!tankTexture.loadFromFile("sprites/tank_base.png"))
 	{
 		cout << "Error loading the tank_base!\n";
@@ -37,7 +41,7 @@ void Player::startPosition(float x, float y)
 void Player::update(float deltaTime,RenderWindow &window)
 {
 	fixedDeltaTime = deltaTime;
-
+	
 	Vector2i mousePosition = Mouse::getPosition(window);
 	lookAt(mousePosition,window);
 	
@@ -62,48 +66,71 @@ void Player::update(float deltaTime,RenderWindow &window)
 	tankSprite.move(movement.x * deltaTime * vSpeed, movement.y * deltaTime * hSpeed);
 	barrelSprite.move(movement.x * deltaTime * vSpeed, movement.y * deltaTime * hSpeed);
 
-	
-
 }
 bool Player::collisionVertical(float dir)
 {
-	for (int i = 0; i < collider.numberOfTargets; i++)
+	for (Collider* current=collFirst; current!=nullptr; current=current->next)
 	{
 		float y = tankSprite.getPosition().y + 17 * dir + boxColliderOffset.y * dir;
-		if (collider.target[i].getGlobalBounds().contains(tankSprite.getPosition().x - dir * 16, y))
+		if (current->target.getGlobalBounds().contains(tankSprite.getPosition().x - dir * 16, y))
 		{
 			return true;
 		}
-		if (collider.target[i].getGlobalBounds().contains(tankSprite.getPosition().x, y))
+		if (current->target.getGlobalBounds().contains(tankSprite.getPosition().x, y))
 		{
 			return true;
 		}
-		if (collider.target[i].getGlobalBounds().contains(tankSprite.getPosition().x + 16 * dir, y))
+		if (current->target.getGlobalBounds().contains(tankSprite.getPosition().x + 16 * dir, y))
 		{
 			return true;
 		}
 	}
 	return false;
 }
+
 bool Player::collisionHorizontal(float dir)
 {
-	for (int i = 0; i < collider.numberOfTargets; i++)
+	for (Collider* current=collFirst;current!=nullptr; current=current->next)
 	{
 		float x = tankSprite.getPosition().x + 17 * dir + boxColliderOffset.x * dir;
-		if (collider.target[i].getGlobalBounds().contains(x, tankSprite.getPosition().y - dir * 16))
+		if (current->target.getGlobalBounds().contains(x, tankSprite.getPosition().y - dir * 16))
 		{
 			return true;
 		}
-		if (collider.target[i].getGlobalBounds().contains(x, tankSprite.getPosition().y))
+		if (current->target.getGlobalBounds().contains(x, tankSprite.getPosition().y))
 		{
 			return true;
 		}
-		if (collider.target[i].getGlobalBounds().contains(x, tankSprite.getPosition().y + dir * 16))
+		if (current->target.getGlobalBounds().contains(x, tankSprite.getPosition().y + dir * 16))
 		{
 			return true;
 		}
 	}
 	return false;
+}
+void Player::addCollider(Sprite sprite)
+{
+	if (collFirst != nullptr && collLast != nullptr)
+	{
+		Collider * add = new Collider;
+		add->target = sprite;
+		add->next = nullptr;
+		collLast->next = add;
+		collLast = add;
+	}
+	else
+	{
+		Collider * add = new Collider;
+		add->target = sprite;
+		add->next = nullptr;
+		collFirst = add;
+		collLast = collFirst;
+	}
+}
+void Player::resetCollider()
+{
+	collFirst = nullptr;
+	collLast = nullptr;
 }
 void Player::draw(RenderWindow &window)
 {	

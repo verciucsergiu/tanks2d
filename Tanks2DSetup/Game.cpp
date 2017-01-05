@@ -11,7 +11,7 @@ Game::Game()
 
 	CreateCamera(0.65f);
 
-	setFireDelay(.3f);
+	setFireDelay(.2f);
 
 	player.setSpeed(150);
 	player.setRotationSpeed(350);
@@ -41,7 +41,7 @@ Game::Game()
 		
 		Color clearColor(150, 150, 150, 255);
 		window.clear(clearColor);
-		Draw(window);
+		
 
 		/*bullet handle*/
 
@@ -53,7 +53,9 @@ Game::Game()
 			Vector2f targetPos = window.mapPixelToCoords(Mouse::getPosition(window));
 			fire->setSpeed(1000);
 			fire->setTarget(targetPos.x, targetPos.y);
+			addBulletCollision(*fire);
 			addBullets(fire);
+			
 			canFire = false;
 			currentDelay = fireDelay;
 		}
@@ -68,12 +70,10 @@ Game::Game()
 			{
 				canFire = true;
 			}
-
 		}
-
 		updateBullets();
+		Draw(window);
 	
-		
 		//DEBUGING
 		Vector2f tankpos = player.tankSprite.getPosition();
 		Font font;
@@ -81,11 +81,11 @@ Game::Game()
 		String fps = "FPS: " + to_string((int)(1 / time.asSeconds()));
 		Text fpsT(fps, font);
 		fpsT.setCharacterSize(15);
-		fpsT.setPosition(window.getView().getCenter().x - window.getView().getSize().x/2, window.getView().getCenter().y + 10);
+		fpsT.setPosition(window.getView().getCenter().x - window.getView().getSize().x / 2, window.getView().getCenter().y - window.getView().getSize().y / 2);
 		window.draw(fpsT);
 
 		CameraBehavior();
-	
+		
 		window.display();
 	}
 }
@@ -117,15 +117,16 @@ void Game::MapCollisions()
 	//collision
 	for (int i = 0; i < tileMap.indexWallTileMap; i++)
 	{
-		player.collider.target[i].setTexture(tileMap.wallTexture);
-		player.collider.target[i].setPosition(tileMap.wallAdress[i].x, tileMap.wallAdress[i].y);
-		player.collider.numberOfTargets = tileMap.indexWallTileMap;
+		Sprite newSprite;
+		newSprite.setTexture(tileMap.wallTexture);
+		newSprite.setPosition(tileMap.wallAdress[i].x, tileMap.wallAdress[i].y);
+		player.addCollider(newSprite);
 	}
 }
 
 void Game::AddCollision(Sprite sprite)
 {
-	player.collider.target[player.collider.numberOfTargets++] = sprite;
+	player.addCollider(sprite);
 }
 
 void Game::addBullets(bullet * target)
@@ -155,15 +156,48 @@ void Game::resetBullets()
 }
 void Game::updateBullets()
 {
-	for (BulletsFired * current = bFiredFirst; current != nullptr; current=current->next)
+	for (BulletsFired * current = bFiredFirst; current != nullptr; current = current->next)
 	{
 		current->bullet->Update(deltaTime, window);
+		if (current->bullet->checkCollision())
+		{
+			eliminareBullet(current);
+		}
+	}
+	
+}
+void Game::eliminareBullet(BulletsFired * target)
+{
+	if (target == bFiredFirst)
+	{
+		BulletsFired *del = target;
+		bFiredFirst = bFiredFirst->next;
+	}
+	else
+	{
+		BulletsFired *pointer = bFiredFirst;
+		while (pointer->next != target)
+		{
+			pointer = pointer->next;
+		}
+		pointer->next = pointer->next->next;
 	}
 }
 
 void Game::setFireDelay(float value)
 {
 	fireDelay = value;
+}
+
+void Game::addBulletCollision(bullet & target)
+{
+	for (int i = 0; i < tileMap.indexWallTileMap; i++)
+	{
+		Sprite newSprite;
+		newSprite.setTexture(tileMap.wallTexture);
+		newSprite.setPosition(tileMap.wallAdress[i].x, tileMap.wallAdress[i].y);
+		target.addCollider(newSprite);
+	}
 }
 
 void Game::MapGenerator()

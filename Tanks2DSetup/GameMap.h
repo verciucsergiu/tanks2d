@@ -15,14 +15,15 @@ public:
 		ground, wall
 	};
 	int indexWallTileMap = 0;
-	Vector2f wallAdress[1000];
+	Vector2f wallAdress[9999];
 	string wallTilePath;
 	void addTile(float x, float y,tileType tile);
 	void draw(RenderWindow &window);
 	Texture wallTexture;
+	Sprite wallSprite;
 private:
 	Sprite groundSprite;
 	Texture groundTexture;
-	Sprite wallSprite;
+	
 };
 

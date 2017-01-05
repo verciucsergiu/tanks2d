@@ -23,7 +23,6 @@ public:
 
 	Sprite barrelSprite;
 	Sprite tankSprite;
-
 	float damage;
 
 	void startPosition(float x, float y);
@@ -36,7 +35,7 @@ public:
 	void draw(RenderWindow &window);
 	void destroy();
 
-	void lookAt(Vector2i target, Vector2i halfSizeWindow);
+	void lookAt(Vector2i target,RenderWindow &window);
 	void tankRotation(int x,int y);
 
 	void setBoxColliderOffset(float x,float y);

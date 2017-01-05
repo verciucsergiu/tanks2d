@@ -10,6 +10,12 @@
 using namespace std;
 using namespace sf;
 
+struct BulletsFired
+{
+	bullet *bullet;
+	BulletsFired *next;
+};
+
 class Game
 {
 public:
@@ -24,8 +30,19 @@ private:
 
 	View followPlayer;
 	Clock clock;
+	float deltaTime;
 	RenderWindow window;
 	Player player;
 	GameMap tileMap;
+
+	BulletsFired *bFiredFirst;
+	BulletsFired *bFiredLast;
+	void addBullets(bullet * target);
+	void resetBullets();
+	void updateBullets();
+	void setFireDelay(float value);
+	float fireDelay;
+
+	void MapGenerator();
 };
 

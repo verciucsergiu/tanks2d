@@ -3,7 +3,6 @@
 Player::Player()
 {
 	currentRotation = 0;
-
 	if (!tankTexture.loadFromFile("sprites/tank_base.png"))
 	{
 		cout << "Error loading the tank_base!\n";
@@ -20,6 +19,7 @@ Player::Player()
 	tankSprite.setOrigin(x, y); // setare pivot centru scop = rotire corecta
 	x += 6;
 	barrelSprite.setOrigin(x, y); // setare pivot centru x+3 scop = rotire corecta a turelei	
+
 	defaultBoxColliderOffset();
 }
 
@@ -37,10 +37,10 @@ void Player::startPosition(float x, float y)
 void Player::update(float deltaTime,RenderWindow &window)
 {
 	fixedDeltaTime = deltaTime;
-	Vector2i mousePosition = Mouse::getPosition(window);
-	Vector2i halfSizeWindow(window.getSize().x / 2, window.getSize().y / 2);
-	lookAt(mousePosition,halfSizeWindow);
 
+	Vector2i mousePosition = Mouse::getPosition(window);
+	lookAt(mousePosition,window);
+	
 	Vector2i movement(0,0);
 	if (Keyboard::isKeyPressed(Keyboard::W) && !collisionVertical(-1))
 	{
@@ -62,14 +62,8 @@ void Player::update(float deltaTime,RenderWindow &window)
 	tankSprite.move(movement.x * deltaTime * vSpeed, movement.y * deltaTime * hSpeed);
 	barrelSprite.move(movement.x * deltaTime * vSpeed, movement.y * deltaTime * hSpeed);
 
-	/*if (Mouse::isButtonPressed(Mouse::Button::Left))
-	{
-		//cout << "Fired : (" << barrelSprite.getPosition().x << "," << barrelSprite.getPosition().y << ")\n";
-		bullet bulletFired;
-		bulletFired.setPosition(barrelSprite.getPosition().x,barrelSprite.getPosition().y);
-		bulletFired.Update(deltaTime, window);
-	}*/
 	
+
 }
 bool Player::collisionVertical(float dir)
 {
@@ -121,13 +115,13 @@ void Player::destroy()
 	Color color(0.f, 0.f, 0.f, 0.f);
 	tankSprite.setColor(color);
 }
-void Player::lookAt(Vector2i target,Vector2i halfSizeWindow)
+void Player::lookAt(Vector2i target,RenderWindow &window)
 {
-	Vector2f curentPos = barrelSprite.getPosition();
-
+	Vector2i currentPos =  window.mapCoordsToPixel(barrelSprite.getPosition(),window.getView());
+	
 	const float PI = 3.14159265;
-	float dx = halfSizeWindow.x - target.x;
-	float dy = halfSizeWindow.y - target.y;
+	float dx = currentPos.x - target.x;
+	float dy = currentPos.y  -target.y;
 
 	float rotation = (atan2(dy, dx)) * 180 / PI;
 
@@ -274,7 +268,6 @@ void Player::tankRotation(int dirX, int dirY)
 			}
 		}
 	}
-
 	//cout << "Angle : " << currentRotation << '\n';
 	tankSprite.setRotation(currentRotation);
 }

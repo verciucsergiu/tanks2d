@@ -2,34 +2,27 @@
 
 Game::Game()
 {
+	bool canFire = true;
+	float currentDelay = 0;
+
 	window.create(VideoMode(800, 574), "TANKS 2D", Style::Titlebar | Style::Close);
-	//window.setFramerateLimit(144);
+
+	resetBullets();
 
 	CreateCamera(0.65f);
+
+	setFireDelay(.3f);
 
 	player.setSpeed(150);
 	player.setRotationSpeed(350);
 	player.setScale(1.3f, 1.3f);
-	player.startPosition(-55, -55);
+	player.startPosition(100, 100);
 	player.setBoxColliderOffset(2, 2);
 	
-	int walls = 12;
-	for (int i = 1; i <= walls; i++)
-	{
-		tileMap.addTile(i, 0, GameMap::tileType::wall);
-		tileMap.addTile(0, i, GameMap::tileType::wall);
-		tileMap.addTile(walls, i, GameMap::tileType::wall);
-		tileMap.addTile(i, walls, GameMap::tileType::wall);
-	}
-	tileMap.addTile(walls, walls, GameMap::tileType::wall);
+	MapGenerator();
 
-	tileMap.addTile(6, 6, GameMap::tileType::wall);
-	tileMap.addTile(6, 7, GameMap::tileType::wall);
-	tileMap.addTile(7, 7, GameMap::tileType::wall);
-	tileMap.addTile(7, 6, GameMap::tileType::wall);
-	//Call after the walls were created and enemy spawned!;
 	MapCollisions();
-	//window
+
 	while (window.isOpen())
 	{
 		Event event;
@@ -41,13 +34,46 @@ Game::Game()
 			}
 		}
 		Time time = clock.getElapsedTime();
-		player.update(time.asSeconds(), window);
+		deltaTime = time.asSeconds();
+
+		player.update(deltaTime, window);
 		clock.restart().asSeconds();
 		
 		Color clearColor(150, 150, 150, 255);
 		window.clear(clearColor);
 		Draw(window);
 
+		/*bullet handle*/
+
+		if (Mouse::isButtonPressed(Mouse::Left) && canFire)
+		{
+			bullet *fire = new bullet;
+			fire->create();
+			fire->setStartPosition(player.barrelSprite.getPosition().x, player.barrelSprite.getPosition().y);
+			Vector2f targetPos = window.mapPixelToCoords(Mouse::getPosition(window));
+			fire->setSpeed(1000);
+			fire->setTarget(targetPos.x, targetPos.y);
+			addBullets(fire);
+			canFire = false;
+			currentDelay = fireDelay;
+		}
+
+		if (!canFire)
+		{
+			if (currentDelay > 0)
+			{
+				currentDelay -= deltaTime;
+			}
+			else
+			{
+				canFire = true;
+			}
+
+		}
+
+		updateBullets();
+	
+		
 		//DEBUGING
 		Vector2f tankpos = player.tankSprite.getPosition();
 		Font font;
@@ -55,9 +81,11 @@ Game::Game()
 		String fps = "FPS: " + to_string((int)(1 / time.asSeconds()));
 		Text fpsT(fps, font);
 		fpsT.setCharacterSize(15);
-		fpsT.setPosition(tankpos.x - 220, tankpos.y+10);
+		fpsT.setPosition(window.getView().getCenter().x - window.getView().getSize().x/2, window.getView().getCenter().y + 10);
 		window.draw(fpsT);
+
 		CameraBehavior();
+	
 		window.display();
 	}
 }
@@ -80,9 +108,7 @@ void Game::CreateCamera(float zoom)
 
 void Game::CameraBehavior()
 {
-	Vector2f tankpos = player.tankSprite.getPosition();
-
-	followPlayer.setCenter(tankpos);
+	followPlayer.setCenter(250, 200);
 	window.setView(followPlayer);
 }
 
@@ -95,12 +121,64 @@ void Game::MapCollisions()
 		player.collider.target[i].setPosition(tileMap.wallAdress[i].x, tileMap.wallAdress[i].y);
 		player.collider.numberOfTargets = tileMap.indexWallTileMap;
 	}
-
-	//enemy to add to player.collider.target[i]
-	//metoda ineficienta de a verifica fiecare obstacol in parte dar mai putin cod de scris
 }
 
 void Game::AddCollision(Sprite sprite)
 {
 	player.collider.target[player.collider.numberOfTargets++] = sprite;
+}
+
+void Game::addBullets(bullet * target)
+{
+	if (bFiredFirst != nullptr && bFiredLast !=nullptr)
+	{
+		BulletsFired *add = new BulletsFired;
+		add->bullet = target;
+		add->next = nullptr;
+		bFiredLast->next = add;
+		bFiredLast = add;	
+	}
+	else
+	{
+		BulletsFired *add = new BulletsFired;
+		add->bullet = target;
+		add->next = nullptr;
+		bFiredFirst = add;
+		bFiredLast = bFiredFirst;
+	}
+}
+
+void Game::resetBullets()
+{
+	bFiredFirst = nullptr;
+	bFiredLast = nullptr;
+}
+void Game::updateBullets()
+{
+	for (BulletsFired * current = bFiredFirst; current != nullptr; current=current->next)
+	{
+		current->bullet->Update(deltaTime, window);
+	}
+}
+
+void Game::setFireDelay(float value)
+{
+	fireDelay = value;
+}
+
+void Game::MapGenerator()
+{
+	int walls = 12;
+	for (int i = 0; i < walls; i++)
+	{
+		tileMap.addTile(i, 0, GameMap::tileType::wall);
+		tileMap.addTile(0, i, GameMap::tileType::wall);
+		tileMap.addTile(walls, i, GameMap::tileType::wall);
+		tileMap.addTile(i, walls, GameMap::tileType::wall);
+	}
+	tileMap.addTile(walls, walls, GameMap::tileType::wall);
+	tileMap.addTile(6, 6, GameMap::tileType::wall);
+	tileMap.addTile(6, 7, GameMap::tileType::wall);
+	tileMap.addTile(7, 7, GameMap::tileType::wall);
+	tileMap.addTile(7, 6, GameMap::tileType::wall);
 }

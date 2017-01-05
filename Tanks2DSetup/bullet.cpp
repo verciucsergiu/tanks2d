@@ -4,13 +4,7 @@
 
 bullet::bullet()
 {
-	if (!bulletTexture.loadFromFile("sprites/bullet.png"))
-	{
-	//	cout << "Error loading the bullet\n";
-	}
-	//cout << "Sprite loaded!\n";
-	bulletSprite.setTexture(bulletTexture);
-	bulletSprite.setScale(10, 10);
+
 }
 bullet::~bullet()
 {
@@ -18,24 +12,58 @@ bullet::~bullet()
 
 void bullet::Update(float deltaTime, RenderWindow &window)
 {
+	shoot(deltaTime);
 	draw(window);
+
 }
 void bullet::draw(RenderWindow &window)
 {
-	//cout << "Sprite draw!\n";
 	window.draw(bulletSprite);
 }
-void bullet::shoot(float dirX, float dirY)
+void bullet::shoot(float deltaTime)
 {
-	float distThisFrame;
-}
-void bullet::translate(Vector2i target)
-{
-	
+	float moveX = movement.x * speed * deltaTime;
+	float moveY = movement.y * speed * deltaTime;
+	bulletSprite.move(moveX,moveY);
 }
 
-void bullet::setPosition(int x, int y)
+void bullet::setTarget(int x, int y)
 {
-	//cout << "Bullet position :(" << x << "," << y << ")\n";
+	target.x = x;
+	target.y = y;
+	calculateT();
+}
+void bullet::setSpeed(float value)
+{
+	speed = value;
+}
+void bullet::calculateT()
+{
+	float x = target.x - startPos.x;
+	float y = target.y - startPos.y;
+	float normalize = sqrt(x*x + y*y);
+	x = x / normalize;
+	y = y / normalize;
+	movement.x = x;
+	movement.y = y;
+	cout << x << " " << y<<'\n';
+}
+
+void bullet::setStartPosition(int x, int y)
+{
 	bulletSprite.setPosition(x, y);
+	startPos.x = x;
+	startPos.y = y;
+}
+
+void bullet::create()
+{
+	if (!bulletTexture.loadFromFile("sprites/bullet.png"))
+	{
+			cout << "Error loading the bullet\n";
+	}
+	bulletSprite.setTexture(bulletTexture);
+	float x = bulletSprite.getGlobalBounds().height / 2;
+	float y = bulletSprite.getGlobalBounds().width / 2;
+	bulletSprite.setOrigin(x, y);
 }

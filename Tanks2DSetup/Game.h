@@ -1,51 +1,46 @@
 #pragma once
-#include "SFML\Graphics.hpp"
-#include <iostream>
-#include <fstream>
-#include <cctype>
-#include <string>
-#include "Player.h"
-#include "GameMap.h"
-#include "bullet.h"
+#include "Level.h"
+#include "TextButton.h"
+
 
 using namespace std;
 using namespace sf;
 
-struct BulletsFired
-{
-	bullet *bullet;
-	BulletsFired *next;
+enum menuType {
+	mainMenu, levelMenu, actualGame
 };
-
+struct GameLevels
+{
+	TextButton level[100];
+	int nrLlevels;
+};
 class Game
 {
 public:
 	Game();
 	~Game();
 private:
-	void Draw(RenderWindow &window);
 	void CreateCamera(float zoom);
-	void CameraBehavior();
-	void MapCollisions();
-	void AddCollision(Sprite sprite);
-
+	void displayFps();
 	View followPlayer;
 	Clock clock;
 	float deltaTime;
 	RenderWindow window;
-	Player player;
-	GameMap tileMap;
+	
+	menuType currentMenu;
+	
+	TextButton quit;
+	TextButton play;
+	TextButton back;
 
-	BulletsFired *bFiredFirst;
-	BulletsFired *bFiredLast;
-	void addBullets(bullet * target);
-	void resetBullets();
-	void updateBullets();
-	void setFireDelay(float value);
-	float fireDelay;
-	void addBulletCollision(bullet &target);
-	void eliminareBullet(BulletsFired *target);
+	void createMainMenu();
+	void createLevelsMenu();
+	void createLoadingScreen();
 
-	void MapGenerator();
+	TextButton loadingText;
+
+	void resetLevels();
+	GameLevels levels;
+
 };
 

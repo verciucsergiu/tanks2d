@@ -2,27 +2,16 @@
 
 Game::Game()
 {
-	bool canFire = true;
-	float currentDelay = 0;
+	window.create(VideoMode(800, 576), "TANKS 2D", Style::Titlebar | Style::Close);
 
-	window.create(VideoMode(800, 574), "TANKS 2D", Style::Titlebar | Style::Close);
+	CreateCamera(1);
+	resetLevels();
 
-	resetBullets();
+	createLevelsMenu();
+	createMainMenu();
+	createLoadingScreen();
 
-	CreateCamera(0.65f);
-
-	setFireDelay(.2f);
-
-	player.setSpeed(150);
-	player.setRotationSpeed(350);
-	player.setScale(1.3f, 1.3f);
-	player.startPosition(100, 100);
-	player.setBoxColliderOffset(2, 2);
-	
-	MapGenerator();
-
-	MapCollisions();
-
+	currentMenu = menuType::mainMenu;
 	while (window.isOpen())
 	{
 		Event event;
@@ -35,56 +24,70 @@ Game::Game()
 		}
 		Time time = clock.getElapsedTime();
 		deltaTime = time.asSeconds();
-
-		player.update(deltaTime, window);
 		clock.restart().asSeconds();
 		
 		Color clearColor(150, 150, 150, 255);
 		window.clear(clearColor);
+		//UPDATE
+		displayFps();
+		Vector2f mousePos = window.mapPixelToCoords(Mouse::getPosition(window));
+		switch (currentMenu)
+		{
+		case mainMenu:
+		{
+			quit.Draw(window);
+			play.Draw(window);
+			quit.checkHover(mousePos.x, mousePos.y, window);
+			play.checkHover(mousePos.x, mousePos.y, window);
+			if (Mouse::isButtonPressed(Mouse::Button::Left))
+			{
+				if (play.checkClick(mousePos.x,mousePos.y) && play.isActive())
+				{
+					currentMenu = menuType::levelMenu;
+				}
+				if (quit.checkClick(mousePos.x, mousePos.y) && quit.isActive())
+				{
+					window.close();
+				}
+
+			}
+			
+		}
+			break;
+		case levelMenu:
+		{
+			back.Draw(window);
+			back.checkHover(mousePos.x, mousePos.y, window);
+			for (int i = 0; i < levels.nrLlevels; i++)
+			{
+				levels.level[i].Draw(window);
+				levels.level[i].checkHover(mousePos.x, mousePos.y, window);
+			}
+			if (Mouse::isButtonPressed(Mouse::Button::Left))
+			{
+				
+				if (back.checkClick(mousePos.x, mousePos.y) && back.isActive())
+				{
+					currentMenu = menuType::mainMenu;
+				}
+				for (int i = 0; i < levels.nrLlevels; i++)
+				{
+					if (levels.level[i].checkClick(mousePos.x, mousePos.y) && levels.level[i].isActive())
+					{
+						currentMenu = menuType::actualGame;
+					}
+				}
+			}
+		}
+			break;
+		case actualGame:
+		{
+			loadingText.Draw(window);
+		}
+			break;
+		}
 		
 
-		/*bullet handle*/
-
-		if (Mouse::isButtonPressed(Mouse::Left) && canFire)
-		{
-			bullet *fire = new bullet;
-			fire->create();
-			fire->setStartPosition(player.barrelSprite.getPosition().x, player.barrelSprite.getPosition().y);
-			Vector2f targetPos = window.mapPixelToCoords(Mouse::getPosition(window));
-			fire->setSpeed(1000);
-			fire->setTarget(targetPos.x, targetPos.y);
-			addBulletCollision(*fire);
-			addBullets(fire);
-			
-			canFire = false;
-			currentDelay = fireDelay;
-		}
-
-		if (!canFire)
-		{
-			if (currentDelay > 0)
-			{
-				currentDelay -= deltaTime;
-			}
-			else
-			{
-				canFire = true;
-			}
-		}
-		updateBullets();
-		Draw(window);
-	
-		//DEBUGING
-		Vector2f tankpos = player.tankSprite.getPosition();
-		Font font;
-		font.loadFromFile("sansation.ttf");
-		String fps = "FPS: " + to_string((int)(1 / time.asSeconds()));
-		Text fpsT(fps, font);
-		fpsT.setCharacterSize(15);
-		fpsT.setPosition(window.getView().getCenter().x - window.getView().getSize().x / 2, window.getView().getCenter().y - window.getView().getSize().y / 2);
-		window.draw(fpsT);
-
-		CameraBehavior();
 		
 		window.display();
 	}
@@ -93,11 +96,7 @@ Game::~Game()
 {
 	
 }
-void Game::Draw(RenderWindow & window)
-{
-	tileMap.draw(window);
-	player.draw(window);
-}
+
 void Game::CreateCamera(float zoom)
 {
 	followPlayer.setCenter(0, 0);
@@ -106,113 +105,48 @@ void Game::CreateCamera(float zoom)
 	window.setView(followPlayer);
 }
 
-void Game::CameraBehavior()
+void Game::displayFps()
 {
-	followPlayer.setCenter(250, 200);
-	window.setView(followPlayer);
+	Font font;
+	font.loadFromFile("sansation.ttf");
+	String fps = "FPS: " + to_string((int)(1 / deltaTime));
+	Text fpsT(fps, font);
+	fpsT.setCharacterSize(15);
+	fpsT.setPosition(window.getView().getCenter().x - window.getView().getSize().x / 2, window.getView().getCenter().y - window.getView().getSize().y / 2);
+	window.draw(fpsT);
 }
 
-void Game::MapCollisions()
+void Game::createLevelsMenu()
 {
-	//collision
-	for (int i = 0; i < tileMap.indexWallTileMap; i++)
+	back.create("Back", window.getView().getCenter().x - window.getView().getSize().x / 2 + 150, window.getView().getCenter().y - window.getView().getSize().y / 2 + 55, Color::Yellow, sizeType::mediu);
+	float startX = window.getView().getCenter().x - window.getView().getSize().x / 2 + 180;
+	float startY = window.getView().getCenter().y - window.getView().getSize().y / 2 + 180;
+	float spacing = 100;
+	int level = 0;
+	for (int i = 0; i < 3; i++)
 	{
-		Sprite newSprite;
-		newSprite.setTexture(tileMap.wallTexture);
-		newSprite.setPosition(tileMap.wallAdress[i].x, tileMap.wallAdress[i].y);
-		player.addCollider(newSprite);
-	}
-}
-
-void Game::AddCollision(Sprite sprite)
-{
-	player.addCollider(sprite);
-}
-
-void Game::addBullets(bullet * target)
-{
-	if (bFiredFirst != nullptr && bFiredLast !=nullptr)
-	{
-		BulletsFired *add = new BulletsFired;
-		add->bullet = target;
-		add->next = nullptr;
-		bFiredLast->next = add;
-		bFiredLast = add;	
-	}
-	else
-	{
-		BulletsFired *add = new BulletsFired;
-		add->bullet = target;
-		add->next = nullptr;
-		bFiredFirst = add;
-		bFiredLast = bFiredFirst;
-	}
-}
-
-void Game::resetBullets()
-{
-	bFiredFirst = nullptr;
-	bFiredLast = nullptr;
-}
-void Game::updateBullets()
-{
-	for (BulletsFired * current = bFiredFirst; current != nullptr; current = current->next)
-	{
-		current->bullet->Update(deltaTime, window);
-		if (current->bullet->checkCollision())
+		for (int j = 0; j < 5; j++)
 		{
-			eliminareBullet(current);
+			levels.level[level++].create(to_string(level), startX + j*spacing, startY + i*spacing, Color::Blue, sizeType::small);
+			if (level > 1)
+			{
+				levels.level[level - 1].setActive(false);
+			}
 		}
 	}
-	
+	levels.nrLlevels = level;
 }
-void Game::eliminareBullet(BulletsFired * target)
+void Game::createLoadingScreen()
 {
-	if (target == bFiredFirst)
-	{
-		BulletsFired *del = target;
-		bFiredFirst = bFiredFirst->next;
-	}
-	else
-	{
-		BulletsFired *pointer = bFiredFirst;
-		while (pointer->next != target)
-		{
-			pointer = pointer->next;
-		}
-		pointer->next = pointer->next->next;
-	}
+	loadingText.create("Loading level...", window.getView().getCenter().x, window.getView().getCenter().y);
+}
+void Game::resetLevels()
+{
+	levels.nrLlevels = 0;
 }
 
-void Game::setFireDelay(float value)
+void Game::createMainMenu()
 {
-	fireDelay = value;
-}
-
-void Game::addBulletCollision(bullet & target)
-{
-	for (int i = 0; i < tileMap.indexWallTileMap; i++)
-	{
-		Sprite newSprite;
-		newSprite.setTexture(tileMap.wallTexture);
-		newSprite.setPosition(tileMap.wallAdress[i].x, tileMap.wallAdress[i].y);
-		target.addCollider(newSprite);
-	}
-}
-
-void Game::MapGenerator()
-{
-	int walls = 12;
-	for (int i = 0; i < walls; i++)
-	{
-		tileMap.addTile(i, 0, GameMap::tileType::wall);
-		tileMap.addTile(0, i, GameMap::tileType::wall);
-		tileMap.addTile(walls, i, GameMap::tileType::wall);
-		tileMap.addTile(i, walls, GameMap::tileType::wall);
-	}
-	tileMap.addTile(walls, walls, GameMap::tileType::wall);
-	tileMap.addTile(6, 6, GameMap::tileType::wall);
-	tileMap.addTile(6, 7, GameMap::tileType::wall);
-	tileMap.addTile(7, 7, GameMap::tileType::wall);
-	tileMap.addTile(7, 6, GameMap::tileType::wall);
+	quit.create("Quit", window.getView().getCenter().x, window.getView().getCenter().y + 80, Color::Red, sizeType::mediu);
+	play.create("Play", window.getView().getCenter().x, window.getView().getCenter().y, Color::Blue, sizeType::mediu);
 }

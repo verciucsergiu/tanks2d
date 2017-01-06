@@ -82,7 +82,6 @@ void bullet::calculateT()
 	y = y / normalize;
 	movement.x = x;
 	movement.y = y;
-	cout << x << " " << y<<'\n';
 }
 
 void bullet::setStartPosition(int x, int y)

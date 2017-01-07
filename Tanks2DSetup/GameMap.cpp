@@ -1,9 +1,5 @@
 #include "GameMap.h"
 
-enum tileType
-{
-	ground,wall
-};
 GameMap::GameMap()
 {
 	if (!wallTexture.loadFromFile("sprites/tile_wall.png"))

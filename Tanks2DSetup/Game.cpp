@@ -5,11 +5,15 @@ Game::Game()
 	window.create(VideoMode(800, 576), "TANKS 2D", Style::Titlebar | Style::Close);
 
 	CreateCamera(1);
-	resetLevels();
+	resetLevelsMenu();
 
 	createLevelsMenu();
 	createMainMenu();
 	createLoadingScreen();
+	
+	getPlayerStats();
+	resetLevels();
+	createLevels();
 
 	currentMenu = menuType::mainMenu;
 	while (window.isOpen())
@@ -29,7 +33,7 @@ Game::Game()
 		Color clearColor(150, 150, 150, 255);
 		window.clear(clearColor);
 		//UPDATE
-		displayFps();
+		
 		Vector2f mousePos = window.mapPixelToCoords(Mouse::getPosition(window));
 		switch (currentMenu)
 		{
@@ -58,10 +62,10 @@ Game::Game()
 		{
 			back.Draw(window);
 			back.checkHover(mousePos.x, mousePos.y, window);
-			for (int i = 0; i < levels.nrLlevels; i++)
+			for (int i = 0; i < levelsMenu.nrLlevels; i++)
 			{
-				levels.level[i].Draw(window);
-				levels.level[i].checkHover(mousePos.x, mousePos.y, window);
+				levelsMenu.level[i].Draw(window);
+				levelsMenu.level[i].checkHover(mousePos.x, mousePos.y, window);
 			}
 			if (Mouse::isButtonPressed(Mouse::Button::Left))
 			{
@@ -70,11 +74,13 @@ Game::Game()
 				{
 					currentMenu = menuType::mainMenu;
 				}
-				for (int i = 0; i < levels.nrLlevels; i++)
+				for (int i = 0; i < levelsMenu.nrLlevels; i++)
 				{
-					if (levels.level[i].checkClick(mousePos.x, mousePos.y) && levels.level[i].isActive())
+					if (levelsMenu.level[i].checkClick(mousePos.x, mousePos.y) && levelsMenu.level[i].isActive())
 					{
+						currentLevelPlaying = i;
 						currentMenu = menuType::actualGame;
+						levels.level[i].setPlayerStats(playerStats);
 					}
 				}
 			}
@@ -82,13 +88,12 @@ Game::Game()
 			break;
 		case actualGame:
 		{
-			loadingText.Draw(window);
+			levels.level[currentLevelPlaying].Update(deltaTime, window);
 		}
 			break;
 		}
 		
-
-		
+		displayFps();
 		window.display();
 	}
 }
@@ -127,22 +132,45 @@ void Game::createLevelsMenu()
 	{
 		for (int j = 0; j < 5; j++)
 		{
-			levels.level[level++].create(to_string(level), startX + j*spacing, startY + i*spacing, Color::Blue, sizeType::small);
+			levelsMenu.level[level++].create(to_string(level), startX + j*spacing, startY + i*spacing, Color::Blue, sizeType::small);
 			if (level > 1)
 			{
-				levels.level[level - 1].setActive(false);
+				levelsMenu.level[level - 1].setActive(false);
 			}
 		}
 	}
-	levels.nrLlevels = level;
+	levelsMenu.nrLlevels = level;
 }
 void Game::createLoadingScreen()
 {
 	loadingText.create("Loading level...", window.getView().getCenter().x, window.getView().getCenter().y);
 }
+void Game::resetLevelsMenu()
+{
+	levelsMenu.nrLlevels = 0;
+}
+
+
+void Game::getPlayerStats()
+{
+	ifstream fin("playerStats.txt");
+	fin >> playerStats.health;
+	fin >> playerStats.damage;
+	fin >> playerStats.currentLevel;
+	fin >> playerStats.speed;
+	fin >> playerStats.bulletSpeed;
+	fin.close();
+}
+
 void Game::resetLevels()
 {
-	levels.nrLlevels = 0;
+	levels.nrLevels = 0;
+}
+
+void Game::createLevels()
+{
+	levels.level[0].Create();
+	levels.level[0].GenerateMap("level1.txt");
 }
 
 void Game::createMainMenu()

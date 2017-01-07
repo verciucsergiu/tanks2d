@@ -2,11 +2,8 @@
 
 Level::Level()
 {
-	currentDelay = 0;
-	canFire = true;
-	resetBullets();
-	MapGenerator();
-	MapCollisions();
+	testing = true;
+	cameras.nrSquare = 0;
 }
 
 Level::~Level()
@@ -14,11 +11,19 @@ Level::~Level()
 
 }
 
+void Level::Create()
+{
+	currentDelay = 0;
+	canFire = true;
+	resetBullets();
+	initPlayer();
+	
+	fireDelay = .25f;
+}
+
 void Level::Update(float deltaTime, RenderWindow & window)
 {
-
-	player.update(deltaTime, window);
-
+	fixedDeltaTime = deltaTime;
 	if (Mouse::isButtonPressed(Mouse::Left) && canFire)
 	{
 		bullet *fire = new bullet;
@@ -29,7 +34,6 @@ void Level::Update(float deltaTime, RenderWindow & window)
 		fire->setTarget(targetPos.x, targetPos.y);
 		addBulletCollision(*fire);
 		addBullets(fire);
-
 		canFire = false;
 		currentDelay = fireDelay;
 	}
@@ -45,21 +49,58 @@ void Level::Update(float deltaTime, RenderWindow & window)
 			canFire = true;
 		}
 	}
+	player.update(deltaTime, window);
+	Draw(window);
+	CameraBehavior(window);
 }
 
 void Level::Draw(RenderWindow & window)
 {
 	tileMap.draw(window);
 	player.draw(window);
+	for (BulletsFired * current = bFiredFirst; current != nullptr; current = current->next)
+	{
+		current->bullet->Update(fixedDeltaTime, window);
+
+		if (current->bullet->checkCollision())
+		{
+			eliminareBullet(current);
+		}
+	}
 }
+
+
 
 void Level::initPlayer()
 {
-	player.setSpeed(150);
 	player.setRotationSpeed(350);
 	player.setScale(1.3f, 1.3f);
-	player.startPosition(100, 100);
+	player.startPosition(300, 300);
 	player.setBoxColliderOffset(2, 2);
+}
+
+void Level::CameraBehavior(RenderWindow &window)
+{
+	
+	for (int i = 0; i < cameras.nrSquare; i++)
+	{
+		if (testing)
+		{
+			//cout << cameras.square[i].collision.left << " " << cameras.square[i].collision.top << '\n';
+		}
+		//cout << cameras.square[i].collision.left << " " << cameras.square[i].collision.top << '\n';
+		if (cameras.square[i].collision.contains(player.tankSprite.getPosition().x, player.tankSprite.getPosition().y))
+		{
+			//cout <<"we got a hit! : "<< cameras.square[i].gridX << " " << cameras.square[i].gridY <<'\n';
+		}
+	}
+	testing = false;
+
+	followPlayer.setCenter(window.getSize().x/2,window.getSize().y/2);
+	
+	followPlayer.setSize(window.getSize().x, window.getSize().y);
+	followPlayer.zoom(1);
+	window.setView(followPlayer);
 }
 
 void Level::addBullets(bullet * target)
@@ -86,18 +127,6 @@ void Level::resetBullets()
 {
 	bFiredFirst = nullptr;
 	bFiredLast = nullptr;
-}
-
-void Level::updateBullets(RenderWindow &window)
-{
-	for (BulletsFired * current = bFiredFirst; current != nullptr; current = current->next)
-	{
-		current->bullet->Update(deltaTime, window);
-		if (current->bullet->checkCollision())
-		{
-			eliminareBullet(current);
-		}
-	}
 }
 
 void Level::setFireDelay(float value)
@@ -134,18 +163,121 @@ void Level::eliminareBullet(BulletsFired * target)
 	}
 }
 
-void Level::MapGenerator()
+void Level::GenerateMap(string fisier)
 {
+	//800 px width
+	//576 px height
+	ifstream fin(fisier);
+	int mat[100][100];
+	int rows, collumns;
+	fin >> rows >> collumns;
+	for (int row = 0; row < rows; row++)
+	{
+		for (int col = 0; col < collumns; col++)
+		{
+			fin >> mat[row][col];
+		}
+	}
+
+	for (int row = 1; row < rows - 1; row++)
+	{
+		for (int col = 1; col < collumns -1; col++)
+		{
+			if (mat[row][col])
+			{
+				bool dreapta = mat[row][col + 1];
+				bool stanga = mat[row][col - 1];
+				bool sus = mat[row - 1][col];
+				bool jos = mat[row + 1][col];
+				mapGrid((row - 1) * 18, (col - 1) * 25, sus, jos, stanga, dreapta);
+			}
+		}
+	}
+	MapCollisions();
+}
+void Level::mapGrid(int startX, int startY, bool sus, bool jos, bool stanga, bool dreapta)
+{
+	int x = startY;
+	int y = startX;
+	
 	for (int i = 0; i < 18; i++)
 	{
-		tileMap.addTile(0, i, GameMap::tileType::wall);
-		tileMap.addTile(24, i, GameMap::tileType::wall);
+		bool canSt = true;
+		if (stanga && (i >= 9 && i <= 10))
+		{
+			canSt = false;
+		}
+		bool canDr = true;
+		if (dreapta && (i >= 9 && i <= 10))
+		{
+			canDr = false;
+		}
+		if (canSt)
+		{
+			tileMap.addTile(x, i + y, tileType::wall);
+		}
+		else
+		{
+			cameras.square[cameras.nrSquare].collision.height = 32;
+			cameras.square[cameras.nrSquare].collision.width = 32;
+			cameras.square[cameras.nrSquare].collision.top = x * 32;
+			cameras.square[cameras.nrSquare].collision.left = (i + y) * 32;
+			cameras.square[cameras.nrSquare].gridX = x / 25;
+			cameras.square[cameras.nrSquare++].gridY = y / 18;
+		}
+		if (canDr)
+		{
+			tileMap.addTile(24 + x, i + y, tileType::wall);
+		}
+		else
+		{
+			cameras.square[cameras.nrSquare].collision.height = 32;
+			cameras.square[cameras.nrSquare].collision.width = 32;
+			cameras.square[cameras.nrSquare].collision.top = (24 + x) * 32;
+			cameras.square[cameras.nrSquare].collision.left = (i + y) * 32;
+			cameras.square[cameras.nrSquare].gridX = x / 25;
+			cameras.square[cameras.nrSquare++].gridY = y / 18;
+		}
+		
 	}
 	for (int i = 0; i < 25; i++)
 	{
-		tileMap.addTile(i, 0, GameMap::tileType::wall);
-		tileMap.addTile(i, 17, GameMap::tileType::wall);
-
+		bool canJos = true;
+		if (jos && i >= 10 && i <= 12)
+		{
+			canJos = false;
+		}
+		bool canSus = true;
+		if (sus && i >= 10 && i <= 12)
+		{
+			canSus = false;
+		}
+		if (canSus)
+		{
+			tileMap.addTile(i + x, y, tileType::wall);
+		}
+		else
+		{
+			cameras.square[cameras.nrSquare].collision.height = 32;
+			cameras.square[cameras.nrSquare].collision.width = 32;
+			cameras.square[cameras.nrSquare].collision.top = (i + x) * 32;
+			cameras.square[cameras.nrSquare].collision.left = y * 32;
+			cameras.square[cameras.nrSquare].gridX = x / 25;
+			cameras.square[cameras.nrSquare++].gridY = y / 18;
+		}
+		if (canJos)
+		{
+			tileMap.addTile(i + x, 17 + y, tileType::wall);
+		}
+		else
+		{
+			cameras.square[cameras.nrSquare].collision.height = 32;
+			cameras.square[cameras.nrSquare].collision.width = 32;
+			cameras.square[cameras.nrSquare].collision.top = (i + x) * 32;
+			cameras.square[cameras.nrSquare].collision.left = (17 + y) * 32;
+			cameras.square[cameras.nrSquare].gridX = x / 25;
+			cameras.square[cameras.nrSquare++].gridY = y / 18;
+		}
 	}
 }
 
@@ -158,4 +290,14 @@ void Level::MapCollisions()
 		newSprite.setPosition(tileMap.wallAdress[i].x, tileMap.wallAdress[i].y);
 		player.addCollider(newSprite);
 	}
+}
+
+void Level::setPlayerStats(Stats value)
+{
+	player.damage = value.damage;
+	player.health = value.health;
+	player.setSpeed(value.speed);
+	player.setRotationSpeed(400);
+	player.setScale(1.3f, 1.3f);
+	player.setBoxColliderOffset(2, 2);
 }

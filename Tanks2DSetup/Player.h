@@ -6,23 +6,24 @@
 using namespace std;
 using namespace sf;
 
-
 struct Collider
 {
 	Sprite target;
 	Collider * next;
 };
 
-
 class Player
 {
 public:
 	Player();
 	~Player();
-
+	/*Stats*/
+	int damage;
+	int health;
+	/*No more stats*/
 	Sprite barrelSprite;
 	Sprite tankSprite;
-	float damage;
+	
 
 	void startPosition(float x, float y);
 	void update(float deltaTime, RenderWindow &window);

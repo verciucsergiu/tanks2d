@@ -14,8 +14,8 @@ void bullet::Update(float deltaTime, RenderWindow &window)
 {
 	shoot(deltaTime);
 	draw(window);
-
 }
+
 void bullet::addCollider(Sprite sprite)
 {
 	if (collFirst != nullptr && collLast != nullptr)

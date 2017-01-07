@@ -16,37 +16,66 @@ struct BulletsFired
 	bullet *bullet;
 	BulletsFired *next;
 };
+struct CameraGrid
+{
+	FloatRect collision;
+	int gridX;
+	int gridY;
+};
+struct ArrayCameraGrid
+{
+	CameraGrid square[100];
+	int nrSquare;
+};
+struct Stats
+{
+	int health;
+	int damage;
+	int currentLevel;
+	float speed;
+	float bulletSpeed;
+};
 class Level
 {
 public:
 	Level();
 	~Level();
 
+	void Create();
 	void Update(float deltaTime, RenderWindow &window);
-	void Draw(RenderWindow &window);
+	
 
 	void initPlayer();
 
-	float deltaTime;
+	float fixedDeltaTime;
 	Player player;
 	GameMap tileMap;
 
-	BulletsFired *bFiredFirst;
-	BulletsFired *bFiredLast;
+	View followPlayer;
+	void CameraBehavior(RenderWindow &window);
+
 	void addBullets(bullet * target);
 	void resetBullets();
-	void updateBullets(RenderWindow &window);
 	void setFireDelay(float value);
-	float fireDelay;
-	void addBulletCollision(bullet &target);
-	void eliminareBullet(BulletsFired *target);
+	
+	void GenerateMap(string fisier);
+	
 
-	void MapGenerator();
-	void MapCollisions();
-
+	void setPlayerStats(Stats value);
 
 private:
 	float currentDelay;
 	bool canFire;
+	float fireDelay;
+	void addBulletCollision(bullet &target);
+	void eliminareBullet(BulletsFired *target);
+	BulletsFired *bFiredFirst;
+	BulletsFired *bFiredLast;
+	void Draw(RenderWindow &window);
+	void mapGrid(int startX, int startY, bool sus, bool jos, bool stanga, bool dreapta);
+	void MapCollisions();
+	ArrayCameraGrid cameras;
+
+	bool testing;
 };
 

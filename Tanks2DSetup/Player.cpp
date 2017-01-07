@@ -44,7 +44,6 @@ void Player::update(float deltaTime,RenderWindow &window)
 	
 	Vector2i mousePosition = Mouse::getPosition(window);
 	lookAt(mousePosition,window);
-	
 	Vector2i movement(0,0);
 	if (Keyboard::isKeyPressed(Keyboard::W) && !collisionVertical(-1))
 	{

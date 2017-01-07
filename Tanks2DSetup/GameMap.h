@@ -1,19 +1,22 @@
 #pragma once
-#include <SFML\Graphics.hpp>
+#include "SFML\Graphics.hpp"
 #include <string.h>
 #include <iostream>
+
+
 using namespace sf;
 using namespace std;
+
+enum tileType
+{
+	ground, wall
+};
 
 class GameMap
 {
 public:
 	GameMap();
 	~GameMap();
-	enum tileType
-	{
-		ground, wall
-	};
 	int indexWallTileMap = 0;
 	Vector2f wallAdress[9999];
 	string wallTilePath;

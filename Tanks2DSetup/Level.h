@@ -76,6 +76,8 @@ private:
 	void MapCollisions();
 	ArrayCameraGrid cameras;
 
+	void createCamera(int x,int y);
+
 	bool testing;
 };
 

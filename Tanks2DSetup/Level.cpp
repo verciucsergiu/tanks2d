@@ -17,7 +17,6 @@ void Level::Create()
 	canFire = true;
 	resetBullets();
 	initPlayer();
-	
 	fireDelay = .25f;
 }
 
@@ -84,19 +83,12 @@ void Level::CameraBehavior(RenderWindow &window)
 	
 	for (int i = 0; i < cameras.nrSquare; i++)
 	{
-		if (testing)
-		{
-			//cout << cameras.square[i].collision.left << " " << cameras.square[i].collision.top << '\n';
-		}
-		//cout << cameras.square[i].collision.left << " " << cameras.square[i].collision.top << '\n';
 		if (cameras.square[i].collision.contains(player.tankSprite.getPosition().x, player.tankSprite.getPosition().y))
 		{
-			//cout <<"we got a hit! : "<< cameras.square[i].gridX << " " << cameras.square[i].gridY <<'\n';
+			followPlayer.setCenter(window.getSize().x / 2 + window.getSize().x * cameras.square[i].gridX, window.getSize().y / 2 + window.getSize().y * cameras.square[i].gridY);
 		}
 	}
-	testing = false;
-
-	followPlayer.setCenter(window.getSize().x/2,window.getSize().y/2);
+	
 	
 	followPlayer.setSize(window.getSize().x, window.getSize().y);
 	followPlayer.zoom(1);
@@ -190,6 +182,10 @@ void Level::GenerateMap(string fisier)
 				bool sus = mat[row - 1][col];
 				bool jos = mat[row + 1][col];
 				mapGrid((row - 1) * 18, (col - 1) * 25, sus, jos, stanga, dreapta);
+				if (mat[row][col] == 2)
+				{
+					createCamera(col - 1, row - 1);
+				}
 			}
 		}
 	}
@@ -220,8 +216,8 @@ void Level::mapGrid(int startX, int startY, bool sus, bool jos, bool stanga, boo
 		{
 			cameras.square[cameras.nrSquare].collision.height = 32;
 			cameras.square[cameras.nrSquare].collision.width = 32;
-			cameras.square[cameras.nrSquare].collision.top = x * 32;
-			cameras.square[cameras.nrSquare].collision.left = (i + y) * 32;
+			cameras.square[cameras.nrSquare].collision.top = (i + y) * 32;
+			cameras.square[cameras.nrSquare].collision.left = x * 32;
 			cameras.square[cameras.nrSquare].gridX = x / 25;
 			cameras.square[cameras.nrSquare++].gridY = y / 18;
 		}
@@ -233,8 +229,8 @@ void Level::mapGrid(int startX, int startY, bool sus, bool jos, bool stanga, boo
 		{
 			cameras.square[cameras.nrSquare].collision.height = 32;
 			cameras.square[cameras.nrSquare].collision.width = 32;
-			cameras.square[cameras.nrSquare].collision.top = (24 + x) * 32;
-			cameras.square[cameras.nrSquare].collision.left = (i + y) * 32;
+			cameras.square[cameras.nrSquare].collision.top = (i + y) * 32;
+			cameras.square[cameras.nrSquare].collision.left = (24 + x) * 32;
 			cameras.square[cameras.nrSquare].gridX = x / 25;
 			cameras.square[cameras.nrSquare++].gridY = y / 18;
 		}
@@ -260,8 +256,8 @@ void Level::mapGrid(int startX, int startY, bool sus, bool jos, bool stanga, boo
 		{
 			cameras.square[cameras.nrSquare].collision.height = 32;
 			cameras.square[cameras.nrSquare].collision.width = 32;
-			cameras.square[cameras.nrSquare].collision.top = (i + x) * 32;
-			cameras.square[cameras.nrSquare].collision.left = y * 32;
+			cameras.square[cameras.nrSquare].collision.top = y * 32;
+			cameras.square[cameras.nrSquare].collision.left = (i + x) * 32;
 			cameras.square[cameras.nrSquare].gridX = x / 25;
 			cameras.square[cameras.nrSquare++].gridY = y / 18;
 		}
@@ -273,8 +269,8 @@ void Level::mapGrid(int startX, int startY, bool sus, bool jos, bool stanga, boo
 		{
 			cameras.square[cameras.nrSquare].collision.height = 32;
 			cameras.square[cameras.nrSquare].collision.width = 32;
-			cameras.square[cameras.nrSquare].collision.top = (i + x) * 32;
-			cameras.square[cameras.nrSquare].collision.left = (17 + y) * 32;
+			cameras.square[cameras.nrSquare].collision.top = (17 + y) * 32;
+			cameras.square[cameras.nrSquare].collision.left = (i + x) * 32;
 			cameras.square[cameras.nrSquare].gridX = x / 25;
 			cameras.square[cameras.nrSquare++].gridY = y / 18;
 		}
@@ -290,6 +286,12 @@ void Level::MapCollisions()
 		newSprite.setPosition(tileMap.wallAdress[i].x, tileMap.wallAdress[i].y);
 		player.addCollider(newSprite);
 	}
+}
+
+void Level::createCamera(int x, int y)
+{
+	followPlayer.setCenter(400 + 800 * x, 288 + 576 * y);
+	player.startPosition(400 + 800 * x, 288 + 576 * y);
 }
 
 void Level::setPlayerStats(Stats value)

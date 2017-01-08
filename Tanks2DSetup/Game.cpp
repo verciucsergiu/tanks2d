@@ -119,6 +119,14 @@ void Game::displayFps()
 	fpsT.setCharacterSize(15);
 	fpsT.setPosition(window.getView().getCenter().x - window.getView().getSize().x / 2, window.getView().getCenter().y - window.getView().getSize().y / 2);
 	window.draw(fpsT);
+	if (currentMenu == menuType::actualGame)
+	{
+		String str = "X: " + to_string((int)levels.level[currentLevelPlaying].player.tankSprite.getPosition().x) + "\nY: " + to_string((int)levels.level[currentLevelPlaying].player.tankSprite.getPosition().y);
+		Text strText(str, font);
+		strText.setCharacterSize(15);
+		strText.setPosition(window.getView().getCenter().x - window.getView().getSize().x / 2, window.getView().getCenter().y - window.getView().getSize().y / 2 + 20);
+		window.draw(strText);
+	}
 }
 
 void Game::createLevelsMenu()

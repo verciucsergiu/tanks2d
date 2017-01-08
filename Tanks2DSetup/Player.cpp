@@ -168,7 +168,7 @@ void Player::tankRotation(int dirX, int dirY)
 	{
 		if (dirX == -1)
 		{
-			if (currentRotation >= 180 + fixedDeltaTime * 100 || currentRotation <= 180 - fixedDeltaTime * 100)
+			if (currentRotation >= 180 + fixedDeltaTime * 65 || currentRotation <= 180 - fixedDeltaTime * 65)
 			{
 				if (currentRotation>180)
 				{
@@ -182,7 +182,7 @@ void Player::tankRotation(int dirX, int dirY)
 		}
 		else
 		{
-			if (currentRotation >= 0 + fixedDeltaTime * 100 || currentRotation <= 0 - fixedDeltaTime * 100)
+			if (currentRotation >= 0 + fixedDeltaTime * 65 || currentRotation <= 0 - fixedDeltaTime * 65)
 			{
 				if (currentRotation>180)
 				{
@@ -199,7 +199,7 @@ void Player::tankRotation(int dirX, int dirY)
 	{
 		if (dirY == 1)
 		{
-			if (currentRotation >= 90 + fixedDeltaTime * 100 || currentRotation <= 90 - fixedDeltaTime * 100)
+			if (currentRotation >= 90 + fixedDeltaTime * 65 || currentRotation <= 90 - fixedDeltaTime * 65)
 			{
 				if (currentRotation <270 && currentRotation > 90)
 				{
@@ -214,7 +214,7 @@ void Player::tankRotation(int dirX, int dirY)
 		}
 		else
 		{
-			if (currentRotation >= 270 + fixedDeltaTime * 100 || currentRotation <= 270 - fixedDeltaTime * 100)
+			if (currentRotation >= 270 + fixedDeltaTime * 65 || currentRotation <= 270 - fixedDeltaTime * 65)
 			{
 				if (currentRotation < 270 && currentRotation > 90)
 				{
@@ -238,7 +238,7 @@ void Player::tankRotation(int dirX, int dirY)
 	{
 		if (dirX == 1 && dirY == 1) // 45
 		{
-			if (currentRotation >= 45 + fixedDeltaTime * 100 || currentRotation <= 45 - fixedDeltaTime * 100)
+			if (currentRotation >= 45 + fixedDeltaTime * 65 || currentRotation <= 45 - fixedDeltaTime * 65)
 			{
 				if (currentRotation < 225 && currentRotation > 45)
 				{
@@ -253,7 +253,7 @@ void Player::tankRotation(int dirX, int dirY)
 		}
 		if (dirX == -1 && dirY == 1) // 135
 		{
-			if (currentRotation >= 135 + fixedDeltaTime * 100 || currentRotation <= 135 - fixedDeltaTime * 100)
+			if (currentRotation >= 135 + fixedDeltaTime * 65 || currentRotation <= 135 - fixedDeltaTime * 65)
 			{
 				if (currentRotation < 315 && currentRotation > 135)
 				{
@@ -267,7 +267,7 @@ void Player::tankRotation(int dirX, int dirY)
 		}
 		if (dirX == -1 && dirY == -1) //225
 		{
-			if (currentRotation >= 225 + fixedDeltaTime * 100 || currentRotation <= 225 - fixedDeltaTime * 100)
+			if (currentRotation >= 225 + fixedDeltaTime * 65 || currentRotation <= 225 - fixedDeltaTime * 65)
 			{
 				if (currentRotation < 225 && currentRotation > 45)
 				{
@@ -281,7 +281,7 @@ void Player::tankRotation(int dirX, int dirY)
 		}
 		if (dirX == 1 && dirY == -1) // 315
 		{
-			if (currentRotation >= 315 + fixedDeltaTime * 100 || currentRotation <= 315 - fixedDeltaTime * 100)
+			if (currentRotation >= 315 + fixedDeltaTime * 65 || currentRotation <= 315 - fixedDeltaTime * 65)
 			{
 				if (currentRotation < 315 && currentRotation > 135)
 				{

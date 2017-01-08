@@ -88,10 +88,6 @@ void Level::CameraBehavior(RenderWindow &window)
 			followPlayer.setCenter(window.getSize().x / 2 + window.getSize().x * cameras.square[i].gridX, window.getSize().y / 2 + window.getSize().y * cameras.square[i].gridY);
 		}
 	}
-	
-	
-	followPlayer.setSize(window.getSize().x, window.getSize().y);
-	followPlayer.zoom(1);
 	window.setView(followPlayer);
 }
 
@@ -292,6 +288,8 @@ void Level::createCamera(int x, int y)
 {
 	followPlayer.setCenter(400 + 800 * x, 288 + 576 * y);
 	player.startPosition(400 + 800 * x, 288 + 576 * y);
+	followPlayer.setSize(800, 576);
+	followPlayer.zoom(1);
 }
 
 void Level::setPlayerStats(Stats value)

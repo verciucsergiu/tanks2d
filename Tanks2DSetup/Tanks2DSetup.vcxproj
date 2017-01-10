@@ -149,7 +149,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\pr\Tanks2DSetup\EndGame.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMap.cpp" />
@@ -157,15 +156,17 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="TextButton.cpp" />
+    <ClCompile Include="Tower.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\pr\Tanks2DSetup\EndGame.h" />
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="EndGame.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="TextButton.h" />
+    <ClInclude Include="Tower.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="level1.txt" />

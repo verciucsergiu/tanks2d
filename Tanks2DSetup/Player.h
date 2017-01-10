@@ -22,8 +22,7 @@ public:
 	int health;
 	/*No more stats*/
 	Sprite barrelSprite;
-	Sprite tankSprite;
-	
+	Sprite tankSprite;	
 
 	void startPosition(float x, float y);
 	void update(float deltaTime, RenderWindow &window);
@@ -48,8 +47,11 @@ public:
 	void setRotationSpeed(float value);
 private:
 	Vector2i boxColliderOffset;
+
 	Texture tankTexture;
 	Texture barrelTexture;
+	
+
 	void defaultBoxColliderOffset();
 	float PI = 3.14159265f;
 	float vSpeed;

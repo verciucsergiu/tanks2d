@@ -7,6 +7,7 @@ Player::Player()
 
 	testing = false;
 	
+	//multe modificari aici
 	if (!tankTexture.loadFromFile("sprites/tank_base.png"))
 	{
 		cout << "Error loading the tank_base!\n";
@@ -15,6 +16,8 @@ Player::Player()
 	{
 		cout << "Error loading the tank_turel!\n";
 	}
+	
+
 	tankSprite.setTexture(tankTexture);
 	barrelSprite.setTexture(barrelTexture);
 
@@ -36,6 +39,7 @@ void Player::startPosition(float x, float y)
 	Vector2f position(x, y);
 	tankSprite.setPosition(position);
 	barrelSprite.setPosition(position);
+	barrelSprite.setOrigin(0, 5); // am adaugat asta pt. ca turela nu statea locului
 }
 
 void Player::update(float deltaTime,RenderWindow &window)
@@ -135,6 +139,7 @@ void Player::draw(RenderWindow &window)
 {	
 	window.draw(tankSprite);
 	window.draw(barrelSprite);
+	
 }
 void Player::destroy()
 {
@@ -148,6 +153,10 @@ void Player::lookAt(Vector2i target,RenderWindow &window)
 	const float PI = 3.14159265;
 	float dx = currentPos.x - target.x;
 	float dy = currentPos.y  -target.y;
+
+	//am adaugat asta pt ca turela nu urmareste mouse-ul cum trebuie altfel
+	dx = -dx; 
+	dy = -dy;
 
 	float rotation = (atan2(dy, dx)) * 180 / PI;
 

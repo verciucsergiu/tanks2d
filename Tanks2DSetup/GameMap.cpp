@@ -2,12 +2,13 @@
 
 GameMap::GameMap()
 {
-	if (!wallTexture.loadFromFile("sprites/tile_wall.png"))
+	if (!wallTexture.loadFromFile("sprites/sandbagbeige.png")) //Schimbat numele imaginii
 	{
 		cout << "Error loading wall!\n";
 	}
 	wallSprite.setTexture(wallTexture);
 }
+
 
 GameMap::~GameMap()
 {

@@ -15,50 +15,50 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\Player.cpp">
+    <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\bullet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\GameMap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\Level.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\TextButton.cpp">
+    <ClCompile Include="TextButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\Player.h">
+    <ClInclude Include="bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\bullet.h">
+    <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\Game.h">
+    <ClInclude Include="GameMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\GameMap.h">
+    <ClInclude Include="Level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\Level.h">
+    <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\TextButton.h">
+    <ClInclude Include="TextButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\playerStats.txt" />
-    <Text Include="..\..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\Tanks2DSetup\tanks2d\Tanks2DSetup\level1.txt" />
+    <Text Include="level1.txt" />
+    <Text Include="playerStats.txt" />
   </ItemGroup>
 </Project>

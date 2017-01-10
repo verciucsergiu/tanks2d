@@ -15,6 +15,20 @@ Game::Game()
 	resetLevels();
 	createLevels();
 
+	sf::Texture sandLevelTexture;
+	sf::Sprite sandSprite;
+
+	if(!sandLevelTexture.loadFromFile("sprites/sand.png"))
+	{
+		cout << "Error loading tile_ground!\n";
+	}
+
+
+	sandLevelTexture.setRepeated(true);
+
+	sandSprite.setTexture(sandLevelTexture);
+	sandSprite.setTextureRect({0,0,3200,2304});
+
 	currentMenu = menuType::mainMenu;
 	while (window.isOpen())
 	{
@@ -30,9 +44,7 @@ Game::Game()
 		deltaTime = time.asSeconds();
 		clock.restart().asSeconds();
 		
-		Color clearColor(150, 150, 150, 255);
-		window.clear(clearColor);
-		//UPDATE
+		window.clear();
 		
 		Vector2f mousePos = window.mapPixelToCoords(Mouse::getPosition(window));
 		switch (currentMenu)
@@ -88,6 +100,7 @@ Game::Game()
 			break;
 		case actualGame:
 		{
+			window.draw(sandSprite);
 			levels.level[currentLevelPlaying].Update(deltaTime, window);
 		}
 			break;

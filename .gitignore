@@ -1,2 +1,4 @@
 *.sln
 *.VC.opendb
+*.suo
+*.VC.db

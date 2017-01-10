@@ -38,6 +38,7 @@ void Finish::takeDamage(int value)
 		cout << value << " " << health << '\n';
 		if (health <= 0)
 		{
+
 			alive = false;
 		}
 	}

@@ -7,7 +7,7 @@
 #include "Player.h"
 #include "GameMap.h"
 #include "bullet.h"
-#include "Finish.h"
+#include "EndGame.h"
 using namespace std;
 using namespace sf;
 
@@ -77,7 +77,7 @@ private:
 
 	void createCamera(int x,int y);
 	void createFinish(int x, int y);
-	Finish endTheGame;
+	EndGame endTheGame;
 	bool testing;
 	
 	Vector2i playerStartingPos;

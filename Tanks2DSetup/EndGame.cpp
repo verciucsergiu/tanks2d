@@ -1,8 +1,8 @@
-#include "Finish.h"
+#include "EndGame.h"
 
 
 
-Finish::Finish()
+EndGame::EndGame()
 {
 	alive = true;
 	if (!finishTexture.loadFromFile("sprites/finish.png"))
@@ -13,39 +13,35 @@ Finish::Finish()
 }
 
 
-Finish::~Finish()
+EndGame::~EndGame()
 {
-
 }
 
-void Finish::draw(RenderWindow & window)
+void EndGame::draw(RenderWindow & window)
 {
 	window.draw(finishSprite);
 }
 
-void Finish::setPosition(int gridX, int gridY,int x,int y)
+void EndGame::setPosition(int gridX, int gridY, int x, int y)
 {
 	float xPos = 800 * gridX + x;
 	float yPos = 576 * gridY + y;
 	finishSprite.setPosition(xPos, yPos);
 }
 
-void Finish::takeDamage(int value)
+void EndGame::takeDamage(int value)
 {
 	if (alive)
 	{
 		health -= value;
-		cout << value << " " << health << '\n';
 		if (health <= 0)
 		{
-
 			alive = false;
 		}
 	}
-	
 }
 
-bool Finish::isAlive()
+bool EndGame::isAlive()
 {
 	return alive;
 }

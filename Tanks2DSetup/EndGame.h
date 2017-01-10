@@ -4,11 +4,11 @@
 
 using namespace sf;
 using namespace std;
-class Finish
+class EndGame
 {
 public:
-	Finish();
-	~Finish();
+	EndGame();
+	~EndGame();
 	Texture finishTexture;
 	Sprite finishSprite;
 	int health;
@@ -18,6 +18,6 @@ public:
 
 	bool isAlive();
 private:
-	bool alive;	
+	bool alive;
 };
 

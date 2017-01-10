@@ -9,6 +9,7 @@ using namespace sf;
 struct Collider2D
 {
 	Sprite target;
+	int role;
 	Collider2D * next;
 };
 
@@ -28,10 +29,10 @@ public:
 
 	Collider2D *collFirst;
 	Collider2D *collLast;
-	void addCollider(Sprite sprite);
+	void addCollider(Sprite sprite,int roleValue);
 	void resetCollider();
 	bool checkCollision();
-
+	int collisionType;
 private:
 	void draw(RenderWindow &window);
 	Texture bulletTexture;

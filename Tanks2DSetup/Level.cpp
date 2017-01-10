@@ -24,7 +24,7 @@ void Level::Create()
 void Level::Update(float deltaTime, RenderWindow & window)
 {
 	fixedDeltaTime = deltaTime;
-	if (Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && canFire)
+	if (Mouse::isButtonPressed(Mouse::Left) && canFire)
 	{
 		bullet *fire = new bullet;
 		fire->create();
@@ -59,12 +59,17 @@ void Level::Draw(RenderWindow & window)
 {
 	tileMap.draw(window);
 	player.draw(window);
+	endTheGame.draw(window);
 	for (BulletsFired * current = bFiredFirst; current != nullptr; current = current->next)
 	{
 		current->bullet->Update(fixedDeltaTime, window);
 
 		if (current->bullet->checkCollision())
 		{
+			if (current->bullet->collisionType == 1)
+			{
+				endTheGame.takeDamage(player.damage);
+			}
 			eliminareBullet(current);
 		}
 	}
@@ -76,7 +81,6 @@ void Level::initPlayer()
 {
 	player.setRotationSpeed(350);
 	player.setScale(1.3f, 1.3f);
-	player.startPosition(300, 300);
 	player.setBoxColliderOffset(2, 2);
 }
 
@@ -131,8 +135,12 @@ void Level::addBulletCollision(bullet & target)
 		Sprite newSprite;
 		newSprite.setTexture(tileMap.wallTexture);
 		newSprite.setPosition(tileMap.wallAdress[i].x, tileMap.wallAdress[i].y);
-		target.addCollider(newSprite);
+		target.addCollider(newSprite,0);
 	}
+	Sprite newSprite;
+	newSprite.setTexture(endTheGame.finishTexture);
+	newSprite.setPosition(endTheGame.finishSprite.getPosition());
+	target.addCollider(newSprite,1);
 }
 
 void Level::eliminareBullet(BulletsFired * target)
@@ -183,6 +191,10 @@ void Level::GenerateMap(string fisier)
 				if (mat[row][col] == 2)
 				{
 					createCamera(col - 1, row - 1);
+				}
+				if (mat[row][col] == 3)
+				{
+					createFinish(col - 1, row - 1);
 				}
 			}
 		}
@@ -284,14 +296,31 @@ void Level::MapCollisions()
 		newSprite.setPosition(tileMap.wallAdress[i].x, tileMap.wallAdress[i].y);
 		player.addCollider(newSprite);
 	}
+	Sprite newSprite;
+	newSprite.setTexture(endTheGame.finishTexture);
+	newSprite.setPosition(endTheGame.finishSprite.getPosition());
+	player.addCollider(newSprite);
 }
 
 void Level::createCamera(int x, int y)
 {
 	followPlayer.setCenter(400 + 800 * x, 288 + 576 * y);
 	player.startPosition(400 + 800 * x, 288 + 576 * y);
+	playerStartingPos.x = 400 + 800 * x;
+	playerStartingPos.y = 288 + 576 * y;
 	followPlayer.setSize(800, 576);
 	followPlayer.zoom(1);
+}
+
+void Level::createFinish(int x, int y)
+{
+	endTheGame.health = 100;
+	endTheGame.setPosition(x, y, 400, 288);
+}
+
+void Level::setNewLevel()
+{
+	player.startPosition(playerStartingPos.x, playerStartingPos.y);
 }
 
 void Level::setPlayerStats(Stats value)
@@ -302,4 +331,17 @@ void Level::setPlayerStats(Stats value)
 	player.setRotationSpeed(400);
 	player.setScale(1.3f, 1.3f);
 	player.setBoxColliderOffset(2, 2);
+}
+
+bool Level::gameEnd()
+{
+	if (endTheGame.isAlive())
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+	
 }

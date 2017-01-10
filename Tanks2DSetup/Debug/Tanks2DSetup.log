@@ -1,8 +1,3 @@
-﻿  Tower.cpp
-e:\proiect\tanks2dsetup\tower.h(14): error C2380: type(s) preceding 'Tower' (constructor with return type, or illegal redefinition of current class-name?)
-e:\proiect\tanks2dsetup\tower.h(14): error C2208: 'Tower': no members defined using this type
-e:\proiect\tanks2dsetup\tower.h(15): error C2371: 'Tower::barrelSprite': redefinition; different basic types
-  e:\proiect\tanks2dsetup\tower.h(13): note: see declaration of 'Tower::barrelSprite'
-e:\proiect\tanks2dsetup\tower.h(16): error C2380: type(s) preceding 'Tower' (constructor with return type, or illegal redefinition of current class-name?)
-e:\proiect\tanks2dsetup\tower.h(16): error C2208: 'Tower': no members defined using this type
-e:\proiect\tanks2dsetup\tower.cpp(11): fatal error C1903: unable to recover from previous error(s); stopping compilation
+﻿  LINK : E:\proiect\Debug\Tanks2DSetup.exe not found or not built by the last incremental link; performing full link
+  Tanks2DSetup.vcxproj -> E:\proiect\Debug\Tanks2DSetup.exe
+  Tanks2DSetup.vcxproj -> E:\proiect\Debug\Tanks2DSetup.pdb (Full PDB)

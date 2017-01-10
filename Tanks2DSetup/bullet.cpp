@@ -16,12 +16,13 @@ void bullet::Update(float deltaTime, RenderWindow &window)
 	draw(window);
 }
 
-void bullet::addCollider(Sprite sprite)
+void bullet::addCollider(Sprite sprite,int roleValue)
 {
 	if (collFirst != nullptr && collLast != nullptr)
 	{
 		Collider2D * add = new Collider2D;
 		add->target = sprite;
+		add->role = roleValue;
 		add->next = nullptr;
 		collLast->next = add;
 		collLast = add;
@@ -30,6 +31,7 @@ void bullet::addCollider(Sprite sprite)
 	{
 		Collider2D * add = new Collider2D;
 		add->target = sprite;
+		add->role = roleValue;
 		add->next = nullptr;
 		collFirst = add;
 		collLast = collFirst;
@@ -47,6 +49,12 @@ bool bullet::checkCollision()
 		FloatRect rect(bulletSprite.getPosition().x, bulletSprite.getPosition().y, 4, 4);
 		if (current->target.getGlobalBounds().intersects(rect))
 		{
+			collisionType = 0;
+			if (current->role == 1)
+			{
+				
+				collisionType = 1;
+			}
 			return true;
 		}
 	}
@@ -90,8 +98,6 @@ void bullet::setStartPosition(int x, int y)
 	startPos.x = x;
 	startPos.y = y;
 }
-
-
 
 void bullet::create()
 {

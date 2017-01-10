@@ -57,6 +57,6 @@ private:
 	void resetLevels();
 	void createLevels();
 	int currentLevelPlaying;
-
+	int maxLevels;
 };
 

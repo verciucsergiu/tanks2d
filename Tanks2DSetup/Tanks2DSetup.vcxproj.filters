@@ -9,6 +9,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="TextButton.cpp" />
     <ClCompile Include="Tower.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\pr\Tanks2DSetup\EndGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet.h" />

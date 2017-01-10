@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\pr\Tanks2DSetup\EndGame.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMap.cpp" />

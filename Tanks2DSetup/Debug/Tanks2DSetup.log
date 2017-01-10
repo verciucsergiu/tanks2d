@@ -1,3 +1,5 @@
-﻿  LINK : E:\proiect\Debug\Tanks2DSetup.exe not found or not built by the last incremental link; performing full link
-  Tanks2DSetup.vcxproj -> E:\proiect\Debug\Tanks2DSetup.exe
-  Tanks2DSetup.vcxproj -> E:\proiect\Debug\Tanks2DSetup.pdb (Full PDB)
+﻿  EndGame.cpp
+d:\@blue\faculta\visual studio c++\proiect\pr\tanks2dsetup\endgame.cpp(27): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\pr\tanks2dsetup\endgame.cpp(28): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Tanks2DSetup.vcxproj -> D:\@BLUE\Faculta\Visual Studio c++\Proiect\pr\Debug\Tanks2DSetup.exe
+  Tanks2DSetup.vcxproj -> D:\@BLUE\Faculta\Visual Studio c++\Proiect\pr\Debug\Tanks2DSetup.pdb (Full PDB)

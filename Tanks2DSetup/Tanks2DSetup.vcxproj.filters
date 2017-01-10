@@ -36,6 +36,9 @@
     <ClCompile Include="TextButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\pr\Tanks2DSetup\Finish.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TextButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\pr\Tanks2DSetup\Finish.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

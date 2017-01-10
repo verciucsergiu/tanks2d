@@ -27,7 +27,7 @@ Game::Game()
 	sandLevelTexture.setRepeated(true);
 
 	sandSprite.setTexture(sandLevelTexture);
-	sandSprite.setTextureRect({0,0,3200,2304});
+	sandSprite.setTextureRect({0,0,5000,5000});
 
 	currentMenu = menuType::mainMenu;
 	while (window.isOpen())
@@ -35,10 +35,11 @@ Game::Game()
 		Event event;
 		while (window.pollEvent(event))
 		{
-			if ((event.type == Event::Closed) || (Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)))
+			if (event.type == Event::Closed)
 			{
 				window.close();
 			}
+			
 		}
 		Time time = clock.getElapsedTime();
 		deltaTime = time.asSeconds();
@@ -46,6 +47,11 @@ Game::Game()
 		
 		window.clear();
 		
+		if (Keyboard::isKeyPressed(Keyboard::Key::Escape))
+		{
+			currentMenu = menuType::levelMenu;
+		}
+
 		Vector2f mousePos = window.mapPixelToCoords(Mouse::getPosition(window));
 		switch (currentMenu)
 		{
@@ -102,6 +108,17 @@ Game::Game()
 		{
 			window.draw(sandSprite);
 			levels.level[currentLevelPlaying].Update(deltaTime, window);
+			if (levels.level[currentLevelPlaying].gameEnd())
+			{
+				currentLevelPlaying++;
+				if (currentLevelPlaying > maxLevels)
+				{
+					currentMenu = menuType::levelMenu;
+				}
+				levels.level[currentLevelPlaying].Create();
+				levels.level[currentLevelPlaying].GenerateMap("level1.txt");
+			}
+
 		}
 			break;
 		}
@@ -192,6 +209,7 @@ void Game::createLevels()
 {
 	levels.level[0].Create();
 	levels.level[0].GenerateMap("level1.txt");
+	maxLevels = 0;
 }
 
 void Game::createMainMenu()

@@ -7,7 +7,7 @@
 #include "Player.h"
 #include "GameMap.h"
 #include "bullet.h"
-
+#include "Finish.h"
 using namespace std;
 using namespace sf;
 
@@ -57,12 +57,10 @@ public:
 	void addBullets(bullet * target);
 	void resetBullets();
 	void setFireDelay(float value);
-	
+	void setNewLevel();
 	void GenerateMap(string fisier);
-	
-
 	void setPlayerStats(Stats value);
-
+	bool gameEnd();
 private:
 	float currentDelay;
 	bool canFire;
@@ -76,8 +74,12 @@ private:
 	void MapCollisions();
 	ArrayCameraGrid cameras;
 
-	void createCamera(int x,int y);
 
+	void createCamera(int x,int y);
+	void createFinish(int x, int y);
+	Finish endTheGame;
 	bool testing;
+	
+	Vector2i playerStartingPos;
 };
 

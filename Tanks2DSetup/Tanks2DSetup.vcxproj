@@ -156,6 +156,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="TextButton.cpp" />
+    <ClCompile Include="Tower.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="TextButton.h" />
+    <ClInclude Include="Tower.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="level1.txt" />

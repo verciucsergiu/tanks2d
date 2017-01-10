@@ -19,6 +19,7 @@ public:
 	~bullet();
 	Sprite bulletSprite;
 	void setStartPosition(int x, int y);
+	void setBulletRotation(Vector2i mousePosition, sf::RenderWindow &window);
 	void create();
 	void Update(float deltaTime, RenderWindow &window);
 	void shoot(float deltaTime);
@@ -41,5 +42,6 @@ private:
 	Vector2f movement;
 	void calculateT();
 	float speed;
+
 };
 

@@ -45,6 +45,8 @@ public:
 	void setScale(float x, float y);
 	void setSpeed(float speed);
 	void setRotationSpeed(float value);
+
+	float getTurretRotation(); //return turretRotation
 private:
 	Vector2i boxColliderOffset;
 
@@ -59,6 +61,7 @@ private:
 	float fixedDeltaTime;
 	float rotationSpeed;
 	float currentRotation;
+	float turretRotation;
 
 	bool testing;
 };

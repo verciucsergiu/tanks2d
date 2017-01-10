@@ -1,5 +1,5 @@
 #include "bullet.h"
-
+#include "Player.h"
 
 
 bullet::bullet()
@@ -90,6 +90,8 @@ void bullet::setStartPosition(int x, int y)
 	startPos.x = x;
 	startPos.y = y;
 }
+
+
 
 void bullet::create()
 {

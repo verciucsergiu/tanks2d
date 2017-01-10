@@ -1,4 +1,5 @@
 #include "Level.h"
+#include "bullet.h"
 
 Level::Level()
 {
@@ -23,11 +24,12 @@ void Level::Create()
 void Level::Update(float deltaTime, RenderWindow & window)
 {
 	fixedDeltaTime = deltaTime;
-	if (Mouse::isButtonPressed(Mouse::Left) && canFire)
+	if (Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && canFire)
 	{
 		bullet *fire = new bullet;
 		fire->create();
 		fire->setStartPosition(player.barrelSprite.getPosition().x, player.barrelSprite.getPosition().y);
+		fire->setBulletRotation(Mouse::getPosition(window), window);
 		Vector2f targetPos = window.mapPixelToCoords(Mouse::getPosition(window));
 		fire->setSpeed(1000);
 		fire->setTarget(targetPos.x, targetPos.y);

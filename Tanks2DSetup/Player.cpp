@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "bullet.h"
 
 Player::Player()
 {
@@ -158,10 +159,37 @@ void Player::lookAt(Vector2i target,RenderWindow &window)
 	dx = -dx; 
 	dy = -dy;
 
-	float rotation = (atan2(dy, dx)) * 180 / PI;
+	turretRotation = (atan2(dy, dx)) * 180 / PI; 
+	//am scos "float rotation" de aici si l-am adaugat in private
+	//am nevoie de el in bullet.cpp
 
-	barrelSprite.setRotation(rotation);
+	barrelSprite.setRotation(turretRotation);
 }
+
+void bullet::setBulletRotation(Vector2i target, RenderWindow &window)
+{
+	Vector2i currentPos = window.mapCoordsToPixel(bulletSprite.getPosition(), window.getView());
+
+	const float PI = 3.14159265;
+	float dx = currentPos.x - target.x;
+	float dy = currentPos.y - target.y;
+
+	//am adaugat asta pt ca turela nu urmareste mouse-ul cum trebuie altfel
+	dx = -dx;
+	dy = -dy;
+
+	float turretRotation = (atan2(dy, dx)) * 180 / PI;
+	//am scos "float rotation" de aici si l-am adaugat in private
+	//am nevoie de el in bullet.cpp
+	turretRotation += 90.0f;
+	bulletSprite.setRotation(turretRotation);
+}
+
+float Player::getTurretRotation()
+{
+	return turretRotation;
+}
+
 void Player::tankRotation(int dirX, int dirY)
 {
 	//wtf should i do :(

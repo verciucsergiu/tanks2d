@@ -15,32 +15,28 @@ void bullet::Update(float deltaTime, RenderWindow &window)
 	shoot(deltaTime);
 	draw(window);
 }
+void bullet::setBulletRotation(Vector2i target, RenderWindow &window)
+{
+	Vector2i currentPos = window.mapCoordsToPixel(bulletSprite.getPosition(), window.getView());
 
-void bullet::addCollider(Sprite sprite,int roleValue)
-{
-	if (collFirst != nullptr && collLast != nullptr)
-	{
-		Collider2D * add = new Collider2D;
-		add->target = sprite;
-		add->role = roleValue;
-		add->next = nullptr;
-		collLast->next = add;
-		collLast = add;
-	}
-	else
-	{
-		Collider2D * add = new Collider2D;
-		add->target = sprite;
-		add->role = roleValue;
-		add->next = nullptr;
-		collFirst = add;
-		collLast = collFirst;
-	}
+	const float PI = 3.14159265;
+	float dx = currentPos.x - target.x;
+	float dy = currentPos.y - target.y;
+
+	//am adaugat asta pt ca turela nu urmareste mouse-ul cum trebuie altfel
+	dx = -dx;
+	dy = -dy;
+
+	float turretRotation = (atan2(dy, dx)) * 180 / PI;
+	//am scos "float rotation" de aici si l-am adaugat in private
+	//am nevoie de el in bullet.cpp
+	turretRotation += 90.0f;
+	bulletSprite.setRotation(turretRotation);
 }
-void bullet::resetCollider()
+void bullet::setColliders(Collider2D * first, Collider2D * last)
 {
-	collFirst = nullptr;
-	collLast = nullptr;
+	collFirst = first;
+	collLast = last;
 }
 bool bullet::checkCollision()
 {
@@ -101,7 +97,6 @@ void bullet::setStartPosition(int x, int y)
 
 void bullet::create()
 {
-	resetCollider();
 	if (!bulletTexture.loadFromFile("sprites/bullet.png"))
 	{
 			cout << "Error loading the bullet\n";

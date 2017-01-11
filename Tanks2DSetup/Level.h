@@ -62,10 +62,17 @@ public:
 	void setPlayerStats(Stats value);
 	bool gameEnd();
 private:
+
+	Collider *collFirst;
+	Collider *collLast;
+	void resetCollider();
+	Collider2D *c2DFirst;
+	Collider2D *c2DLast;
+	
 	float currentDelay;
 	bool canFire;
 	float fireDelay;
-	void addBulletCollision(bullet &target);
+	void addBulletCollision();
 	void eliminareBullet(BulletsFired *target);
 	BulletsFired *bFiredFirst;
 	BulletsFired *bFiredLast;

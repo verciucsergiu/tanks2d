@@ -12,7 +12,9 @@ GameMap::GameMap()
 
 GameMap::~GameMap()
 {
+
 }
+
 void GameMap::draw(RenderWindow &window)
 {
 	for (int i = 0; i < indexWallTileMap; i++)

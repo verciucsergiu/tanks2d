@@ -29,8 +29,8 @@ public:
 
 	Collider * collFirst;
 	Collider * collLast;
-	void addCollider(Sprite sprite);
-	void resetCollider();
+	void setCollider(Collider *First, Collider *Last);
+
 
 	bool Player::collisionHorizontal(float dir);
 	bool Player::collisionVertical(float dir);

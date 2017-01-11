@@ -4,7 +4,7 @@
 Player::Player()
 {
 	currentRotation = 0;
-	resetCollider();
+	//resetCollider();
 
 	testing = false;
 	
@@ -50,6 +50,8 @@ void Player::update(float deltaTime,RenderWindow &window)
 	Vector2i mousePosition = Mouse::getPosition(window);
 	lookAt(mousePosition,window);
 	Vector2i movement(0,0);
+
+	cout << hSpeed << " " << vSpeed << '\n';
 	if (Keyboard::isKeyPressed(Keyboard::W) && !collisionVertical(-1))
 	{
 		movement.y -= 1;
@@ -92,6 +94,12 @@ bool Player::collisionVertical(float dir)
 	return false;
 }
 
+void Player::setCollider(Collider * First, Collider * Last)
+{
+	collFirst = First;
+	collLast = Last;
+}
+
 bool Player::collisionHorizontal(float dir)
 {
 	for (Collider* current=collFirst;current!=nullptr; current=current->next)
@@ -111,30 +119,6 @@ bool Player::collisionHorizontal(float dir)
 		}
 	}
 	return false;
-}
-void Player::addCollider(Sprite sprite)
-{
-	if (collFirst != nullptr && collLast != nullptr)
-	{
-		Collider * add = new Collider;
-		add->target = sprite;
-		add->next = nullptr;
-		collLast->next = add;
-		collLast = add;
-	}
-	else
-	{
-		Collider * add = new Collider;
-		add->target = sprite;
-		add->next = nullptr;
-		collFirst = add;
-		collLast = collFirst;
-	}
-}
-void Player::resetCollider()
-{
-	collFirst = nullptr;
-	collLast = nullptr;
 }
 void Player::draw(RenderWindow &window)
 {	
@@ -166,24 +150,6 @@ void Player::lookAt(Vector2i target,RenderWindow &window)
 	barrelSprite.setRotation(turretRotation);
 }
 
-void bullet::setBulletRotation(Vector2i target, RenderWindow &window)
-{
-	Vector2i currentPos = window.mapCoordsToPixel(bulletSprite.getPosition(), window.getView());
-
-	const float PI = 3.14159265;
-	float dx = currentPos.x - target.x;
-	float dy = currentPos.y - target.y;
-
-	//am adaugat asta pt ca turela nu urmareste mouse-ul cum trebuie altfel
-	dx = -dx;
-	dy = -dy;
-
-	float turretRotation = (atan2(dy, dx)) * 180 / PI;
-	//am scos "float rotation" de aici si l-am adaugat in private
-	//am nevoie de el in bullet.cpp
-	turretRotation += 90.0f;
-	bulletSprite.setRotation(turretRotation);
-}
 
 float Player::getTurretRotation()
 {

@@ -29,8 +29,7 @@ public:
 
 	Collider2D *collFirst;
 	Collider2D *collLast;
-	void addCollider(Sprite sprite,int roleValue);
-	void resetCollider();
+	void setColliders(Collider2D *first, Collider2D *last);
 	bool checkCollision();
 	int collisionType;
 private:

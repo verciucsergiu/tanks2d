@@ -1,5 +1,18 @@
-﻿  EndGame.cpp
-d:\@blue\faculta\visual studio c++\proiect\pr\tanks2dsetup\endgame.cpp(27): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr\tanks2dsetup\endgame.cpp(28): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  Tanks2DSetup.vcxproj -> D:\@BLUE\Faculta\Visual Studio c++\Proiect\pr\Debug\Tanks2DSetup.exe
-  Tanks2DSetup.vcxproj -> D:\@BLUE\Faculta\Visual Studio c++\Proiect\pr\Debug\Tanks2DSetup.pdb (Full PDB)
+﻿  Game.cpp
+d:\@blue\faculta\visual studio c++\proiect\proiect\tanks2dsetup\game.cpp(62): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\proiect\tanks2dsetup\game.cpp(63): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\proiect\tanks2dsetup\game.cpp(66): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\proiect\tanks2dsetup\game.cpp(70): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\proiect\tanks2dsetup\game.cpp(82): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\proiect\tanks2dsetup\game.cpp(86): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\proiect\tanks2dsetup\game.cpp(91): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\proiect\tanks2dsetup\game.cpp(97): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\proiect\tanks2dsetup\game.cpp(142): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\proiect\tanks2dsetup\game.cpp(168): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\proiect\tanks2dsetup\game.cpp(177): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\proiect\tanks2dsetup\game.cpp(188): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\proiect\tanks2dsetup\game.cpp(224): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\proiect\tanks2dsetup\game.cpp(224): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+d:\@blue\faculta\visual studio c++\proiect\proiect\tanks2dsetup\game.cpp(225): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+  Tanks2DSetup.vcxproj -> D:\@BLUE\Faculta\Visual Studio c++\Proiect\proiect\Debug\Tanks2DSetup.exe
+  Tanks2DSetup.vcxproj -> D:\@BLUE\Faculta\Visual Studio c++\Proiect\proiect\Debug\Tanks2DSetup.pdb (Full PDB)

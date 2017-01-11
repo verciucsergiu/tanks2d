@@ -5,6 +5,7 @@ Level::Level()
 {
 	testing = true;
 	cameras.nrSquare = 0;
+	resetCollider();
 }
 
 Level::~Level()
@@ -14,11 +15,13 @@ Level::~Level()
 
 void Level::Create()
 {
+	
 	currentDelay = 0;
 	canFire = true;
 	resetBullets();
 	initPlayer();
 	fireDelay = .25f;
+	
 }
 
 void Level::Update(float deltaTime, RenderWindow & window)
@@ -33,7 +36,7 @@ void Level::Update(float deltaTime, RenderWindow & window)
 		Vector2f targetPos = window.mapPixelToCoords(Mouse::getPosition(window));
 		fire->setSpeed(1000);
 		fire->setTarget(targetPos.x, targetPos.y);
-		addBulletCollision(*fire);
+		fire->setColliders(c2DFirst, c2DLast);
 		addBullets(fire);
 		canFire = false;
 		currentDelay = fireDelay;
@@ -52,6 +55,7 @@ void Level::Update(float deltaTime, RenderWindow & window)
 	}
 	player.update(deltaTime, window);
 	Draw(window);
+	player.setCollider(collFirst, collLast);
 	CameraBehavior(window);
 }
 
@@ -63,7 +67,7 @@ void Level::Draw(RenderWindow & window)
 	for (BulletsFired * current = bFiredFirst; current != nullptr; current = current->next)
 	{
 		current->bullet->Update(fixedDeltaTime, window);
-
+		current->bullet->setColliders(c2DFirst, c2DLast);
 		if (current->bullet->checkCollision())
 		{
 			if (current->bullet->collisionType == 1)
@@ -128,19 +132,53 @@ void Level::setFireDelay(float value)
 	fireDelay = value;
 }
 
-void Level::addBulletCollision(bullet & target)
+void Level::addBulletCollision()
 {
 	for (int i = 0; i < tileMap.indexWallTileMap; i++)
 	{
 		Sprite newSprite;
 		newSprite.setTexture(tileMap.wallTexture);
 		newSprite.setPosition(tileMap.wallAdress[i].x, tileMap.wallAdress[i].y);
-		target.addCollider(newSprite,0);
+		if (c2DFirst != nullptr && c2DLast != nullptr)
+		{
+			Collider2D * add = new Collider2D;
+			add->target = newSprite;
+			add->role = 0;
+			add->next = nullptr;
+			c2DLast->next = add;
+			c2DLast = add;
+		}
+		else
+		{
+			Collider2D * add = new Collider2D;
+			add->target = newSprite;
+			add->role = 0;
+			add->next = nullptr;
+			c2DFirst = add;
+			c2DLast = c2DFirst;
+		}
 	}
 	Sprite newSprite;
 	newSprite.setTexture(endTheGame.finishTexture);
 	newSprite.setPosition(endTheGame.finishSprite.getPosition());
-	target.addCollider(newSprite,1);
+	if (c2DFirst != nullptr && c2DLast != nullptr)
+	{
+		Collider2D * add = new Collider2D;
+		add->target = newSprite;
+		add->role = 1;
+		add->next = nullptr;
+		c2DLast->next = add;
+		c2DLast = add;
+	}
+	else
+	{
+		Collider2D * add = new Collider2D;
+		add->target = newSprite;
+		add->role = 1;
+		add->next = nullptr;
+		c2DFirst = add;
+		c2DLast = c2DFirst;
+	}
 }
 
 void Level::eliminareBullet(BulletsFired * target)
@@ -200,6 +238,7 @@ void Level::GenerateMap(string fisier)
 		}
 	}
 	MapCollisions();
+	addBulletCollision();
 }
 void Level::mapGrid(int startX, int startY, bool sus, bool jos, bool stanga, bool dreapta)
 {
@@ -294,12 +333,42 @@ void Level::MapCollisions()
 		Sprite newSprite;
 		newSprite.setTexture(tileMap.wallTexture);
 		newSprite.setPosition(tileMap.wallAdress[i].x, tileMap.wallAdress[i].y);
-		player.addCollider(newSprite);
+		if (collFirst != nullptr && collLast != nullptr)
+		{
+			Collider * add = new Collider;
+			add->target = newSprite;
+			add->next = nullptr;
+			collLast->next = add;
+			collLast = add;
+		}
+		else
+		{
+			Collider * add = new Collider;
+			add->target = newSprite;
+			add->next = nullptr;
+			collFirst = add;
+			collLast = collFirst;
+		}
 	}
 	Sprite newSprite;
 	newSprite.setTexture(endTheGame.finishTexture);
 	newSprite.setPosition(endTheGame.finishSprite.getPosition());
-	player.addCollider(newSprite);
+	if (collFirst != nullptr && collLast != nullptr)
+	{
+		Collider * add = new Collider;
+		add->target = newSprite;
+		add->next = nullptr;
+		collLast->next = add;
+		collLast = add;
+	}
+	else
+	{
+		Collider * add = new Collider;
+		add->target = newSprite;
+		add->next = nullptr;
+		collFirst = add;
+		collLast = collFirst;
+	}
 }
 
 void Level::createCamera(int x, int y)
@@ -344,4 +413,13 @@ bool Level::gameEnd()
 		return true;
 	}
 	
+}
+
+void Level::resetCollider()
+{
+	
+	collFirst = nullptr;
+	collLast = nullptr;
+	c2DFirst = nullptr;
+	c2DLast = nullptr;
 }

@@ -50,8 +50,6 @@ void Player::update(float deltaTime,RenderWindow &window)
 	Vector2i mousePosition = Mouse::getPosition(window);
 	lookAt(mousePosition,window);
 	Vector2i movement(0,0);
-
-	cout << hSpeed << " " << vSpeed << '\n';
 	if (Keyboard::isKeyPressed(Keyboard::W) && !collisionVertical(-1))
 	{
 		movement.y -= 1;
@@ -297,7 +295,6 @@ void Player::tankRotation(int dirX, int dirY)
 			}
 		}
 	}
-	//cout << "Angle : " << currentRotation << '\n';
 	tankSprite.setRotation(currentRotation);
 }
 void Player::setBoxColliderOffset(float x, float y)

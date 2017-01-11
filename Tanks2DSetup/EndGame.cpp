@@ -41,6 +41,11 @@ void EndGame::takeDamage(int value)
 	}
 }
 
+void EndGame::setPlay()
+{
+	alive = true;
+}
+
 bool EndGame::isAlive()
 {
 	return alive;

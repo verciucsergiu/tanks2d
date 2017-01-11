@@ -71,6 +71,7 @@ public:
 	void GenerateMap(string fisier);
 	void setPlayerStats(Stats value);
 	bool gameEnd();
+	void setPlay();
 private:
 
 	Collider *collFirst;

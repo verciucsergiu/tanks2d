@@ -476,6 +476,11 @@ bool Level::gameEnd()
 	
 }
 
+void Level::setPlay()
+{
+	endTheGame.setPlay();
+}
+
 void Level::resetCollider()
 {
 	

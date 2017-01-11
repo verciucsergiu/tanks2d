@@ -15,7 +15,7 @@ public:
 	void draw(RenderWindow &window);
 	void setPosition(int gridX, int gridY, int x, int y);
 	void takeDamage(int value);
-
+	void setPlay();
 	bool isAlive();
 private:
 	bool alive;

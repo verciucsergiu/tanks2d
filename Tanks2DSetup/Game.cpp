@@ -77,7 +77,7 @@ Game::Game()
 		}
 			break;
 		case levelMenu:
-		{
+		{			
 			back.Draw(window);
 			back.checkHover(mousePos.x, mousePos.y, window);
 			for (int i = 0; i < levelsMenu.nrLlevels; i++)
@@ -99,6 +99,7 @@ Game::Game()
 						currentLevelPlaying = i;
 						currentMenu = menuType::actualGame;
 						levels.level[i].setPlayerStats(playerStats);
+						levels.level[i].setPlay();
 					}
 				}
 			}
@@ -110,19 +111,15 @@ Game::Game()
 			levels.level[currentLevelPlaying].Update(deltaTime, window);
 			if (levels.level[currentLevelPlaying].gameEnd())
 			{
-				currentLevelPlaying++;
-				
-				if (currentLevelPlaying > maxLevels)
+				followPlayer.setCenter(0, 0);
+				window.setView(followPlayer);
+				currentMenu = menuType::levelMenu;
+				if (currentLevelPlaying + 1 <= maxLevels)
 				{
-					currentMenu = menuType::levelMenu;
+					levelsMenu.level[currentLevelPlaying + 1].setActive(true);
 				}
-				else
-				{
-					levels.level[currentLevelPlaying].setPlayerStats(playerStats);
-				}
-				
 			}
-
+				
 		}
 			break;
 		}
@@ -216,6 +213,7 @@ void Game::createLevels()
 	levels.level[0].GenerateMap("level1.txt");
 	levels.level[1].Create();
 	levels.level[1].GenerateMap("level2.txt");
+	levels.level[1].setPlayerStats(playerStats);
 	maxLevels = 1;
 }
 

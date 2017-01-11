@@ -77,6 +77,10 @@ void Level::Draw(RenderWindow & window)
 			eliminareBullet(current);
 		}
 	}
+	for (int i = 0; i < objects.nrObjects; i++)
+	{
+		objects.obj[i].draw(window);
+	}
 }
 
 
@@ -179,6 +183,30 @@ void Level::addBulletCollision()
 		c2DFirst = add;
 		c2DLast = c2DFirst;
 	}
+	for (int i = 0; i < objects.nrObjects; i++)
+	{
+		Sprite newSprite;
+		newSprite.setTexture(objects.obj[i].objectTexture);
+		newSprite.setPosition(objects.obj[i].objectSprite.getPosition());
+		if (c2DFirst != nullptr && c2DLast != nullptr)
+		{
+			Collider2D * add = new Collider2D;
+			add->target = newSprite;
+			add->role = 0;
+			add->next = nullptr;
+			c2DLast->next = add;
+			c2DLast = add;
+		}
+		else
+		{
+			Collider2D * add = new Collider2D;
+			add->target = newSprite;
+			add->role = 0;
+			add->next = nullptr;
+			c2DFirst = add;
+			c2DLast = c2DFirst;
+		}
+	}
 }
 
 void Level::eliminareBullet(BulletsFired * target)
@@ -237,6 +265,17 @@ void Level::GenerateMap(string fisier)
 			}
 		}
 	}
+	
+	int nrObjects;
+	fin >> nrObjects;
+	for (int index = 0; index < nrObjects; index++)
+	{
+		int gridX, gridY, x, y,type;
+		fin >> gridX >> gridY >> x >> y >> type;
+		objects.obj[index].create(gridX, gridY, x, y, type);
+	}
+	objects.nrObjects = nrObjects;
+
 	MapCollisions();
 	addBulletCollision();
 }
@@ -368,6 +407,28 @@ void Level::MapCollisions()
 		add->next = nullptr;
 		collFirst = add;
 		collLast = collFirst;
+	}
+	for (int i = 0; i < objects.nrObjects; i++)
+	{
+		Sprite newSprite;
+		newSprite.setTexture(objects.obj[i].objectTexture);
+		newSprite.setPosition(objects.obj[i].objectSprite.getPosition());
+		if (collFirst != nullptr && collLast != nullptr)
+		{
+			Collider * add = new Collider;
+			add->target = newSprite;
+			add->next = nullptr;
+			collLast->next = add;
+			collLast = add;
+		}
+		else
+		{
+			Collider * add = new Collider;
+			add->target = newSprite;
+			add->next = nullptr;
+			collFirst = add;
+			collLast = collFirst;
+		}
 	}
 }
 

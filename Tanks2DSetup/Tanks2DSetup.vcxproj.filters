@@ -9,7 +9,8 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="TextButton.cpp" />
     <ClCompile Include="Tower.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\pr\Tanks2DSetup\EndGame.cpp" />
+    <ClCompile Include="EndGame.cpp" />
+    <ClCompile Include="objectsOnMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet.h" />
@@ -20,9 +21,11 @@
     <ClInclude Include="TextButton.h" />
     <ClInclude Include="Tower.h" />
     <ClInclude Include="EndGame.h" />
+    <ClInclude Include="objectsOnMap.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="level1.txt" />
     <Text Include="playerStats.txt" />
+    <Text Include="level2.txt" />
   </ItemGroup>
 </Project>

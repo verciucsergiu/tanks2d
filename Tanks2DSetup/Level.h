@@ -1,4 +1,5 @@
 #pragma once
+
 #include "SFML\Graphics.hpp"
 #include <iostream>
 #include <fstream>
@@ -8,6 +9,8 @@
 #include "GameMap.h"
 #include "bullet.h"
 #include "EndGame.h"
+#include "objectsOnMap.h"
+
 using namespace std;
 using namespace sf;
 
@@ -35,6 +38,13 @@ struct Stats
 	float speed;
 	float bulletSpeed;
 };
+
+struct objectOnMapList
+{
+	objectsOnMap obj[200];
+	int nrObjects;
+};
+
 class Level
 {
 public:
@@ -88,5 +98,6 @@ private:
 	bool testing;
 	
 	Vector2i playerStartingPos;
+	objectOnMapList objects;
 };
 

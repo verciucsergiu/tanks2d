@@ -215,7 +215,7 @@ void Game::createLevels()
 	levels.level[0].Create();
 	levels.level[0].GenerateMap("level1.txt");
 	levels.level[1].Create();
-	levels.level[1].GenerateMap("level1.txt");
+	levels.level[1].GenerateMap("level2.txt");
 	maxLevels = 1;
 }
 

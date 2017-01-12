@@ -10,15 +10,12 @@
 #include "bullet.h"
 #include "EndGame.h"
 #include "objectsOnMap.h"
+#include "Tower.h"
 
 using namespace std;
 using namespace sf;
 
-struct BulletsFired
-{
-	bullet *bullet;
-	BulletsFired *next;
-};
+
 struct CameraGrid
 {
 	FloatRect collision;
@@ -44,7 +41,11 @@ struct objectOnMapList
 	objectsOnMap obj[200];
 	int nrObjects;
 };
-
+struct towerList
+{
+	Tower list[20];
+	int nrTowers;
+};
 class Level
 {
 public:
@@ -100,5 +101,8 @@ private:
 	
 	Vector2i playerStartingPos;
 	objectOnMapList objects;
+
+	towerList towers;
+	PosInSpace tankPos;
 };
 

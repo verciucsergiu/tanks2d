@@ -81,6 +81,11 @@ void Level::Draw(RenderWindow & window)
 	{
 		objects.obj[i].draw(window);
 	}
+	for (int i = 0; i < towers.nrTowers; i++)
+	{
+		towers.list[i].update(fixedDeltaTime, window);
+		towers.list[i].tankPosition(tankPos.gridX, tankPos.gridX, player.tankSprite.getPosition().x, player.tankSprite.getPosition().y);
+	}
 }
 
 
@@ -100,6 +105,8 @@ void Level::CameraBehavior(RenderWindow &window)
 		if (cameras.square[i].collision.contains(player.tankSprite.getPosition().x, player.tankSprite.getPosition().y))
 		{
 			followPlayer.setCenter(window.getSize().x / 2 + window.getSize().x * cameras.square[i].gridX, window.getSize().y / 2 + window.getSize().y * cameras.square[i].gridY);
+			tankPos.gridX = cameras.square[i].gridX;
+			tankPos.gridY = cameras.square[i].gridY;
 		}
 	}
 	window.setView(followPlayer);
@@ -207,6 +214,30 @@ void Level::addBulletCollision()
 			c2DLast = c2DFirst;
 		}
 	}
+	for (int i = 0; i < towers.nrTowers; i++)
+	{
+		Sprite newSprite;
+		newSprite.setTexture(towers.list[i].towerTexture);
+		newSprite.setPosition(towers.list[i].towerSprite.getPosition());
+		if (c2DFirst != nullptr && c2DLast != nullptr)
+		{
+			Collider2D * add = new Collider2D;
+			add->target = newSprite;
+			add->role = 0;
+			add->next = nullptr;
+			c2DLast->next = add;
+			c2DLast = add;
+		}
+		else
+		{
+			Collider2D * add = new Collider2D;
+			add->target = newSprite;
+			add->role = 0;
+			add->next = nullptr;
+			c2DFirst = add;
+			c2DLast = c2DFirst;
+		}
+	}
 }
 
 void Level::eliminareBullet(BulletsFired * target)
@@ -275,7 +306,17 @@ void Level::GenerateMap(string fisier)
 		objects.obj[index].create(gridX, gridY, x, y, type);
 	}
 	objects.nrObjects = nrObjects;
-
+	int nrTower;
+	fin >> nrTower;
+	for (int i = 0; i < nrTower; i++)
+	{
+		int gridX, gridY, x, y;
+		fin >> gridX >> gridY >> x >> y;
+		towers.list[i].initalization();
+		towers.list[i].setPosition(gridX, gridY, x, y);
+		towers.list[i].setAlive(true);
+	}
+	towers.nrTowers = nrTower;
 	MapCollisions();
 	addBulletCollision();
 }
@@ -413,6 +454,28 @@ void Level::MapCollisions()
 		Sprite newSprite;
 		newSprite.setTexture(objects.obj[i].objectTexture);
 		newSprite.setPosition(objects.obj[i].objectSprite.getPosition());
+		if (collFirst != nullptr && collLast != nullptr)
+		{
+			Collider * add = new Collider;
+			add->target = newSprite;
+			add->next = nullptr;
+			collLast->next = add;
+			collLast = add;
+		}
+		else
+		{
+			Collider * add = new Collider;
+			add->target = newSprite;
+			add->next = nullptr;
+			collFirst = add;
+			collLast = collFirst;
+		}
+	}
+	for (int i = 0; i < towers.nrTowers; i++)
+	{
+		Sprite newSprite;
+		newSprite.setTexture(towers.list[i].towerTexture);
+		newSprite.setPosition(towers.list[i].towerSprite.getPosition());
 		if (collFirst != nullptr && collLast != nullptr)
 		{
 			Collider * add = new Collider;

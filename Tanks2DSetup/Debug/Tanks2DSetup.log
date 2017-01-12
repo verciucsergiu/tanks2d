@@ -1,47 +1,6 @@
-﻿  Level.cpp
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(34): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(38): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(102): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(252): warning C4800: 'int': forcing value to bool 'true' or 'false' (performance warning)
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(253): warning C4800: 'int': forcing value to bool 'true' or 'false' (performance warning)
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(254): warning C4800: 'int': forcing value to bool 'true' or 'false' (performance warning)
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(255): warning C4800: 'int': forcing value to bool 'true' or 'false' (performance warning)
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(301): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(307): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(308): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(314): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(320): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(321): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(341): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(347): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(348): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(354): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(360): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(361): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(437): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(438): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\level.cpp(453): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Game.cpp
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\game.cpp(62): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\game.cpp(63): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\game.cpp(66): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\game.cpp(70): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\game.cpp(82): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\game.cpp(86): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\game.cpp(91): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\game.cpp(97): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\game.cpp(139): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\game.cpp(165): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\game.cpp(174): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\game.cpp(185): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\game.cpp(222): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\game.cpp(222): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\game.cpp(223): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
-  EndGame.cpp
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\endgame.cpp(27): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-d:\@blue\faculta\visual studio c++\proiect\pr2\tanks2dsetup\endgame.cpp(28): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  main.cpp
-  Tanks2DSetup.vcxproj -> D:\@BLUE\Faculta\Visual Studio c++\Proiect\pr2\Debug\Tanks2DSetup.exe
-  Tanks2DSetup.vcxproj -> D:\@BLUE\Faculta\Visual Studio c++\Proiect\pr2\Debug\Tanks2DSetup.pdb (Full PDB)
+﻿  Tower.cpp
+c:\users\alin1\desktop\project2\tanks2dsetup\tower.cpp(130): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\alin1\desktop\project2\tanks2dsetup\tower.cpp(131): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\alin1\desktop\project2\tanks2dsetup\tower.cpp(43): warning C4700: uninitialized local variable 'newBull' used
+  Tanks2DSetup.vcxproj -> C:\Users\Alin1\Desktop\project2\Debug\Tanks2DSetup.exe
+  Tanks2DSetup.vcxproj -> C:\Users\Alin1\Desktop\project2\Debug\Tanks2DSetup.pdb (Full PDB)

@@ -98,6 +98,7 @@ Game::Game()
 					{
 						currentLevelPlaying = i;
 						currentMenu = menuType::actualGame;
+						levels.level[i].Create();
 						levels.level[i].setPlayerStats(playerStats);
 						levels.level[i].setPlay();
 					}

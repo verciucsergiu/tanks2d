@@ -46,6 +46,12 @@ struct towerList
 	Tower list[20];
 	int nrTowers;
 };
+struct BulletsFired
+{
+	bullet *bullet;
+	BulletsFired *next;
+	
+};
 class Level
 {
 public:

@@ -4,7 +4,12 @@
 
 Tower::Tower()
 {
-	
+	resetBullets();
+	hit = false;
+	if (!bulTexture.loadFromFile("sprites/bullet.png"))
+	{
+
+	}
 }
 
 
@@ -32,20 +37,33 @@ void Tower::setAlive(bool value)
 
 void Tower::update(float deltaTime, RenderWindow & window)
 {
+	//updateBullets(deltaTime, window);
+	
+	for (int i = 0; i < bullets.nrOfBullets; i++)
+	{
+		bullets.bull[i].bulletSpr.move(bullets.bull[i].normalX * deltaTime * speed, bullets.bull[i].normalY * deltaTime * speed);
+		bullets.bull[i].bulletSpr.setTexture(bulTexture);
+		hit = false;
+		if (tankSprite.getGlobalBounds().contains(bullets.bull[i].bulletSpr.getPosition().x, bullets.bull[i].bulletSpr.getPosition().y))
+		{
+			eliminareBullet(i);
+			hit = true;
+		}
+		Vector2f currentpos = bullets.bull[i].bulletSpr.getPosition();
+		FloatRect camera(towerPos.gridX * 800 + 32, towerPos.gridY * 576 - 32, 768, 544);
+		if (!camera.contains(currentpos.x,currentpos.y))
+		{
+			eliminareBullet(i);
+		}
+		window.draw(bullets.bull[i].bulletSpr);
+	}
 	draw(window);
-	time = deltaTime;
 	if (tankPos.gridX == towerPos.gridX && tankPos.gridY == towerPos.gridY)
 	{
 		if (canFire)
 		{
+			fire(tankPos.x, tankPos.y);
 			canFire = false;
-			bullet *newBull;
-			newBull->create();
-			newBull->setStartPosition(towerPos.x, towerPos.y);
-			newBull->setTarget(tankPos.x, tankPos.y);
-			Vector2i target(tankPos.x, tankPos.y);
-			newBull->setBulletRotation(target, window);
-			addBullets(newBull);
 		}
 		else
 		{
@@ -60,15 +78,13 @@ void Tower::update(float deltaTime, RenderWindow & window)
 			}
 		}
 	}
+	
 }
 void Tower::draw(RenderWindow &window)
 {
 	window.draw(towerSprite);
 	window.draw(tunSprite);
-	for (BulletsFired * current = bFiredFirst; current != nullptr; current = current->next)
-	{
-		current->bullet->Update(time, window);
-	}
+	urmaresteTank(window);
 }
 void Tower::tankPosition(int gridX, int gridY, int x, int y)
 {
@@ -91,38 +107,68 @@ void Tower::initalization()
 	if (!tunTexture.loadFromFile("sprites/tower_tun.png")) {
 	}
 	tunSprite.setTexture(tunTexture);
-	//towerSprite.setOrigin(towerSprite.getGlobalBounds().height / 2, towerSprite.getGlobalBounds().width / 2);
-	//tunSprite.setOrigin(tunSprite.getGlobalBounds().height / 2, tunSprite.getGlobalBounds().width / 2);
+	float x = tunSprite.getOrigin().x + 16;
+	float y = tunSprite.getOrigin().y + 16;
+	towerSprite.setOrigin(x, y);
+	x += 16;
+	tunSprite.setOrigin(x, y);
 	canFire = true;
-	fireDelay = .35f;
+	fireDelay = .5f;
 	currentDelay = fireDelay;
 	resetBullets();
+	speed = 650;
 }
 
-void Tower::addBullets(bullet * target)
+void Tower::urmaresteTank(RenderWindow &window)
 {
-	if (bFiredFirst != nullptr && bFiredLast != nullptr)
+	Vector2f currentPos = tunSprite.getPosition();
+
+	const float PI = 3.14159265;
+	float dx = currentPos.x - tankPos.x;
+	float dy = currentPos.y - tankPos.y;
+	float tunRotation = (atan2(dy, dx)) * 180 / PI;
+	tunSprite.setRotation(tunRotation);
+}
+
+void Tower::fire(int targetX, int targetY)
+{
+	if (bullets.nrOfBullets < 8)
 	{
-		BulletsFired *add = new BulletsFired;
-		add->bullet = target;
-		add->next = nullptr;
-		bFiredLast->next = add;
-		bFiredLast = add;
-	}
-	else
-	{
-		BulletsFired *add = new BulletsFired;
-		add->bullet = target;
-		add->next = nullptr;
-		bFiredFirst = add;
-		bFiredLast = bFiredFirst;
+		float x = targetX - tunSprite.getPosition().x;
+		float y = targetY - tunSprite.getPosition().y;
+		float normalize = sqrt(x*x + y*y);
+		x = x / normalize;
+		y = y / normalize;
+		bullets.bull[bullets.nrOfBullets].bulletSpr.setPosition(tunSprite.getPosition().x, tunSprite.getPosition().y);
+		bullets.bull[bullets.nrOfBullets].normalX = x;
+		bullets.bull[bullets.nrOfBullets].normalY = y;
+		bullets.nrOfBullets++;
 	}
 }
+
+void Tower::setTankSprite(Sprite tank)
+{
+	tankSprite = tank;
+}
+
+bool Tower::isHit()
+{
+	return hit;
+}
+
+void Tower::eliminareBullet(int pos)
+{
+	for (int i = pos; i < bullets.nrOfBullets - 1; i++)
+	{
+		bullets.bull[i] = bullets.bull[i + 1];
+	}
+	bullets.nrOfBullets--;
+}
+
 
 void Tower::resetBullets()
 {
-	bFiredFirst = nullptr;
-	bFiredLast = nullptr;
+	bullets.nrOfBullets = 0;
 }
 
 void Tower::setPosition(int gridX, int gridY, int x, int y)
@@ -131,8 +177,8 @@ void Tower::setPosition(int gridX, int gridY, int x, int y)
 	float posY = 576 * gridY + y;
 	towerPos.gridX = gridX;
 	towerPos.gridY = gridY;
-	towerPos.x = x;
-	towerPos.y = y;
+	towerPos.x = posX;
+	towerPos.y = posY;
 	towerSprite.setPosition(posX, posY);
 	tunSprite.setPosition(posX, posY);
 }

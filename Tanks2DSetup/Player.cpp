@@ -316,6 +316,11 @@ void Player::setRotationSpeed(float value)
 {
 	rotationSpeed = value;
 }
+void Player::takeDamage(int value)
+{
+	health -= value;
+	cout << health << '\n';
+}
 void Player::defaultBoxColliderOffset()
 {
 	boxColliderOffset.x = 0;

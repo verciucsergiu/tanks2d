@@ -46,6 +46,8 @@ public:
 	void setSpeed(float speed);
 	void setRotationSpeed(float value);
 
+	void takeDamage(int value);
+
 	float getTurretRotation(); //return turretRotation
 private:
 	Vector2i boxColliderOffset;

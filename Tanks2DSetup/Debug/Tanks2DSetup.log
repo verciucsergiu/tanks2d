@@ -1,6 +1,20 @@
-﻿  Tower.cpp
-c:\users\alin1\desktop\project2\tanks2dsetup\tower.cpp(130): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\alin1\desktop\project2\tanks2dsetup\tower.cpp(131): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\alin1\desktop\project2\tanks2dsetup\tower.cpp(43): warning C4700: uninitialized local variable 'newBull' used
+﻿  Game.cpp
+c:\users\alin1\desktop\project2\tanks2dsetup\game.cpp(62): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\alin1\desktop\project2\tanks2dsetup\game.cpp(63): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\alin1\desktop\project2\tanks2dsetup\game.cpp(66): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\alin1\desktop\project2\tanks2dsetup\game.cpp(70): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\alin1\desktop\project2\tanks2dsetup\game.cpp(82): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\alin1\desktop\project2\tanks2dsetup\game.cpp(86): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\alin1\desktop\project2\tanks2dsetup\game.cpp(91): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\alin1\desktop\project2\tanks2dsetup\game.cpp(97): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\alin1\desktop\project2\tanks2dsetup\game.cpp(140): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\alin1\desktop\project2\tanks2dsetup\game.cpp(164): warning C4996: 'sf::Text::setColor': was declared deprecated
+  c:\users\alin1\desktop\project2\include\sfml\graphics\text.hpp(177): note: see declaration of 'sf::Text::setColor'
+c:\users\alin1\desktop\project2\tanks2dsetup\game.cpp(172): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\alin1\desktop\project2\tanks2dsetup\game.cpp(181): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\alin1\desktop\project2\tanks2dsetup\game.cpp(192): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+c:\users\alin1\desktop\project2\tanks2dsetup\game.cpp(229): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\alin1\desktop\project2\tanks2dsetup\game.cpp(229): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+c:\users\alin1\desktop\project2\tanks2dsetup\game.cpp(230): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
   Tanks2DSetup.vcxproj -> C:\Users\Alin1\Desktop\project2\Debug\Tanks2DSetup.exe
   Tanks2DSetup.vcxproj -> C:\Users\Alin1\Desktop\project2\Debug\Tanks2DSetup.pdb (Full PDB)

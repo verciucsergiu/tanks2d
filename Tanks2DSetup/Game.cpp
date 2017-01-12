@@ -158,6 +158,12 @@ void Game::displayFps()
 		strText.setCharacterSize(15);
 		strText.setPosition(window.getView().getCenter().x - window.getView().getSize().x / 2, window.getView().getCenter().y - window.getView().getSize().y / 2 + 20);
 		window.draw(strText);
+		String strHealth = to_string(levels.level[currentLevelPlaying].player.health) + "/100";
+		Text strTextH(strHealth, font);
+		strTextH.setCharacterSize(35);
+		strTextH.setColor(Color::Red);
+		strTextH.setPosition(window.getView().getCenter().x - window.getView().getSize().x / 2, window.getView().getCenter().y - window.getView().getSize().y / 2 + 40);
+		window.draw(strTextH);
 	}
 }
 

@@ -84,7 +84,12 @@ void Level::Draw(RenderWindow & window)
 	for (int i = 0; i < towers.nrTowers; i++)
 	{
 		towers.list[i].update(fixedDeltaTime, window);
-		towers.list[i].tankPosition(tankPos.gridX, tankPos.gridX, player.tankSprite.getPosition().x, player.tankSprite.getPosition().y);
+		towers.list[i].tankPosition(tankPos.gridX, tankPos.gridY, player.tankSprite.getPosition().x, player.tankSprite.getPosition().y);
+		towers.list[i].setTankSprite(player.tankSprite);
+		if (towers.list[i].isHit())
+		{
+			player.takeDamage(5);
+		}
 	}
 }
 
@@ -287,6 +292,8 @@ void Level::GenerateMap(string fisier)
 				mapGrid((row - 1) * 18, (col - 1) * 25, sus, jos, stanga, dreapta);
 				if (mat[row][col] == 2)
 				{
+					tankPos.gridX = col - 1;
+					tankPos.gridY = row - 1;
 					createCamera(col - 1, row - 1);
 				}
 				if (mat[row][col] == 3)
@@ -313,8 +320,8 @@ void Level::GenerateMap(string fisier)
 		int gridX, gridY, x, y;
 		fin >> gridX >> gridY >> x >> y;
 		towers.list[i].initalization();
-		towers.list[i].setPosition(gridX, gridY, x, y);
 		towers.list[i].setAlive(true);
+		towers.list[i].setPosition(gridX, gridY, x, y);
 	}
 	towers.nrTowers = nrTower;
 	MapCollisions();

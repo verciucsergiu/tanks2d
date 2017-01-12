@@ -10,11 +10,15 @@ struct PosInSpace
 {
 	int gridX, gridY, x, y;
 };
-
-struct BulletsFired
+struct glont
 {
-	bullet *bullet;
-	BulletsFired *next;
+	Sprite bulletSpr;
+	float normalX, normalY;
+};
+struct Bullets
+{
+	glont bull[10]; 
+	int nrOfBullets;
 };
 class Tower
 {
@@ -35,20 +39,25 @@ public:
 	void tankPosition(int gridX, int gridY, int x, int y);
 	bool isAlive();
 	void initalization();
+	void urmaresteTank(RenderWindow &window);
+	void fire(int targetX, int targetY);
+	void setTankSprite(Sprite tank);
+	bool isHit();
+	void eliminareBullet(int pos);
 private:
 	Sprite bulletTexture;
 	bool alive;
 	PosInSpace tankPos, towerPos;
 
-	BulletsFired *bFiredFirst;
-	BulletsFired *bFiredLast;
-
-	void addBullets(bullet * target);
 	void resetBullets();
-
+	Bullets bullets;
 	bool canFire;
 	float fireDelay;
 	float currentDelay;
 	float time;
+	Texture bulTexture;
+	Sprite tankSprite;
+	bool hit;
+	float speed;
 };
 

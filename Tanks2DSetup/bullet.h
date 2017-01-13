@@ -32,6 +32,7 @@ public:
 	void setColliders(Collider2D *first, Collider2D *last);
 	bool checkCollision();
 	int collisionType;
+	FloatRect colTarget;
 private:
 	void draw(RenderWindow &window);
 	Texture bulletTexture;

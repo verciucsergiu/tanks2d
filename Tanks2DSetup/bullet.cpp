@@ -42,14 +42,18 @@ bool bullet::checkCollision()
 {
 	for (Collider2D * current = collFirst; current != nullptr; current = current->next)
 	{
-		FloatRect rect(bulletSprite.getPosition().x, bulletSprite.getPosition().y, 4, 4);
+		FloatRect rect(bulletSprite.getPosition().x, bulletSprite.getPosition().y, 20, 20);
 		if (current->target.getGlobalBounds().intersects(rect))
 		{
 			collisionType = 0;
 			if (current->role == 1)
 			{
-				
 				collisionType = 1;
+			}
+			if (current->role == 2)
+			{
+				collisionType = 2;
+				colTarget = rect;
 			}
 			return true;
 		}

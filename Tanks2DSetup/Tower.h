@@ -29,6 +29,7 @@ public:
 	Sprite towerSprite;
 	Texture tunTexture;
 	Texture towerTexture;
+	Texture towerTextureDestroy;
 	int health;
 	int damage;
 	void setPosition(int gridX, int gridY, int x, int y);

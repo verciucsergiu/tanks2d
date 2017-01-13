@@ -74,6 +74,17 @@ void Level::Draw(RenderWindow & window)
 			{
 				endTheGame.takeDamage(player.damage);
 			}
+			if (current->bullet->collisionType == 2)
+			{
+				for (int i = 0; i < towers.nrTowers; i++)
+				{
+					FloatRect rect(towers.list[i].towerSprite.getPosition().x - 8, towers.list[i].towerSprite.getPosition().y - 8, towers.list[i].towerSprite.getGlobalBounds().height + 15, towers.list[i].towerSprite.getGlobalBounds().width + 15);
+					if (rect.intersects(current->bullet->colTarget))
+					{
+						towers.list[i].takeDamage(player.damage);
+					}
+				}
+			}
 			eliminareBullet(current);
 		}
 	}
@@ -228,7 +239,7 @@ void Level::addBulletCollision()
 		{
 			Collider2D * add = new Collider2D;
 			add->target = newSprite;
-			add->role = 0;
+			add->role = 2;
 			add->next = nullptr;
 			c2DLast->next = add;
 			c2DLast = add;
@@ -237,7 +248,7 @@ void Level::addBulletCollision()
 		{
 			Collider2D * add = new Collider2D;
 			add->target = newSprite;
-			add->role = 0;
+			add->role = 2;
 			add->next = nullptr;
 			c2DFirst = add;
 			c2DLast = c2DFirst;
@@ -580,6 +591,7 @@ Vector2i Level::getCameraPos()
 	pos.y = followPlayer.getCenter().y;
 	return pos;
 }
+
 
 void Level::resetCollider()
 {

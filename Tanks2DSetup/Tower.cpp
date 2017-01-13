@@ -57,7 +57,7 @@ void Tower::update(float deltaTime, RenderWindow & window)
 		window.draw(bullets.bull[i].bulletSpr);
 	}
 	draw(window);
-	if (tankPos.gridX == towerPos.gridX && tankPos.gridY == towerPos.gridY)
+	if (tankPos.gridX == towerPos.gridX && tankPos.gridY == towerPos.gridY && alive)
 	{
 		if (canFire)
 		{
@@ -81,9 +81,18 @@ void Tower::update(float deltaTime, RenderWindow & window)
 }
 void Tower::draw(RenderWindow &window)
 {
-	window.draw(towerSprite);
-	window.draw(tunSprite);
-	urmaresteTank(window);
+	if (alive)
+	{
+		towerSprite.setTexture(towerTexture);
+		window.draw(towerSprite);
+		window.draw(tunSprite);
+		urmaresteTank(window);
+	}
+	else
+	{
+		towerSprite.setTexture(towerTextureDestroy);
+		window.draw(towerSprite);
+	}
 }
 void Tower::tankPosition(int gridX, int gridY, int x, int y)
 {
@@ -105,17 +114,18 @@ void Tower::initalization()
 	towerSprite.setTexture(towerTexture);
 	if (!tunTexture.loadFromFile("sprites/tower_tun.png")) {
 	}
+	if (!towerTextureDestroy.loadFromFile("sprites/tower_base_destroy.png")) {
+	}
 	tunSprite.setTexture(tunTexture);
-	float x = tunSprite.getOrigin().x + 16;
+	float x = tunSprite.getOrigin().x + 32;
 	float y = tunSprite.getOrigin().y + 16;
-	towerSprite.setOrigin(x, y);
-	x += 16;
 	tunSprite.setOrigin(x, y);
 	canFire = true;
 	fireDelay = .5f;
 	currentDelay = fireDelay;
 	resetBullets();
 	speed = 650;
+	health = 350;
 }
 
 void Tower::urmaresteTank(RenderWindow &window)
@@ -182,5 +192,5 @@ void Tower::setPosition(int gridX, int gridY, int x, int y)
 	towerPos.x = posX;
 	towerPos.y = posY;
 	towerSprite.setPosition(posX, posY);
-	tunSprite.setPosition(posX, posY);
+	tunSprite.setPosition(posX+11, posY+16);
 }

@@ -159,6 +159,7 @@
     <ClCompile Include="EndGame.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMap.cpp" />
+    <ClCompile Include="hud.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="objectsOnMap.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="EndGame.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMap.h" />
+    <ClInclude Include="hud.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="objectsOnMap.h" />
     <ClInclude Include="Player.h" />
@@ -178,8 +180,8 @@
     <ClInclude Include="Tower.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\pr3\Tanks2DSetup\level3.txt" />
     <Text Include="level1.txt" />
+    <Text Include="level3.txt" />
     <Text Include="playerStats.txt" />
     <Text Include="level2.txt" />
   </ItemGroup>

@@ -83,6 +83,7 @@ public:
 	void setPause(bool value);
 	bool isPause();
 	Vector2i getCameraPos();
+
 private:
 
 	Collider *collFirst;
@@ -116,7 +117,7 @@ private:
 
 	int mapMap[25][25];
 	int rows, collumns;
-
+	
 	bool pause;
 };
 

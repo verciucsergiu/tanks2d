@@ -125,7 +125,6 @@ void Tower::initalization()
 	currentDelay = fireDelay;
 	resetBullets();
 	speed = 650;
-	health = 350;
 }
 
 void Tower::urmaresteTank(RenderWindow &window)
@@ -175,6 +174,11 @@ void Tower::eliminareBullet(int pos)
 		}
 	}
 	bullets.nrOfBullets--;
+}
+
+void Tower::setHealth(int valoare)
+{
+	health = valoare;
 }
 
 

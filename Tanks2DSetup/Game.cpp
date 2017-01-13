@@ -3,7 +3,7 @@
 Game::Game()
 {
 	window.create(VideoMode(800, 576), "TANKS 2D", Style::Titlebar | Style::Close);
-
+	getPlayerStats();
 	CreateCamera(1);
 	resetLevelsMenu();
 
@@ -11,19 +11,34 @@ Game::Game()
 	createMainMenu();
 	createLoadingScreen();
 	
-	getPlayerStats();
+
 	resetLevels();
 	createLevels();
 
 	sf::Texture sandLevelTexture;
 	sf::Sprite sandSprite;
-
+	sf::Texture introGame;
+	sf::Sprite introSrite;
 	if(!sandLevelTexture.loadFromFile("sprites/sand.png"))
 	{
-		cout << "Error loading tile_ground!\n";
+		cout << "Error loading sand!\n";
 	}
-
-
+	if (!introGame.loadFromFile("sprites/intro.png"))
+	{
+		cout << "Error loading intro!\n";
+	}
+	sf::Texture levelText;
+	if (!levelText.loadFromFile("sprites/levelmenu.png"))
+	{
+		cout << "Error loading levelmenu!\n";
+	}
+	
+	sf::Sprite levelSprite;
+	introSrite.setTexture(introGame);
+	introSrite.setPosition(-400, -288);
+	levelSprite.setTexture(levelText);
+	levelSprite.setPosition(-400, -288);
+	
 	sandLevelTexture.setRepeated(true);
 
 	sandSprite.setTexture(sandLevelTexture);
@@ -56,6 +71,7 @@ Game::Game()
 		{
 		case mainMenu:
 		{
+			window.draw(introSrite);
 			quit.Draw(window);
 			play.Draw(window);
 			quit.checkHover(mousePos.x, mousePos.y, window);
@@ -70,15 +86,15 @@ Game::Game()
 				{
 					window.close();
 				}
-
 			}
-			
 		}
 			break;
 		case levelMenu:
 		{			
+			window.draw(levelSprite);
 			back.Draw(window);
 			back.checkHover(mousePos.x, mousePos.y, window);
+			
 			for (int i = 0; i < levelsMenu.nrLlevels; i++)
 			{
 				levelsMenu.level[i].Draw(window);
@@ -99,16 +115,19 @@ Game::Game()
 						currentMenu = menuType::actualGame;
 						levels.level[i].Create();
 						levels.level[i].player.setAlive(true);
+						getPlayerStats();
 						levels.level[i].setPlayerStats(playerStats);
 						levels.level[i].setPlay();
 					}
 				}
 			}
 		}
+		
 			break;
 		case actualGame:
 		{
 			window.draw(sandSprite);
+			
 			if (!pause)
 			{
 				levels.level[currentLevelPlaying].setPause(false);
@@ -128,6 +147,7 @@ Game::Game()
 						window.setView(followPlayer);
 						currentMenu = menuType::levelMenu;
 						levels.level[currentLevelPlaying].setPlay();
+						getPlayerStats();
 						levels.level[currentLevelPlaying].setPlayerStats(playerStats);
 					}
 				}
@@ -142,6 +162,8 @@ Game::Game()
 						if (currentLevelPlaying + 1 <= maxLevels)
 						{
 							levelsMenu.level[currentLevelPlaying + 1].setActive(true);
+							playerStats.currentLevel++;
+							saveStats();
 						}
 					}
 				}
@@ -181,10 +203,12 @@ Game::Game()
 					contCreated = false;
 				}
 			}
+			gameHud.health = levels.level[currentLevelPlaying].player.health;
+			gameHud.draw(window);
 		}
 			break;
 		}
-		displayFps();
+		//displayFps();
 		window.display();
 	}
 }
@@ -210,20 +234,6 @@ void Game::displayFps()
 	fpsT.setCharacterSize(15);
 	fpsT.setPosition(window.getView().getCenter().x - window.getView().getSize().x / 2, window.getView().getCenter().y - window.getView().getSize().y / 2);
 	window.draw(fpsT);
-	if (currentMenu == menuType::actualGame)
-	{
-		String str = "X: " + to_string((int)levels.level[currentLevelPlaying].player.tankSprite.getPosition().x) + "\nY: " + to_string((int)levels.level[currentLevelPlaying].player.tankSprite.getPosition().y);
-		Text strText(str, font);
-		strText.setCharacterSize(15);
-		strText.setPosition(window.getView().getCenter().x - window.getView().getSize().x / 2, window.getView().getCenter().y - window.getView().getSize().y / 2 + 20);
-		window.draw(strText);
-		String strHealth = to_string(levels.level[currentLevelPlaying].player.health) + "/100";
-		Text strTextH(strHealth, font);
-		strTextH.setCharacterSize(35);
-		strTextH.setColor(Color::Red);
-		strTextH.setPosition(window.getView().getCenter().x - window.getView().getSize().x / 2, window.getView().getCenter().y - window.getView().getSize().y / 2 + 40);
-		window.draw(strTextH);
-	}
 }
 
 void Game::createLevelsMenu()
@@ -238,7 +248,7 @@ void Game::createLevelsMenu()
 		for (int j = 0; j < 5; j++)
 		{
 			levelsMenu.level[level++].create(to_string(level), startX + j*spacing, startY + i*spacing, Color::Blue, sizeType::small);
-			if (level > 3)
+			if (level > playerStats.currentLevel)
 			{
 				levelsMenu.level[level - 1].setActive(false);
 			}
@@ -282,6 +292,13 @@ void Game::createLevels()
 	levels.level[1].GenerateMap(levelsStrings[1]);
 	levels.level[2].GenerateMap(levelsStrings[2]);
 	maxLevels = 2;
+}
+
+void Game::saveStats()
+{
+	ofstream out("playerStats.txt");
+	out << playerStats.health<<" "<< playerStats.damage<<" "<< playerStats.currentLevel<< "\n" << playerStats.speed<<" "<< playerStats.bulletSpeed;
+	out.close();
 }
 
 void Game::createMainMenu()

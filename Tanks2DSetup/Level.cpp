@@ -99,7 +99,7 @@ void Level::Draw(RenderWindow & window)
 		towers.list[i].setTankSprite(player.tankSprite);
 		if (towers.list[i].isHit())
 		{
-			player.takeDamage(50);
+			player.takeDamage(20);
 		}
 	}
 }
@@ -571,6 +571,11 @@ void Level::setPlay()
 				createCamera(col - 1, row - 1);
 			}
 		}
+	}
+	for (int index = 0; index < towers.nrTowers; index++)
+	{
+		towers.list[index].setAlive(true);
+		towers.list[index].setHealth(350);
 	}
 }
 

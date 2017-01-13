@@ -2,6 +2,7 @@
 #include "SFML\Graphics.hpp"
 #include "Level.h"
 #include "TextButton.h"
+#include "hud.h"
 #include <fstream>
 
 using namespace std;
@@ -60,5 +61,8 @@ private:
 	void createLevels();
 	int currentLevelPlaying;
 	int maxLevels;
+	hud gameHud;
+
+	void saveStats();
 };
 

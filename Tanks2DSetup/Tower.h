@@ -45,6 +45,7 @@ public:
 	void setTankSprite(Sprite tank);
 	bool isHit();
 	void eliminareBullet(int pos);
+	void setHealth(int valoare);
 private:
 	Sprite bulletTexture;
 	bool alive;

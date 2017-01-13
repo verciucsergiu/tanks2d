@@ -54,14 +54,15 @@ void TextButton::checkHover(int x, int y, RenderWindow &window)
 	{
 		if (checkClick(x, y))
 		{
-			Text notAviable("This is not aviable!",font);
-			notAviable.setCharacterSize(15);
-			float xOriginText = notAviable.getGlobalBounds().width / 2;
-			float yOriginText = notAviable.getGlobalBounds().height / 2;
-			notAviable.setOrigin(xOriginText, yOriginText);
-			notAviable.setPosition(buttonSprite.getPosition().x, buttonSprite.getPosition().y - buttonSprite.getGlobalBounds().height / 2 - 8);
-			notAviable.setColor(Color::Red);
-			window.draw(notAviable);
+			Text notAvailable("This is not available!",font);
+			notAvailable.setCharacterSize(17);
+			notAvailable.setStyle(Text::Style::Bold);
+			float xOriginText = notAvailable.getGlobalBounds().width / 2;
+			float yOriginText = notAvailable.getGlobalBounds().height / 2;
+			notAvailable.setOrigin(xOriginText, yOriginText);
+			notAvailable.setPosition(buttonSprite.getPosition().x, buttonSprite.getPosition().y - buttonSprite.getGlobalBounds().height / 2 - 12);
+			notAvailable.setColor(Color::Black);
+			window.draw(notAvailable);
 		}
 	}
 	

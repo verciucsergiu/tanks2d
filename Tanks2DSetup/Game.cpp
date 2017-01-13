@@ -11,18 +11,11 @@ Game::Game()
 	createMainMenu();
 	createLoadingScreen();
 	
-
 	resetLevels();
 	createLevels();
 
-	sf::Texture sandLevelTexture;
-	sf::Sprite sandSprite;
 	sf::Texture introGame;
 	sf::Sprite introSrite;
-	if(!sandLevelTexture.loadFromFile("sprites/sand.png"))
-	{
-		cout << "Error loading sand!\n";
-	}
 	if (!introGame.loadFromFile("sprites/intro.png"))
 	{
 		cout << "Error loading intro!\n";
@@ -38,11 +31,6 @@ Game::Game()
 	introSrite.setPosition(-400, -288);
 	levelSprite.setTexture(levelText);
 	levelSprite.setPosition(-400, -288);
-	
-	sandLevelTexture.setRepeated(true);
-
-	sandSprite.setTexture(sandLevelTexture);
-	sandSprite.setTextureRect({0,0,5000,5000});
 
 	currentMenu = menuType::mainMenu;
 
@@ -125,9 +113,7 @@ Game::Game()
 		
 			break;
 		case actualGame:
-		{
-			window.draw(sandSprite);
-			
+		{	
 			if (!pause)
 			{
 				levels.level[currentLevelPlaying].setPause(false);

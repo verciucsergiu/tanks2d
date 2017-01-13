@@ -24,9 +24,12 @@ public:
 	void draw(RenderWindow &window);
 	Texture wallTexture;
 	Sprite wallSprite;
+
+	void setWallString(string value);
+	void create();
 private:
 	Sprite groundSprite;
 	Texture groundTexture;
-	
+	string wallString;
 };
 

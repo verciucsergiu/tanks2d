@@ -118,6 +118,9 @@ private:
 	int mapMap[25][25];
 	int rows, collumns;
 	
+	sf::Texture groundLevelTexture;
+	sf::Sprite groundSprite;
+
 	bool pause;
 };
 

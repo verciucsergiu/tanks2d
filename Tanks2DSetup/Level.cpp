@@ -27,6 +27,7 @@ void Level::Create()
 void Level::Update(float deltaTime, RenderWindow & window)
 {
 	fixedDeltaTime = deltaTime;
+	
 	if (Mouse::isButtonPressed(Mouse::Left) && canFire && !isPause())
 	{
 		bullet *fire = new bullet;
@@ -53,6 +54,7 @@ void Level::Update(float deltaTime, RenderWindow & window)
 			canFire = true;
 		}
 	}
+	window.draw(groundSprite);
 	player.update(deltaTime, window);
 	Draw(window);
 	player.setCollider(collFirst, collLast);
@@ -279,6 +281,24 @@ void Level::GenerateMap(string fisier)
 	//800 px width
 	//576 px height
 	ifstream fin(fisier);
+	char grd[255], wall[255];
+	string ground;
+	string wallStr;
+	fin.getline(grd, 255, '\n');
+	fin.getline(wall, 255, '\n');
+	
+	ground = grd;
+	wallStr = wall;
+	cout << ground << wallStr << '\n';
+	tileMap.setWallString(wallStr);
+	tileMap.create();
+	if (!groundLevelTexture.loadFromFile(ground))
+	{
+
+	}
+	groundLevelTexture.setRepeated(true);
+	groundSprite.setTexture(groundLevelTexture);
+	groundSprite.setTextureRect({ 0,0,5000,5000 });
 	fin >> rows >> collumns;
 	for (int row = 0; row < rows; row++)
 	{
@@ -333,6 +353,7 @@ void Level::GenerateMap(string fisier)
 		towers.list[i].setPosition(gridX, gridY, x, y);
 	}
 	towers.nrTowers = nrTower;
+	
 	MapCollisions();
 	addBulletCollision();
 }
@@ -420,6 +441,7 @@ void Level::mapGrid(int startX, int startY, bool sus, bool jos, bool stanga, boo
 			cameras.square[cameras.nrSquare++].gridY = y / 18;
 		}
 	}
+	
 }
 
 void Level::MapCollisions()

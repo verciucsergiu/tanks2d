@@ -1,3 +1,5 @@
+sprites/dirt.png
+sprites/sandbagbeige.png
 8 8
 0 0 0 0 0 0 0 0 
 0 2 3 0 0 0 0 0
@@ -13,3 +15,4 @@
 1 0 300 423 0
 1
 1 1 350 300 
+

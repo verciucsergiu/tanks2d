@@ -2,11 +2,7 @@
 
 GameMap::GameMap()
 {
-	if (!wallTexture.loadFromFile("sprites/sandbagbeige.png")) //Schimbat numele imaginii
-	{
-		cout << "Error loading wall!\n";
-	}
-	wallSprite.setTexture(wallTexture);
+	
 }
 
 
@@ -22,6 +18,18 @@ void GameMap::draw(RenderWindow &window)
 		wallSprite.setPosition(wallAdress[i].x,wallAdress[i].y);
 		window.draw(wallSprite);
 	}
+}
+void GameMap::setWallString(string value)
+{
+	wallString = value;
+}
+void GameMap::create()
+{
+	if (!wallTexture.loadFromFile(wallString)) //Schimbat numele imaginii
+	{
+		cout << "Error loading wall!\n";
+	}
+	wallSprite.setTexture(wallTexture);
 }
 void GameMap::addTile(float x, float y, tileType tile)
 {

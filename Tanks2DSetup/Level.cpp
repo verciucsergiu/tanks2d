@@ -289,7 +289,6 @@ void Level::GenerateMap(string fisier)
 	
 	ground = grd;
 	wallStr = wall;
-	cout << ground << wallStr << '\n';
 	tileMap.setWallString(wallStr);
 	tileMap.create();
 	if (!groundLevelTexture.loadFromFile(ground))

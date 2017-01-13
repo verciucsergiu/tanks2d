@@ -1,4 +1,4 @@
-sprites/grass.png
+sprites/sand.png
 sprites/sandbagbeige.png
 8 8
 0 0 0 0 0 0 0 0 
@@ -14,4 +14,4 @@ sprites/sandbagbeige.png
 1 0 300 75 2
 1 0 300 423 0
 1
-1 0 300 300 
+1 0 700 245 

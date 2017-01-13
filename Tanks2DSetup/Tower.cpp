@@ -6,7 +6,7 @@ Tower::Tower()
 {
 	resetBullets();
 	hit = false;
-	if (!bulTexture.loadFromFile("sprites/bullet.png"))
+	if (!bulTexture.loadFromFile("sprites/bullet_tower.png"))
 	{
 
 	}
@@ -81,6 +81,8 @@ void Tower::update(float deltaTime, RenderWindow & window)
 }
 void Tower::draw(RenderWindow &window)
 {
+	towerSprite.setScale(1.3f, 1.3f);
+	tunSprite.setScale(1.3f, 1.3f);
 	if (alive)
 	{
 		towerSprite.setTexture(towerTexture);
@@ -148,6 +150,7 @@ void Tower::fire(int targetX, int targetY)
 		x = x / normalize;
 		y = y / normalize;
 		bullets.bull[bullets.nrOfBullets].bulletSpr.setPosition(tunSprite.getPosition().x, tunSprite.getPosition().y);
+		bullets.bull[bullets.nrOfBullets].bulletSpr.setScale(1.5f, 1.5f);
 		bullets.bull[bullets.nrOfBullets].normalX = x;
 		bullets.bull[bullets.nrOfBullets].normalY = y;
 		bullets.nrOfBullets++;

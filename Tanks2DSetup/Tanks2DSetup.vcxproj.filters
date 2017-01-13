@@ -30,5 +30,7 @@
     <Text Include="playerStats.txt" />
     <Text Include="level2.txt" />
     <Text Include="level3.txt" />
+    <Text Include="level4.txt" />
+    <Text Include="level5.txt" />
   </ItemGroup>
 </Project>

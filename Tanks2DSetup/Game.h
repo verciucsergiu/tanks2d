@@ -14,12 +14,12 @@ enum menuType {
 
 struct GameLevelsObj
 {
-	Level level[5];
+	Level level[15];
 	int nrLevels;
 };
 struct GameLevels
 {
-	TextButton level[100];
+	TextButton level[25];
 	int nrLlevels;
 };
 

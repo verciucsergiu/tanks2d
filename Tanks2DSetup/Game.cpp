@@ -227,11 +227,11 @@ void Game::createLevelsMenu()
 	back.create("Back", window.getView().getCenter().x - window.getView().getSize().x / 2 + 150, window.getView().getCenter().y - window.getView().getSize().y / 2 + 55, Color::Yellow, sizeType::mediu);
 	float startX = window.getView().getCenter().x - window.getView().getSize().x / 2 + 180;
 	float startY = window.getView().getCenter().y - window.getView().getSize().y / 2 + 180;
-	float spacing = 100;
+	float spacing = 150;
 	int level = 0;
 	for (int i = 0; i < 3; i++)
 	{
-		for (int j = 0; j < 5; j++)
+		for (int j = 0; j < 4; j++)
 		{
 			levelsMenu.level[level++].create(to_string(level), startX + j*spacing, startY + i*spacing, Color::Blue, sizeType::small);
 			if (level > playerStats.currentLevel)
@@ -274,10 +274,14 @@ void Game::createLevels()
 	levelsStrings[0] = "level1.txt";
 	levelsStrings[1] = "level2.txt";
 	levelsStrings[2] = "level3.txt";
+	levelsStrings[3] = "level4.txt";
+	levelsStrings[4] = "level5.txt";	
 	levels.level[0].GenerateMap(levelsStrings[0]);
 	levels.level[1].GenerateMap(levelsStrings[1]);
 	levels.level[2].GenerateMap(levelsStrings[2]);
-	maxLevels = 2;
+	levels.level[3].GenerateMap(levelsStrings[3]);
+	levels.level[4].GenerateMap(levelsStrings[4]);
+	maxLevels = 4;
 }
 
 void Game::saveStats()

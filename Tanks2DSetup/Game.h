@@ -41,6 +41,8 @@ private:
 	TextButton play;
 	TextButton back;
 
+	string levelsStrings[15];
+
 	void createMainMenu();
 	void createLevelsMenu();
 	void createLoadingScreen();

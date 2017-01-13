@@ -27,7 +27,7 @@ void Level::Create()
 void Level::Update(float deltaTime, RenderWindow & window)
 {
 	fixedDeltaTime = deltaTime;
-	if (Mouse::isButtonPressed(Mouse::Left) && canFire)
+	if (Mouse::isButtonPressed(Mouse::Left) && canFire && !isPause())
 	{
 		bullet *fire = new bullet;
 		fire->create();
@@ -88,7 +88,7 @@ void Level::Draw(RenderWindow & window)
 		towers.list[i].setTankSprite(player.tankSprite);
 		if (towers.list[i].isHit())
 		{
-			player.takeDamage(5);
+			player.takeDamage(50);
 		}
 	}
 }
@@ -268,14 +268,12 @@ void Level::GenerateMap(string fisier)
 	//800 px width
 	//576 px height
 	ifstream fin(fisier);
-	int mat[100][100];
-	int rows, collumns;
 	fin >> rows >> collumns;
 	for (int row = 0; row < rows; row++)
 	{
 		for (int col = 0; col < collumns; col++)
 		{
-			fin >> mat[row][col];
+			fin >> mapMap[row][col];
 		}
 	}
 
@@ -283,20 +281,20 @@ void Level::GenerateMap(string fisier)
 	{
 		for (int col = 1; col < collumns -1; col++)
 		{
-			if (mat[row][col])
+			if (mapMap[row][col])
 			{
-				bool dreapta = mat[row][col + 1];
-				bool stanga = mat[row][col - 1];
-				bool sus = mat[row - 1][col];
-				bool jos = mat[row + 1][col];
+				bool dreapta = mapMap[row][col + 1];
+				bool stanga = mapMap[row][col - 1];
+				bool sus = mapMap[row - 1][col];
+				bool jos = mapMap[row + 1][col];
 				mapGrid((row - 1) * 18, (col - 1) * 25, sus, jos, stanga, dreapta);
-				if (mat[row][col] == 2)
+				if (mapMap[row][col] == 2)
 				{
 					tankPos.gridX = col - 1;
 					tankPos.gridY = row - 1;
 					createCamera(col - 1, row - 1);
 				}
-				if (mat[row][col] == 3)
+				if (mapMap[row][col] == 3)
 				{
 					createFinish(col - 1, row - 1);
 				}
@@ -549,6 +547,38 @@ bool Level::gameEnd()
 void Level::setPlay()
 {
 	endTheGame.setPlay();
+	player.setAlive(true);
+	player.health = 100;
+	for (int row = 0; row < rows; row++)
+	{
+		for (int col = 0; col < collumns; col++)
+		{
+			if (mapMap[row][col] == 2)
+			{
+				tankPos.gridX = col - 1;
+				tankPos.gridY = row - 1;
+				createCamera(col - 1, row - 1);
+			}
+		}
+	}
+}
+
+void Level::setPause(bool value)
+{
+	pause = value;
+}
+
+bool Level::isPause()
+{
+	return pause;
+}
+
+Vector2i Level::getCameraPos()
+{
+	Vector2i pos;
+	pos.x = followPlayer.getCenter().x;
+	pos.y = followPlayer.getCenter().y;
+	return pos;
 }
 
 void Level::resetCollider()

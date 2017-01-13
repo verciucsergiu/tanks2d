@@ -49,6 +49,10 @@ public:
 	void takeDamage(int value);
 
 	float getTurretRotation(); //return turretRotation
+
+	bool isAlive();
+	void setAlive(bool value);
+
 private:
 	Vector2i boxColliderOffset;
 
@@ -65,6 +69,6 @@ private:
 	float currentRotation;
 	float turretRotation;
 
-	bool testing;
+	bool alive;
 };
 

@@ -79,6 +79,10 @@ public:
 	void setPlayerStats(Stats value);
 	bool gameEnd();
 	void setPlay();
+
+	void setPause(bool value);
+	bool isPause();
+	Vector2i getCameraPos();
 private:
 
 	Collider *collFirst;
@@ -99,7 +103,6 @@ private:
 	void MapCollisions();
 	ArrayCameraGrid cameras;
 
-
 	void createCamera(int x,int y);
 	void createFinish(int x, int y);
 	EndGame endTheGame;
@@ -110,5 +113,10 @@ private:
 
 	towerList towers;
 	PosInSpace tankPos;
+
+	int mapMap[25][25];
+	int rows, collumns;
+
+	bool pause;
 };
 

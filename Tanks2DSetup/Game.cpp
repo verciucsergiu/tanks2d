@@ -30,6 +30,10 @@ Game::Game()
 	sandSprite.setTextureRect({0,0,5000,5000});
 
 	currentMenu = menuType::mainMenu;
+
+	bool levelFailedCreated = false;
+	bool pause = false;
+	bool contCreated = false;
 	while (window.isOpen())
 	{
 		Event event;
@@ -47,11 +51,6 @@ Game::Game()
 		
 		window.clear();
 		
-		if (Keyboard::isKeyPressed(Keyboard::Key::Escape))
-		{
-			currentMenu = menuType::levelMenu;
-		}
-
 		Vector2f mousePos = window.mapPixelToCoords(Mouse::getPosition(window));
 		switch (currentMenu)
 		{
@@ -99,6 +98,7 @@ Game::Game()
 						currentLevelPlaying = i;
 						currentMenu = menuType::actualGame;
 						levels.level[i].Create();
+						levels.level[i].player.setAlive(true);
 						levels.level[i].setPlayerStats(playerStats);
 						levels.level[i].setPlay();
 					}
@@ -109,22 +109,81 @@ Game::Game()
 		case actualGame:
 		{
 			window.draw(sandSprite);
-			levels.level[currentLevelPlaying].Update(deltaTime, window);
-			if (levels.level[currentLevelPlaying].gameEnd())
+			if (!pause)
 			{
-				followPlayer.setCenter(0, 0);
-				window.setView(followPlayer);
-				currentMenu = menuType::levelMenu;
-				if (currentLevelPlaying + 1 <= maxLevels)
+				levels.level[currentLevelPlaying].setPause(false);
+				if (!levels.level[currentLevelPlaying].player.isAlive())
 				{
-					levelsMenu.level[currentLevelPlaying + 1].setActive(true);
+					levels.level[currentLevelPlaying].Update(0, window);
+					TextButton youFailed;
+					TextButton replay;
+					replay.create("Back to menu", levels.level[currentLevelPlaying].getCameraPos().x, levels.level[currentLevelPlaying].getCameraPos().y + 155, Color::Blue, sizeType::mediu);
+					youFailed.create("You failed where everyone else prevailed!\nAdjust your gameplay!!!", levels.level[currentLevelPlaying].getCameraPos().x, levels.level[currentLevelPlaying].getCameraPos().y, Color::Red, sizeType::large);
+					youFailed.Draw(window);
+					replay.Draw(window);
+					replay.checkHover(mousePos.x, mousePos.y, window);
+					if (Mouse::isButtonPressed(Mouse::Button::Left) && replay.checkClick(mousePos.x,mousePos.y))
+					{
+						followPlayer.setCenter(0, 0);
+						window.setView(followPlayer);
+						currentMenu = menuType::levelMenu;
+						levels.level[currentLevelPlaying].setPlay();
+						levels.level[currentLevelPlaying].setPlayerStats(playerStats);
+					}
+				}
+				else
+				{
+					levels.level[currentLevelPlaying].Update(deltaTime, window);
+					if (levels.level[currentLevelPlaying].gameEnd())
+					{
+						followPlayer.setCenter(0, 0);
+						window.setView(followPlayer);
+						currentMenu = menuType::levelMenu;
+						if (currentLevelPlaying + 1 <= maxLevels)
+						{
+							levelsMenu.level[currentLevelPlaying + 1].setActive(true);
+						}
+					}
 				}
 			}
+
+			if (Keyboard::isKeyPressed(Keyboard::Key::Escape) && !pause)
+			{
+				pause = true;
+			
 				
+			}
+			if (pause)
+			{
+				TextButton continuePlay;
+				continuePlay.Draw(window);
+				continuePlay.create("Play", levels.level[currentLevelPlaying].getCameraPos().x, levels.level[currentLevelPlaying].getCameraPos().y, Color::Red, sizeType::mediu);
+				TextButton backMenu;
+				backMenu.Draw(window);
+				backMenu.create("Back to menu", levels.level[currentLevelPlaying].getCameraPos().x, levels.level[currentLevelPlaying].getCameraPos().y + 50, Color::Red, sizeType::mediu);
+				levels.level[currentLevelPlaying].setPause(false);
+				levels.level[currentLevelPlaying].Update(0, window);
+				continuePlay.Draw(window);
+				continuePlay.checkHover(mousePos.x, mousePos.y, window);
+				if (continuePlay.checkClick(mousePos.x,mousePos.y) && Mouse::isButtonPressed(Mouse::Left))
+				{
+					pause = false;
+					contCreated = false;
+				}
+				backMenu.Draw(window);
+				backMenu.checkHover(mousePos.x, mousePos.y, window);
+				if (backMenu.checkClick(mousePos.x, mousePos.y) && Mouse::isButtonPressed(Mouse::Left))
+				{
+					followPlayer.setCenter(0, 0);
+					window.setView(followPlayer);
+					currentMenu = menuType::levelMenu;
+					pause = false;
+					contCreated = false;
+				}
+			}
 		}
 			break;
 		}
-		
 		displayFps();
 		window.display();
 	}
@@ -179,7 +238,7 @@ void Game::createLevelsMenu()
 		for (int j = 0; j < 5; j++)
 		{
 			levelsMenu.level[level++].create(to_string(level), startX + j*spacing, startY + i*spacing, Color::Blue, sizeType::small);
-			if (level > 1)
+			if (level > 3)
 			{
 				levelsMenu.level[level - 1].setActive(false);
 			}
@@ -216,12 +275,13 @@ void Game::resetLevels()
 void Game::createLevels()
 {
 
-	levels.level[0].Create();
-	levels.level[0].GenerateMap("level1.txt");
-	levels.level[1].Create();
-	levels.level[1].GenerateMap("level2.txt");
-	levels.level[1].setPlayerStats(playerStats);
-	maxLevels = 1;
+	levelsStrings[0] = "level1.txt";
+	levelsStrings[1] = "level2.txt";
+	levelsStrings[2] = "level3.txt";
+	levels.level[0].GenerateMap(levelsStrings[0]);
+	levels.level[1].GenerateMap(levelsStrings[1]);
+	levels.level[2].GenerateMap(levelsStrings[2]);
+	maxLevels = 2;
 }
 
 void Game::createMainMenu()

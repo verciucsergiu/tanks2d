@@ -178,6 +178,7 @@
     <ClInclude Include="Tower.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\..\..\..\..\..\%40BLUE\Faculta\Visual Studio c++\Proiect\pr3\Tanks2DSetup\level3.txt" />
     <Text Include="level1.txt" />
     <Text Include="playerStats.txt" />
     <Text Include="level2.txt" />

@@ -4,10 +4,6 @@
 Player::Player()
 {
 	currentRotation = 0;
-	//resetCollider();
-
-	testing = false;
-	
 	//multe modificari aici
 	if (!tankTexture.loadFromFile("sprites/tank_base.png"))
 	{
@@ -17,8 +13,6 @@ Player::Player()
 	{
 		cout << "Error loading the tank_turel!\n";
 	}
-	
-
 	tankSprite.setTexture(tankTexture);
 	barrelSprite.setTexture(barrelTexture);
 
@@ -46,9 +40,11 @@ void Player::startPosition(float x, float y)
 void Player::update(float deltaTime,RenderWindow &window)
 {
 	fixedDeltaTime = deltaTime;
-	
 	Vector2i mousePosition = Mouse::getPosition(window);
-	lookAt(mousePosition,window);
+	if (fixedDeltaTime!=0)
+	{
+		lookAt(mousePosition, window);
+	}
 	Vector2i movement(0,0);
 	if (Keyboard::isKeyPressed(Keyboard::W) && !collisionVertical(-1))
 	{
@@ -154,9 +150,20 @@ float Player::getTurretRotation()
 	return turretRotation;
 }
 
+bool Player::isAlive()
+{
+	return alive;
+}
+
+void Player::setAlive(bool value)
+{
+	alive = value;
+}
+
 void Player::tankRotation(int dirX, int dirY)
 {
-	//wtf should i do :(
+	//wtf should i do :('
+	int tolarance = 4;
 	if (currentRotation < 0)
 	{
 		currentRotation = 360 + currentRotation;
@@ -169,7 +176,7 @@ void Player::tankRotation(int dirX, int dirY)
 	{
 		if (dirX == -1)
 		{
-			if (currentRotation >= 180 + fixedDeltaTime * 65 || currentRotation <= 180 - fixedDeltaTime * 65)
+			if ((int)currentRotation >= 180 + tolarance || (int)currentRotation <= 180 - tolarance)
 			{
 				if (currentRotation>180)
 				{
@@ -183,7 +190,7 @@ void Player::tankRotation(int dirX, int dirY)
 		}
 		else
 		{
-			if (currentRotation >= 0 + fixedDeltaTime * 65 || currentRotation <= 0 - fixedDeltaTime * 65)
+			if ((int)currentRotation >= 0 + tolarance || (int)currentRotation <= 0 - tolarance)
 			{
 				if (currentRotation>180)
 				{
@@ -200,7 +207,7 @@ void Player::tankRotation(int dirX, int dirY)
 	{
 		if (dirY == 1)
 		{
-			if (currentRotation >= 90 + fixedDeltaTime * 65 || currentRotation <= 90 - fixedDeltaTime * 65)
+			if ((int)currentRotation >= 90 + tolarance || (int)currentRotation <= 90 - tolarance)
 			{
 				if (currentRotation <270 && currentRotation > 90)
 				{
@@ -215,7 +222,7 @@ void Player::tankRotation(int dirX, int dirY)
 		}
 		else
 		{
-			if (currentRotation >= 270 + fixedDeltaTime * 65 || currentRotation <= 270 - fixedDeltaTime * 65)
+			if ((int)currentRotation >= 270 + tolarance || (int)currentRotation <= 270 - tolarance)
 			{
 				if (currentRotation < 270 && currentRotation > 90)
 				{
@@ -239,7 +246,7 @@ void Player::tankRotation(int dirX, int dirY)
 	{
 		if (dirX == 1 && dirY == 1) // 45
 		{
-			if (currentRotation >= 45 + fixedDeltaTime * 65 || currentRotation <= 45 - fixedDeltaTime * 65)
+			if ((int)currentRotation >= 45 + tolarance || (int)currentRotation <= 45 - tolarance)
 			{
 				if (currentRotation < 225 && currentRotation > 45)
 				{
@@ -254,7 +261,7 @@ void Player::tankRotation(int dirX, int dirY)
 		}
 		if (dirX == -1 && dirY == 1) // 135
 		{
-			if (currentRotation >= 135 + fixedDeltaTime * 65 || currentRotation <= 135 - fixedDeltaTime * 65)
+			if ((int)currentRotation >= 135 + tolarance || (int)currentRotation <= 135 - tolarance)
 			{
 				if (currentRotation < 315 && currentRotation > 135)
 				{
@@ -268,7 +275,7 @@ void Player::tankRotation(int dirX, int dirY)
 		}
 		if (dirX == -1 && dirY == -1) //225
 		{
-			if (currentRotation >= 225 + fixedDeltaTime * 65 || currentRotation <= 225 - fixedDeltaTime * 65)
+			if ((int)currentRotation >= 225 + tolarance || (int)currentRotation <= 225 - tolarance)
 			{
 				if (currentRotation < 225 && currentRotation > 45)
 				{
@@ -282,7 +289,7 @@ void Player::tankRotation(int dirX, int dirY)
 		}
 		if (dirX == 1 && dirY == -1) // 315
 		{
-			if (currentRotation >= 315 + fixedDeltaTime * 65 || currentRotation <= 315 - fixedDeltaTime * 65)
+			if ((int)currentRotation >= 315 + tolarance || (int)currentRotation <= 315 - tolarance)
 			{
 				if (currentRotation < 315 && currentRotation > 135)
 				{
@@ -318,8 +325,15 @@ void Player::setRotationSpeed(float value)
 }
 void Player::takeDamage(int value)
 {
-	health -= value;
-	cout << health << '\n';
+	
+	if (alive) 
+	{
+		health -= value;
+		if (health<=0)
+		{
+			alive = false;
+		}
+	}
 }
 void Player::defaultBoxColliderOffset()
 {

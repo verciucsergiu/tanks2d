@@ -20,6 +20,11 @@ void TextButton::Draw(RenderWindow &window)
 		buttonSprite.setColor(lowOpacity);
 		textDisplay.setFillColor(lowOpacity);
 	}
+	else
+	{
+		Color lowOpacity(255, 35, 25, 255);
+		textDisplay.setFillColor(lowOpacity);
+	}
 	window.draw(buttonSprite);
 	window.draw(textDisplay);
 }
@@ -96,6 +101,10 @@ void TextButton::create(string text, int positionX, int positionY, Color color,s
 		}
 		break;
 	case large:
+		if (!buttonTexture.loadFromFile("sprites/button_large.png"))
+		{
+			cout << "Error!";
+		}
 		break;
 	default:
 		break;

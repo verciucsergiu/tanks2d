@@ -37,8 +37,7 @@ void Tower::setAlive(bool value)
 
 void Tower::update(float deltaTime, RenderWindow & window)
 {
-	//updateBullets(deltaTime, window);
-	
+	hit = false;
 	for (int i = 0; i < bullets.nrOfBullets; i++)
 	{
 		bullets.bull[i].bulletSpr.move(bullets.bull[i].normalX * deltaTime * speed, bullets.bull[i].normalY * deltaTime * speed);
@@ -50,7 +49,7 @@ void Tower::update(float deltaTime, RenderWindow & window)
 			hit = true;
 		}
 		Vector2f currentpos = bullets.bull[i].bulletSpr.getPosition();
-		FloatRect camera(towerPos.gridX * 800 + 32, towerPos.gridY * 576 - 32, 768, 544);
+		FloatRect camera(towerPos.gridX * 800 + 32, towerPos.gridY * 576, 768, 544);
 		if (!camera.contains(currentpos.x,currentpos.y))
 		{
 			eliminareBullet(i);
@@ -158,9 +157,12 @@ bool Tower::isHit()
 
 void Tower::eliminareBullet(int pos)
 {
-	for (int i = pos; i < bullets.nrOfBullets - 1; i++)
+	if (bullets.nrOfBullets>0)
 	{
-		bullets.bull[i] = bullets.bull[i + 1];
+		for (int i = pos; i < bullets.nrOfBullets - 1; i++)
+		{
+			bullets.bull[i] = bullets.bull[i + 1];
+		}
 	}
 	bullets.nrOfBullets--;
 }
